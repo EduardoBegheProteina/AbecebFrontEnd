@@ -1,0 +1,20 @@
+/* 999-debug.css */
+
+
+.cpObject{
+/*	border: dotted blue 1px;*/
+/*
+	padding: 10px;
+	background:rgba(128,255,128,.1 );
+*/
+	}
+	
+.widgetsContainer{
+/*	background:rgba(255,255,0,.2);*/
+	}
+
+.debug{ color: red; border:1px dotted magenta; padding:10px; }
+
+.ifDebug{ display: none; }
+	.debug DIV.ifDebug{ display:block; }
+	.debug SPAN.ifDebug{ display:inline; }

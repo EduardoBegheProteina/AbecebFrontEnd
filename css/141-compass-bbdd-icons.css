@@ -1,0 +1,39 @@
+.li-icon {
+  background-image: url(../images/32px.png);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: top
+}
+/* FOLDER */
+.typeCategory {
+  background-position: -134px -69px;
+}
+/* DATA 1 */
+.typeDataSet   {
+  background-position: -166px -69px;
+}
+/* DATA 2 */
+.typeDataSubSet {
+  background-position: -198px -69px;
+}
+/* DATA 3*/
+.typeDataField {
+  background-position: -230px -69px;
+}
+/* METADATA */
+.typeMetadataSet  {
+  background-position: -8px -100px;
+}
+/* METADATA ITEM */
+.typeMetadataItem  {
+  background-position: -32px -101px;
+}
+/* DATABASE ITEM */
+.typeDataBase  {
+  background-position: -69px -99px;
+}
+
+.trash-icon {
+  background-position: -264px -69px;
+}

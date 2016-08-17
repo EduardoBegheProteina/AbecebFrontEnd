@@ -1,0 +1,391 @@
+$.templates("cpContainer",
+'{{if children tmpl="cpContainerNode"}}{{else tmpl="cpObjectNode"}}{{\/if}}'
+); //cpContainer
+
+
+$.templates("cpContainerNode",
+	'<div id="{{:abecebObjectId}}" data-cpdata=\'{{JSONstringifyNoChildren #data/}}\' '+
+		'class="cpObjectToInit cpContainerNode '+
+			'{{if type1=="widgetsContainer"}} widgetsContainer {{/if}}'+
+			'{{if type2=="cpRoot"}} cpRoot {{/if}}'+
+			'{{if mode=="edit"}} widgetsContainer-sortable {{/if}}'+
+			'{{if mode=="render"}} widgetsContainer-draggable {{/if}}'+
+			
+			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
+			
+//			' debug'+
+		'">'+
+		
+		'{{if type2=="cpRoot"}}'+
+			'{{if mode=="edit"}}{{include tmpl="cpRoot-topToolbar"/}}'+
+			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
+//			'<div id="cpRootContents">'+
+		'{{/if}}'+
+
+//		'MODE {{:mode}}'+
+//		'<span class="debug">cpContainerNode // {{:debug}}</span>'+
+			'{{for children tmpl="cpContainer"/}}'+
+
+		'{{if type2=="cpRoot"}}'+
+//			'</div>'+ //id="cpRootContents"
+		'{{/if}}'+
+		
+		'<\/div><div class="clearfix"></div>'
+); //cpContainerNode
+
+
+$.templates("cpObjectNode",
+	'<div id="{{:abecebObjectId}}" data-cpdata=\'{{JSONstringifyNoChildren #data/}}\' '+
+		' class="cpObjectToInit'+
+			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
+			'{{if type=="cpWidget"}} contentWidget{{/if}}'+
+//			' debug'+
+		'">'+
+//		'<span class="debug">cpObjectNode // {{:debug}}</span>'+
+		'{{if type=="cpWidget"}}{{include tmpl="cpWidget"/}}{{/if}}'+
+		'{{if type=="cpHtml"}}{{include tmpl="cpHtml"/}}{{/if}}'+
+	'<\/div>'
+); //cpObjectNode
+
+
+$.templates("cpHtml",
+'<div class="cpHtml">'+
+	'{{:content}}'+
+'</div><div class="clearfix"></div>'
+); //cpHtml
+
+
+
+$.templates("cpWidget",
+	'<div class="x_panel cpWidget-x-{{:type1}}" >'+
+	'<div class="x_title">'+
+		'<div class="territorio">'+
+
+			'{{for territorios}}'+
+				'<span class="T0 xh-flag xh-{{toClassName:#data.split("|")[0]}}"><var>{{:#data.split("|")[0]}}</var></span>'+
+
+				'{{if #data.split("|").length>1  }}'+
+				'<span class="T1">{{:#data.split("|")[1]}}</span>'+
+				'{{/if}}'+
+
+			'{{/for}}'+
+		'</div>' +
+		'<ul class="nav navbar-right panel_toolbox">'+
+			'{{if titlebarBadge}}'+
+				'<span class="updatedBadge updatedBadgeStatus-{{:titlebarBadgeStatus}}"'+
+				'{{if titlebarBadgeStatus!="applied" && titlebarBadgeStatus!="old"}} data-toggle="tooltip" title="Actualización de datos disponible."{{/if}}'+
+				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
+			'{{/if}}'+
+			'{{if !hideToolbar}}'+
+			// '<li><a class="collapse-link"><i class="fa fa-minus"></i></a></li>'+
+			'<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-onclick="contextmenu"><i class="fa fa-caret-down"></i></a></li>'+
+			'{{/if}}'+
+		'</ul>'+
+		'<div class="clearfix"></div>'+
+	'</div>'+
+	
+	'<div class="x_content">'+
+		'<h2 class="cpTitle">'+
+			'{{if type1=="ht"}}<a href="{{:href}}">{{/if}}'+
+			'{{:dataShown.cpTitle}}'+
+			'{{if type1=="ht"}}</a>{{/if}}'+
+		'</h2>'+
+		'<div class="usrctnt usrctnt-head">{{:dataShown.usrctnt1}}</div>'+
+
+		'{{if type1=="indicador"}}{{include tmpl="cpWidget-x-indicador"/}}'+
+		'{{else type1=="grafico"}}{{include tmpl="cpWidget-x-grafico"/}}'+
+		'{{else type1=="tabla"}}{{include tmpl="cpWidget-x-tabla"/}}'+
+		'{{else type1=="imagen"}}{{include tmpl="cpWidget-x-imagen"/}}'+
+		'{{else type1=="ht"}}{{include tmpl="cpWidget-x-ht"/}}'+
+		'{{else type1=="descarga"}}{{include tmpl="cpWidget-x-descarga"/}}'+
+		'{{else type1=="embed"}}{{include tmpl="cpWidget-x-embed"/}}'+
+		'{{else type1=="cphtml"}}{{include tmpl="cpWidget-x-cphtml"/}}'+
+		'{{/if}}'+
+
+		'<div class="usrctnt usrctnt-foot">{{:dataShown.usrctnt2}}</div>'+
+
+'{{if dataShown.metadataShown && dataShown.metadataShown.length > 0 }}'+
+	'<div class="dato1-ft">'+
+		'{{for dataShown.metadataShown }}'+
+		'<p>{{:#data}}</p>'+
+		'{{/for}}'+
+	'</div>'+
+'{{/if}}'+
+	
+
+	'</div>'+
+'</div>'
+); //cpWidget
+
+
+$.templates("cpWidget-x-indicador",
+	'{{if dataShown.cpH4 }}'+
+	'<div class="cpH4">{{:dataShown.cpH4}}</div>'+
+	'{{/if}}'+
+
+	'<div class="x_content_dato">'+
+		'{{if dataShown.trend!=undefined && !dataShown.trendDescription }}'+
+			'{{if dataShown.trend == 1 }}<big class="trend-up"></big>{{/if}}'+
+			'{{if dataShown.trend == "0" || dataShown.trend == "eq" }}<big class="trend-eq"></big>{{/if}}'+
+			'{{if dataShown.trend == -1 }}<big class="trend-down"></big>{{/if}}'+
+		'{{/if}}'+
+		'<span class="valor">{{:dataShown.valor}}</span>'+
+		'<span class="valorUM{{if dataShown.valorUM.length < 3 }} big{{/if}}">{{:dataShown.valorUM}}</span>'+
+	'</div>'+
+	
+	'{{if dataShown.trendDescription }}'+
+		'<div class="trend-text1 '+
+			'{{if dataShown.trend == 1 }} trend-up{{/if}}'+
+			'{{if dataShown.trend == 0 || dataShown.trend == "eq" }} trend-eq{{/if}}'+
+			'{{if dataShown.trend == -1 }} trend-down{{/if}}'+
+		'">'+
+            '<span class="trend-arrow"></span>'+
+            '<span class="trend-value">{{:dataShown.trendValue}}</span>'+
+            '<span class="trend-um">{{:dataShown.trendUM}}</span>'+
+            ' <span class="trend-description">{{:dataShown.trendDescription}}</span>'+
+		'</div>'+
+	'{{/if}}'+	
+
+	'{{if dataShown.ownerText1 }}'+
+		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
+	'{{/if}}'
+
+); //cpWidget-x-indicador
+
+
+
+$.templates("cpWidget-x-grafico",
+
+'<div role="tabpanel">'+
+
+//  '<!-- Nav tabs -->'+
+  '<ul class="nav nav-tabs" role="tablist">'+
+    '<li role="presentation" class="active"><a href="#{{:abecebObjectInstanceId}}-grafico" role="tab" data-toggle="tab">Gráfico</a></li>'+
+    '<li role="presentation"><a href="#{{:abecebObjectInstanceId}}-datos" role="tab" data-toggle="tab">Datos</a></li>'+
+  '</ul>'+
+
+//  '<!-- Tab panes -->'+
+  '<div class="tab-content">'+
+    '<div role="tabpanel" class="tab-pane active" id="{{:abecebObjectInstanceId}}-grafico">'+
+    	'<canvas id="widget-{{:abecebObjectInstanceId}}-canvas"></canvas>'+
+    '</div>'+
+    '<div role="tabpanel" class="tab-pane" id="{{:abecebObjectInstanceId}}-datos">'+
+		'{{include tmpl="cpWidget-x-tabla"/}}'+
+    '</div>'+
+  '</div>'+
+
+'</div>'
+
+
+); //cpWidget-x-grafico
+
+
+
+$.templates("cpWidget-x-imagen",
+
+'<div role="tabpanel">'+
+
+  '{{if dataShown.tabledata}}'+
+  '<ul class="nav nav-tabs" role="tablist">'+
+    '<li role="presentation" class="active"><a href="#{{:abecebObjectInstanceId}}-imagen" role="tab" data-toggle="tab">Imagen</a></li>'+
+    '<li role="presentation"><a href="#{{:abecebObjectInstanceId}}-datos" role="tab" data-toggle="tab">Datos</a></li>'+
+  '</ul>'+
+  '{{/if}}'+
+
+  '{{if dataShown.tabledata}}'+
+  '<div class="tab-content">'+
+    '<div role="tabpanel" class="tab-pane active" id="{{:abecebObjectInstanceId}}-imagen">'+
+    '{{/if}}'+
+    	'<img id="widget-{{:abecebObjectInstanceId}}-imagen-img" src="{{:dataShown.src}}" width="100%" />'+
+  '{{if dataShown.tabledata}}'+
+    '</div>'+
+    '<div role="tabpanel" class="tab-pane" id="{{:abecebObjectInstanceId}}-datos">'+
+		'{{include tmpl="cpWidget-x-tabla"/}}'+
+    '</div>'+
+  '</div>'+
+  '{{/if}}'+
+
+'</div>'
+
+
+); //cpWidget-x-imagen
+
+
+$.templates("cpWidget-x-tabla",
+	'<table class="table table-hover table-var">'+
+		'<thead>'+
+			'{{range dataShown.tabledata start=0 end=1 }}'+
+			'<tr>'+
+			'{{for #data }}'+
+			'<th>{{:#data}}</th>'+
+				'{{/for}}'+
+			'</tr>'+
+			'{{/range}}'+
+			'</thead>'+
+		'<tbody>'+
+			'{{range dataShown.tabledata start=1 }}'+
+			'<tr>'+
+				'{{range #data start=0 }}'+
+					'<td>{{:}}</td>'+
+				'{{/range}}'+
+			'</tr>'+
+				'{{/range}}'+
+		'</tbody>'+
+	'</table>'
+
+); //cpWidget-x-tabla
+
+
+
+$.templates("cpWidget-x-ht",
+
+
+	'{{if dataShown.cpH4 }}'+
+	'<div class="cpH4">{{:dataShown.cpH4}}</div>'+
+	'{{/if}}'+
+	
+	'{{if dataShown.descripcion }}'+
+		'<p class="text-gral">{{:dataShown.descripcion}}</p>'+
+	'{{/if}}'+
+	
+	'<div class="dato1-ft">'+
+		'{{if dataShown.author }}'+
+			'<div class="dato1-ft-authordata">'+
+				'{{if dataShown.authorPic }}'+
+					'<div class="dato1-ft-authordata-pic"><img class="pic-author img-circle" src="{{:dataShown.authorPic}}" width="41" height="41" alt="" /></div>'+
+				'{{/if}}'+
+				'<div class="dato1-ft-authordata-data"><p class="dato1-ft-authordata-data-nombre">{{:dataShown.author}}</p><p class="dato1-ft-authordata-data-fecha">25 de mayo 2015</p></div>'+
+			'</div>'+
+		'{{/if}}'+
+		'<div class="dato1-ft-contains">'+
+			'{{if dataShown.contains.indicadores }}<dfn><i class="fa fa-percent" aria-hidden="true"></i><var>{{:dataShown.contains.indicadores}}</var></dfn>{{/if}}'+
+			'{{if dataShown.contains.tablas }}<dfn><i class="fa fa-table" aria-hidden="true"></i><var>{{:dataShown.contains.tablas}}</var></dfn>{{/if}}'+
+			'{{if dataShown.contains.graficos }}<dfn><i class="fa fa-play-circle" aria-hidden="true"></i><var>{{:dataShown.contains.graficos}}</var></dfn>{{/if}}'+
+			'{{if dataShown.contains.embeds }}<dfn><i class="fa fa-bar-chart" aria-hidden="true"></i><var>{{:dataShown.contains.embeds}}</var></dfn>{{/if}}'+
+			'{{if dataShown.contains.textos }}<dfn><i class="fa fa-text-height" aria-hidden="true"></i><var>{{:dataShown.contains.textos}}</var></dfn>{{/if}}'+
+		'</div>'+
+	'</div>'
+
+
+); //cpWidget-x-ht
+
+
+$.templates("cpWidget-x-descarga",
+	'{{if dataShown.cpH4 }}'+
+	'<div class="cpH4">{{:dataShown.cpH4}}</div>'+
+	'{{/if}}'+
+
+	'{{if dataShown.ownerText3 }}'+
+		'<div class="owner-text3">{{:dataShown.ownerText3}}</div>'+
+	'{{/if}}'+
+	
+	'<div class="x_content_descarga">'+
+		'<div class="formato-icon">'+
+			'{{if dataShown.formato.toLowerCase() == "pdf"}}<i class="fa fa-file-pdf-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "xls"}}<i class="fa fa-file-excel-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "doc"}}<i class="fa fa-file-word-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "img"}}<i class="fa fa-file-image-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "txt"}}<i class="fa fa-file-text-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "ppt"}}<i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "vid"}}<i class="fa fa-file-video-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "snd"}}<i class="fa fa-file-sound-o" aria-hidden="true"></i>'+
+			'{{else dataShown.formato.toLowerCase() == "zip"}}<i class="fa fa-file-archive-o" aria-hidden="true"></i>'+
+			'{{else}}<i class="fa fa-file-o" aria-hidden="true"></i>'+
+			'{{/if}}'+
+		'</div>'+
+		'<div class="formato-data">Formato {{:dataShown.formato}}<br>{{:dataShown.filesize}} {{:dataShown.filesizeUM}}</div>'+
+		'<a href="{{:dataShown.href}}" class="descarga">Descargar archivo</a>'+
+	'</div>'+
+	
+	'{{if dataShown.ownerText1 }}'+
+		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
+	'{{/if}}'
+
+); //cpWidget-x-descarga
+
+
+$.templates("cpWidget-x-embed",
+	'{{if dataShown.cpH4 }}'+
+	'<div class="cpH4">{{:dataShown.cpH4}}</div>'+
+	'{{/if}}'+
+
+	'{{if dataShown.ownerText3 }}'+
+		'<div class="owner-text3">{{:dataShown.ownerText3}}</div>'+
+	'{{/if}}'+
+	
+	'<div class="embed-responsive embed-responsive-{{:dataShown.proporcion}}">'+
+		'<iframe class="embed-responsive-item" frameborder="0" allowfullscreen '+
+			'width="400" height="300" '+
+			'src="{{:dataShown.src}}"></iframe>'+
+		'</div>'+
+	
+	'{{if dataShown.ownerText1 }}'+
+		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
+	'{{/if}}'
+
+); //cpWidget-x-embed
+
+
+
+$.templates("cpWidget-x-cphtml",
+	
+	'<div class="cpHtmlwidgetContent">'+
+		'{{:dataShown.cpHtml}}'+
+		'</div>'
+
+); //cpWidget-x-cphtml
+
+
+
+$.templates("cpRoot-topToolbar",
+
+'<div id="topToolbar" class="topHTtitle topToolbar pinnedNOT">'+
+	'<div class="row">'+
+		'<div class="col-md-8">'+
+			'<h1 id="topHTtitleH1">{{:cpTitle}}</h1>'+
+		'</div>'+
+
+		'<div class="col-md-4">'+
+		'<ul class="topToolbarTools">'+
+			'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
+				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+				'<i class="fa fa-text-width" aria-hidden="true"></i>'+
+				'Crear texto'+
+				'</a>'+
+			'</li>'+
+			'<li class="vr"></li>'+
+			'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
+				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+				'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
+				'Cambiar nombre…'+
+				'</a>'+
+			'</li>'+
+			'<li class="vr"></li>'+
+			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+				'<a href="#" class="btn btn-tool btn-lg">'+
+				'<i class="fa fa-download" aria-hidden="true"></i>'+
+				'Exportar'+
+				'</a>'+
+			'</li>'+
+		'</ul>'+
+	'</div>'+ //col
+	'</div>'+ //row
+'</div>' //toolbar
+//'<div class="clearfix">'+ '</div>'
+
+); //cpRoot-topToolbar
+
+
+
+$.templates("cpRoot-topHTtitle",
+
+'<div id="" class="topHTtitle">'+
+	'<div class="row">'+
+		'<div class="col-md-8">'+
+			'<h1 id="topHTtitleH1">{{:title}}</h1>'+
+		'</div>'+
+	'</div>'+ //row
+'</div>' //toolbar
+//'<div class="clearfix">'+ '</div>'
+
+); //cpRoot-topToolbar

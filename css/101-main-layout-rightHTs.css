@@ -1,0 +1,114 @@
+/*101-main-layout-rightHTs.css*/
+
+/*BOYDY sets colNav empty space background */
+/* .colNav .nav.child_menu > 2nd level nav */
+BODY, .colNav .nav.child_menu{
+	background: #fff;
+	}
+
+
+.topNavbar{ border-radius:0; }
+.topNavbar .navbar-nav>LI>A{
+	height:90px;
+	padding-top: 20px;
+	}
+#mainsearch{
+	margin-top: 20px;
+	}
+#mainsearch .input-group.input-group-lg{
+	width:400px;
+	}
+
+
+/* .colNav propiamente dicha: 1st level menu items bg */
+.colNav{
+/*	background:#6199af;*/
+	background:#fff;
+	}
+	
+.sidebarMenuContainer{ 
+	width:100%
+	}
+
+/* 1st level menu items */
+.colNav .menu_section{
+	margin:0;
+/*	background:#6199af;*/
+	}
+
+/* borde entre contenido y navegacion */
+.colCtnt{
+	border-right:1px solid #ccc	;
+	}
+	.nav.side-menu{
+	border-left: 1px solid #ccc;
+    margin-left: -1px;
+    }
+
+.nav.side-menu> li{
+	background:#6199af;
+	}
+
+.nav.side-menu> li.current-page, .nav.side-menu> li.active {
+    /*border-right: 5px solid #1ABB9C;*/
+    border-right: none;
+    }
+.nav.side-menu> li.active > a {
+	margin:0;
+	}
+
+/* 2nd level menu items */
+.colNav .nav.child_menu{
+	padding-bottom: 5px;
+	}
+	.child_menuDropPlaceholder{
+		border:2px dashed #ccc;
+	}
+.colNav .nav.child_menu>li>a{
+	display:block;
+    color: #333;
+    font-size: 12px;
+    padding: 9px;
+	}
+
+
+.colNav .nav.child_menu .buttonItem{
+    padding-top: 9px;
+	}
+
+.nav.child_menu li.current-page{
+	font-weight:bold;
+	}
+.nav.child_menu li.current-page A{
+	background: rgb(209, 233, 255);
+	}
+
+
+/*   ********** */
+
+.nav_title{
+	border: 0; text-align:center; margin:20px 15px 0 10px; width:auto;
+	}
+
+
+
+/**** PROFILE> green bg overrides ****/
+
+.sidebarMenuContainer{ 
+	padding-bottom: 130px;
+	/* dejamos espacio en el menu para que el footer no pise menu items */
+	}
+.sidebar-footer{
+	background: #6199af;
+	height:110px;
+	}
+
+.sidebar-footer H5{
+	color: #fff;
+	font-size:13px;
+}
+.sidebar-footer .profile_info H4{
+	color: #fff;
+	}
+
+

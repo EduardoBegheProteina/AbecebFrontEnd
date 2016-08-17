@@ -1,0 +1,134 @@
+.xh-flag{
+	background-repeat:repeat-y;
+	background-position:left bottom;
+}
+
+
+/* ****************************
+Region 'flags'
+*********** */
+.xh-flag.xh-mercosur{ 
+	background:#8c8;
+	}
+.xh-flag.xh-conosur{ 
+	background:#aee;
+	}
+
+
+/* ****************************
+Country flags (.xh-xx classes)
+******************************
+	
+	GREP from "TL\tComment\r" to CSS code to build:
+
+	FIND:
+	(..)\t(.*)\r
+	
+	REPLACE:
+	.xh-flag.xh-\L\1\E{ /* \1: \2 * /
+	background-image:url(../img/xh-flags/\L\1\E.png);
+	}\r
+	
+*********** */
+
+.xh-flag.xh-ar{ /* AR: Argentina */
+	background-image:url(../img/xh-flags/ar.png);
+	}
+.xh-flag.xh-br{ /* BR: Brasil */
+	background-image:url(../img/xh-flags/br.png);
+	}
+.xh-flag.xh-ca{ /* CA: Canada */
+	background-image:url(../img/xh-flags/ca.png);
+	}
+.xh-flag.xh-cl{ /* CL: Chile */
+	background-image:url(../img/xh-flags/cl.png);
+	}
+.xh-flag.xh-co{ /* CO: Colombia */
+	background-image:url(../img/xh-flags/co.png);
+	}
+.xh-flag.xh-cm{ /* CM: Cameroon */
+	background-image:url(../img/xh-flags/cm.png);
+	}
+.xh-flag.xh-cn{ /* CN: China */
+	background-image:url(../img/xh-flags/cn.png);
+	}
+.xh-flag.xh-cr{ /* CR: Costa Rica */
+	background-image:url(../img/xh-flags/cr.png);
+	}
+.xh-flag.xh-cu{ /* CU: Cuba */
+	background-image:url(../img/xh-flags/cu.png);
+	}
+.xh-flag.xh-de{ /* DE: Germany */
+	background-image:url(../img/xh-flags/de.png);
+	}
+.xh-flag.xh-do{ /* DO: Dominican Republic */
+	background-image:url(../img/xh-flags/do.png);
+	}
+.xh-flag.xh-ec{ /* EC: Ecuador */
+	background-image:url(../img/xh-flags/ec.png);
+	}
+.xh-flag.xh-es{ /* ES: Spain */
+	background-image:url(../img/xh-flags/es.png);
+	}
+.xh-flag.xh-eu{ /* EU: European Union */
+	background-image:url(../img/xh-flags/eu.png);
+	}
+.xh-flag.xh-fr{ /* FR: France */
+	background-image:url(../img/xh-flags/fr.png);
+	}
+.xh-flag.xh-gb{ /* GB: United Kingdom */
+	background-image:url(../img/xh-flags/gb.png);
+	}
+.xh-flag.xh-gt{ /* GT: Guatemala */
+	background-image:url(../img/xh-flags/gt.png);
+	}
+.xh-flag.xh-hn{ /* HN: Honduras */
+	background-image:url(../img/xh-flags/hn.png);
+	}
+.xh-flag.xh-ht{ /* HT: Haiti */
+	background-image:url(../img/xh-flags/ht.png);
+	}
+.xh-flag.xh-it{ /* IT: Italy */
+	background-image:url(../img/xh-flags/it.png);
+	}
+.xh-flag.xh-mx{ /* MX: Mexico */
+	background-image:url(../img/xh-flags/mx.png);
+	}
+.xh-flag.xh-ni{ /* NI: Nicaragua */
+	background-image:url(../img/xh-flags/ni.png);
+	}
+.xh-flag.xh-pa{ /* PA: Panama  */
+	background-image:url(../img/xh-flags/pa.png);
+	}
+.xh-flag.xh-pe{ /* PE: Peru */
+	background-image:url(../img/xh-flags/pe.png);
+	}
+.xh-flag.xh-pr{ /* PR: Puerto Rico */
+	background-image:url(../img/xh-flags/pr.png);
+	}
+.xh-flag.xh-py{ /* PY: Paraguay */
+	background-image:url(../img/xh-flags/py.png);
+	}
+.xh-flag.xh-uy{ /* UY: Uruguay */
+	background-image:url(../img/xh-flags/uy.png);
+	}
+.xh-flag.xh-sr{ /* SR: Suriname */
+	background-image:url(../img/xh-flags/sr.png);
+	}
+.xh-flag.xh-sv{ /* SV: El Salvador */
+	background-image:url(../img/xh-flags/sv.png);
+	}
+.xh-flag.xh-uk{ /* UK: United Kingdom */
+	background-image:url(../img/xh-flags/uk.png);
+	}
+.xh-flag.xh-us{ /* US: United States */
+	background-image:url(../img/xh-flags/us.png);
+	}
+.xh-flag.xh-uy{ /* UY: Uruguay */
+	background-image:url(../img/xh-flags/uy.png);
+	}
+.xh-flag.xh-ve{ /* VE: Venezuela */
+	background-image:url(../img/xh-flags/ve.png);
+	}
+
+

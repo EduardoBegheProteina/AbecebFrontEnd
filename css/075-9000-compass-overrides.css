@@ -1,0 +1,69 @@
+/**** NAV overrides ****/
+
+
+.nav_title{
+	border: 0; text-align:center; margin:20px 15px 0 10px; width:auto;
+	}
+
+
+/*
+.nav li>a {
+  position: relative;
+  display: block;
+  padding: 13px 15px 12px;
+}
+*/
+
+
+
+
+.nav child_menu{
+}
+
+.nav.child_menu li{
+/*	padding-left:20px;*/
+}
+
+.nav .child_menu .fa{
+	width:18px;
+	font-size:13px;
+	display:inline-block;
+}
+
+
+.nav-md ul.nav.child_menu li:before {
+    content: none;
+	}
+
+.nav-md ul.nav.child_menu li:after {
+	content: none;
+	}
+
+
+
+/* left content,  right panel layout */
+.nav-md .container.body .ctnt_col.left_col {
+    padding: 10px 20px 0;
+    margin-right: 230px;
+}
+
+
+
+
+#sidebar-menu{
+/*	font-family: 'Roboto Slab', serif;*/
+	}
+.menu_section h3{ 
+	font-family:"Roboto";
+	font-weight:300;
+	}
+
+.nav child_menu{
+}
+
+
+
+.href{
+	color:#08c;
+	text-decoration: underline;
+}

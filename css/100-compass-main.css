@@ -1,0 +1,160 @@
+/* top nav */
+
+.navbar-nav>LI{
+	/*display: inline-block; */
+	text-align:center; }
+
+.iconBig{ font-size:25px; display:block;}
+
+
+
+
+
+
+
+
+/* left content,	right panel layout */
+.nav-md .container.body .ctnt_col.left_col {
+	padding: 10px 20px 0;
+	margin-right: 230px;
+	}
+
+
+
+
+
+
+
+/**** PROFILE ****/
+/*** dark overlay version */
+
+
+.sidebar-footer{
+  bottom: 0px;
+  clear: both;
+  display: block;
+/*  padding: 5px 0 0 0;*/
+  position: fixed;
+  width: 230px;
+  /*background: #2A3F54*/
+  
+	padding: 5px 0 20px 0;
+	background: #000;  /*The Fallback */
+	background: rgba(0, 0, 0, 0.8); 
+	}
+
+.nav-sm .profile {
+	display: none;
+	}
+
+.profile {
+	padding: 0 20px;
+	}
+
+.profile_pic {
+	width: 35%;
+	float: left;
+	}
+
+.profile_pic .img-circle.profile_img {
+	width:50px; height:50px;
+	background: #fff;
+	z-index: 1000;
+	position: inherit;
+	border: 1px solid rgba(52, 73, 94, 0.44);
+	padding: 2px;
+	}
+
+	
+.profile_info {
+	padding: 0;
+	width: 65%;
+	float: right;
+	}
+
+.profile_info H4{
+	margin:0;
+	font-size:11pt;
+	color: #BAB8B8;
+	}
+
+.profile_info P{
+	margin:10px 0 0;
+	font-size:10pt;
+	color: #fff;
+	}
+.profile_info P A{
+	color:#fff;
+	}
+
+.accent-good{ color: lime; }
+
+
+
+
+
+
+
+
+.nav child_menu{
+}
+
+.nav.child_menu>li{
+/*	padding-left:20px;*/
+    padding: 7px 10px 10px 13px;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav.child_menu>#sortableHtPages>li{
+    padding: 7px 10px 6px 13px;
+    border-bottom: 1px solid #ddd;
+/*    font-size: 14px;*/
+}
+
+.nav.child_menu>#sortableHtPages>li>A{
+	color:#000;
+}
+.nav.child_menu>#sortableHtPages>li>A>I{
+  color: #5A738E;
+}
+
+					
+
+.nav.child_menu .dropdown-menu li{
+	padding-left:0;
+	}
+
+.nav.child_menu .dropdown-menu li.disabled {
+    opacity: .4;
+}
+
+.nav .child_menu .fa{
+	width:18px;
+	font-size:13px;
+	display:inline-block;
+}
+
+
+
+
+/* tour */
+HTML .tour-backdrop{ 
+opacity:0.5;
+}
+
+.popover.tour {
+    max-width: 340px;
+}
+
+
+/* fix sidebar for disabled click */
+.nav.side-menu.sidebar-menu-items{
+	margin:0; /* prevent reposition on init */
+}
+.nav.side-menu> li > a{
+	color: #F2F5F7 !important; /*hover color*/
+	}
+li#htMenuItemLI SPAN.fa {
+    display: none;
+}
+

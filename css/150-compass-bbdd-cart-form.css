@@ -1,0 +1,142 @@
+.cmp-cont {padding: 30px 20px;}
+.cmp-header { border-bottom: 2px solid #000; margin-bottom: 20px; position: relative;}
+.cmp-header h2 {margin-top: 0}
+.cmp-header .cta-cont {text-align: right; padding-top: 5px }
+.cmp-header .cta-cont ul {list-style: none; display: inline-block; padding: 0; vertical-align: middle}
+.cmp-header .cta-cont li {display: inline-block; vertical-align: baseline}
+.cmp-header .cta-cont p { font-size: 18px; font-weight: normal; display: inline-block; vertical-align: middle; }
+.btn-main { background-color: #5C99B0; color: #fff; min-height: 28px; padding: 10px 20px; text-align: center; color: #fff; text-transform: uppercase; border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border: 0px none #5C99B0; margin: 10px 5px}
+.cmp-header .cta-cont .btn-main:hover {background-color: #19B;}
+.volver-btn {font-weight: bold; position: absolute; top: -20px; font-size: 12px;}
+
+.datos-categoria {font-weight: 400; padding-top: 10px}
+.datos-categoria i {font-size: 11px; vertical-align: middle; margin: 0 5px;}
+
+/* CREAR FORMS */
+
+.widgetBuilderTypeSelect { margin-bottom: 40px }
+.widgetBuilderTypeSelect ul { list-style: none; padding: 0 }
+.widgetBuilderTypeSelect li { display: inline-block; vertical-align: top }
+.btn-nav { color: #5C99B0; text-align: center; text-transform: uppercase; padding: 10px; display: block; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px;  }
+.btn-nav:hover {background-color: #eee; }
+.btn-nav .fa { display: block; font-size: 35px; margin-bottom: 5px }
+.btn-nav span { font-weight: bold; font-size: 12px; display: table-cell; height: 32px; vertical-align: middle }
+.selected .btn-nav {background-color: #5C99B0; color: #fff}
+.list-nav { border-right: 2px solid #e5e5e5; padding: 5px; margin-right: -4px}
+.list-nav:first-of-type {border-left: 2px solid #e5e5e5;}
+.list-nav h5 {font-size: 18px; margin: 0 0 0 5px;}
+.list-nav li {margin:5px;}
+
+.form-header {border-bottom: 2px solid #000; margin-bottom: 20px; position: relative;}
+
+.widgetBuilderFormGroup form {margin-bottom: 80px}
+.widgetBuilderFormGroup fieldset { padding: 10px 0; background-color: #F2F2F2; padding: 10px 20px; margin-bottom: 10px }
+.widgetBuilderFormGroup form .h5 { font-weight: normal; display: inline-block; font-size: 16px; }
+.widgetBuilderFormGroup form span { font-weight: normal; display: inline-block; font-size: 16px; }
+.width-sm { width: 40px; display: inline-block; margin-right: 5px}
+.widgetBuilderFormGroup .h4 {font-weight: 400; font-size: 18px;}
+
+.widgetBuilderFormGroup input[type="radio"] { margin: 0 5px 0 0 }
+.widgetBuilderFormGroup input[type="radio"] ~ label { margin-right: 20px }
+
+.checkbox-label { margin-left: 5px; font-weight: normal; vertical-align: middle;}
+
+.form-group.inline {display: inline-block; margin-right: 10px; vertical-align: top}
+
+
+/* RANGO DE FECHAS */
+.rango-cont, .rango-checkbox { float: left; margin-right: 20px}
+.rango-checkbox { margin-top: 6px  }
+.rango-cont > * {display: inline-block; vertical-align: middle }
+
+/* SPINNER */
+.spinner {
+  width: 60px;
+}
+.spinner input {
+  text-align: right;
+}
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  margin-left: -1px;
+  position: relative;
+  border-radius: 0;
+}
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 4px;
+}
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+.input-group-btn-vertical i{
+  position: absolute;
+  top: 0;
+  left: 4px;
+}
+
+/* SORT PANEL */
+.sortableFormField {margin-bottom: 0; border-bottom: 1px dotted #000; font-size: 14px; padding: 10px 0; }
+.sortableFormField:first-child { border-top: 1px dotted #000 }
+.btn-sort { margin: 10px auto; display: block; border: none; background: none; color: #5C99B0; font-size: 24px }
+.sortableFormField-handler{ cursor: move; }
+.sortableFormField label { font-weight: 400 }
+.sortableFormField p {font-size: 12px; margin:0;}
+.sortableFormField .form-group {margin: 10px 0;}
+.sortableFormField.grafico .right {margin-right: 40px}
+.sortableFormField .cta-btn { padding-top: 25px;  }
+.cta-btn button {background-color: #5C99B0; color: #fff;}
+.sortableDataColumna .form-group.inline {vertical-align: bottom}
+.width-md { width: 200px;}
+
+/* CREAR INDICADOR */
+#check-ultimo ~ label {margin-right: 40px}
+
+/* SAVE FORM*/
+#save-form label {display: block}
+#save-form .h4 {margin-bottom: 0}
+#save-form select { width:50%; display: inline-block;  }
+#save-form button { display: inline-block;}
+
+/* MIS DATOS */
+#divNotificaciones .checkbox {display: block}
+.tab-content {padding-top: 40px}
+
+
+/* PREVIEW build widget */
+
+.widgetBuilderPreview{
+	border:1px dashed #aaa;
+}
+
+
+.sortable-panels-only-first .sortableFormField{
+	opacity:.25;
+	}
+
+.sortable-panels-only-first .sortableFormField:first-child{
+	opacity:1;
+	}
+
+
+.sortableFormField:first-child .sortableFormFieldControl-delete{
+	display:none;
+	}
+
+.h4 small.label-warning{ 
+	color: #fff;
+	}
