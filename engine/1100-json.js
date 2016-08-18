@@ -54,7 +54,8 @@ Side Bar Menu:
 				//persistSidebar(ajaxData);
 				removeWorkspace(workspaceID);
 				break;
-
+				
+			case events.widgetUpdate:
 			case events.widgetResize:
 			case events.widgetEdit:
 			case events.widgetDelete: // Atencion, no llevan break porque tienen que persistir todos
@@ -214,6 +215,12 @@ function getSidebar(){
 		success: function(data) {
 			console.log("SideBar obtenida exitosamente");
 			renderCpObject ( $('#sortableHtPages') , data, 'replace' );
+			console.log(data);
+			if(data.compassConsultorId > 0){
+				$('#compassConsultorDiv').show();
+				$('#compassConsultorDiv a').href = 'mailto:' + data.compassConsultorEmail;
+				$('#compassConsultorDiv h4').text(data.compassConsultorName);
+			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);

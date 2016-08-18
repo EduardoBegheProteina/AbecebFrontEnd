@@ -6,6 +6,7 @@ var events = {
 	widgetResize : "cpContainerWidgetResize",
 	widgetEdit : "cpContainerWidgetEdit",
 	widgetDelete: "cpContainerWidgetDelete",
+	widgetUpdate: "cpContainerWidgetUpdate",
 	sidebarAddWidget:"htListHTAddWidget",
 	widgetSort: "cpContainerSort",
 	sidebarSort: "htListSort",

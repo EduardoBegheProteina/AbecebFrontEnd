@@ -1,6 +1,6 @@
 function htRenameDialog( contextHTli ){
 
-   	var currentName = $( contextHTli ).cpGetData('title')
+   	var currentName = $( contextHTli ).cpGetData('cpTitle')
 
 	bootbox.prompt({
 	  title: "Nuevo nombre:",
