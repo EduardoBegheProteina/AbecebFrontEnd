@@ -218,8 +218,10 @@ function getSidebar(){
 			console.log(data);
 			if(data.compassConsultorId > 0){
 				$('#compassConsultorDiv').show();
-				$('#compassConsultorDiv a').href = 'mailto:' + data.compassConsultorEmail;
+				$('#compassConsultorDiv a').attr("href",'mailto:' + data.compassConsultorEmail);
 				$('#compassConsultorDiv h4').text(data.compassConsultorName);
+				var url = httpGet(data.compassConsultorAvatarURL);
+				$('#compassConsultorDiv img').attr("src", url);
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -357,4 +359,12 @@ function renameWorkspace(compassWorkspaceID, newTitle) {
 			console.log("error: " + errorThrown);
 		}
 	});
+}
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 }

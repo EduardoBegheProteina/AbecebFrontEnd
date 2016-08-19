@@ -19,4 +19,9 @@ var instances = {
 	compass : "compass"
 }
 
+var conflictingCharacters = {
+	percent : "%",
+	percentReplacement : "_PERCENT_"
+}
+
 $entorno = false;

@@ -176,10 +176,10 @@ $("#sortableHtPages").on('click', '.dropdown-menu>LI>A', function() {
         bootbox.confirm({ 
 			message: "¿Está seguro de que desea elminar este elemento?", 
 			callback: function(result){ 
+					
 					if(result){
 					
 					if( contextHTli.length>0 ){
-
 						$('#sortableHtPages').attr("workspaceIDHolder", contextHTli.attr("workspaceID"));
 						contextHTli.remove()
 
@@ -347,12 +347,16 @@ processWidgetContextMenu = function(itemKey, opt){
         bootbox.confirm({ 
 			message: "¿Está seguro de que desea elminar este elemento?", 
 			callback: function(result){ 
+				
+					console.log("EDU");
+					console.log(contextHTli);
 					if(result){
 					
 					//eliminar widget?
 					if( contextWidget.length > 0){
-						var dataRoot = $(contextWidget).cpGetDataRoot();	
+						var dataRoot = $(contextWidget).cpGetDataRoot();
 						contextWidget.remove();
+						console.log(dataRoot.cpGetData());
 						$( dataRoot ).cpPersist(events.widgetDelete);
 						compassGlobalUI.update();
 					}else{
@@ -545,13 +549,13 @@ function initContextMenu( callee ){
         		disabled: disabledOnNoMetadata,
         		"name": "Ver información del item (metadatos)", "icon": "fa-info-circle"
         		},
-        	"sep2": "---------",
+        /* "sep2": "---------",
         	
-            "copyToHT": {
+           "copyToHT": {
 				"name": "Copiar a Hoja de Trabajo", 
 				"icon": "fa-files-o",
 				"items": htItems
-				},
+				},*/
         	"sep3": "---------",
         	
         	"config-cptitle": {

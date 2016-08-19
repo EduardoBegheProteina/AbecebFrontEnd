@@ -107,12 +107,12 @@ $.templates("widgetBuilderForm-typeSelect",
 						'<span>Part. en<br>totales</span>'+
 					'</a>'+
 				'</li>'+
-				'<li class="widgetTypeOption {{if widgetType == "grafico-partcronologico" }} selected {{/if}}" data-widgettype="grafico-partcronologico" >'+
-					'<a href="#" class="btn-nav">'+
-						'<i class="fa fa-list-ol"></i>'+
-						'<span>Part. en totales,<br>cronológico</span>'+
-					'</a>'+
-				'</li>'+
+				// '<li class="widgetTypeOption {{if widgetType == "grafico-partcronologico" }} selected {{/if}}" data-widgettype="grafico-partcronologico" >'+
+				// 	'<a href="#" class="btn-nav">'+
+				// 		'<i class="fa fa-list-ol"></i>'+
+				// 		'<span>Part. en totales,<br>cronológico</span>'+
+				// 	'</a>'+
+				// '</li>'+
 			'</ul>'+
 		'</li>'+
 	'</ul>'+

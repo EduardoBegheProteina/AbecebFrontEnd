@@ -160,16 +160,16 @@ $.templates("cpWidget-x-grafico",
 
 //  '<!-- Nav tabs -->'+
   '<ul class="nav nav-tabs" role="tablist">'+
-    '<li role="presentation" class="active"><a href="#{{:abecebObjectInstanceId}}-grafico" role="tab" data-toggle="tab">Gráfico</a></li>'+
-    '<li role="presentation"><a href="#{{:abecebObjectInstanceId}}-datos" role="tab" data-toggle="tab">Datos</a></li>'+
+    '<li role="presentation" class="active"><a href="#{{:abecebObjectId}}-grafico" role="tab" data-toggle="tab">Gráfico</a></li>'+
+    '<li role="presentation"><a href="#{{:abecebObjectId}}-datos" role="tab" data-toggle="tab">Datos</a></li>'+
   '</ul>'+
 
 //  '<!-- Tab panes -->'+
   '<div class="tab-content">'+
-    '<div role="tabpanel" class="tab-pane active" id="{{:abecebObjectInstanceId}}-grafico">'+
-    	'<canvas id="widget-{{:abecebObjectInstanceId}}-canvas"></canvas>'+
+    '<div role="tabpanel" class="tab-pane active" id="{{:abecebObjectId}}-grafico">'+
+    	'<canvas id="widget-{{:abecebObjectId}}-canvas"></canvas>'+
     '</div>'+
-    '<div role="tabpanel" class="tab-pane" id="{{:abecebObjectInstanceId}}-datos">'+
+    '<div role="tabpanel" class="tab-pane" id="{{:abecebObjectId}}-datos">'+
 		'{{include tmpl="cpWidget-x-tabla"/}}'+
     '</div>'+
   '</div>'+
