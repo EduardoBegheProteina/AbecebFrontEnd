@@ -41,20 +41,56 @@ $.templates("cpObjectNode",
 			'{{if type=="cpWidget"}} contentWidget{{/if}}'+
 //			' debug'+
 		'">'+
-//		'<span class="debug">cpObjectNode // {{:debug}}</span>'+
+//		'<span class="debug">cpObjectNode // {{:type}}</span>'+
 		'{{if type=="cpWidget"}}{{include tmpl="cpWidget"/}}{{/if}}'+
 		'{{if type=="cpHtml"}}{{include tmpl="cpHtml"/}}{{/if}}'+
+		'{{if type=="cpDBList"}}{{include tmpl="cpDBList"/}}{{/if}}'+
+		'{{if type=="cpPagination"}}{{include tmpl="cpPagination"/}}{{/if}}'+
 	'<\/div>'
 ); //cpObjectNode
 
 
 $.templates("cpHtml",
-'<div class="cpHtml">'+
+'<div class="cpHtml" {{if style}}style="{{:style}}{{/if}}">'+
 	'{{:content}}'+
 '</div><div class="clearfix"></div>'
 ); //cpHtml
 
 
+$.templates("cpDBList",
+'<div class="cpDBList">'+
+	'<div class="x_content">'+
+	'{{for items}}'+
+		'<h4>{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</h4>'+
+		'<ul>'+
+		'{{for items}}'+
+			'<li><a href="{{:cpHref}}">{{:cpTitle}}</a> {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</li>'+
+		'{{/for}}'+//items
+		'</ul>'+
+	'{{/for}}'+//items
+	'</div>'+//x_content
+'</div><div class="clearfix"></div>'
+); //cpDBList
+
+
+$.templates("cpPagination",
+'<hr>'+
+'<div class="cpPagination" {{if style}}style="{{:style}}{{/if}}">'+
+	'<nav> <ul class="pagination pagination-lg">'+	
+		'<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
+		
+		'{{range start=1 end=pagerTotal}}'+
+
+		'<li {{if #index == pagerCurrent - 1}}class="active"{{/if}}><a href="{{:pagerURLpattern1}}{{:#index+1}}{{:pagerURLpattern2}}">{{:#index+1}}</a></li>'+
+		
+		'{{/range}}'+
+
+		
+		'<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>'+
+
+	'</ul></nav>'+
+'</div><div class="clearfix"></div>'
+); //cpHtml
 
 $.templates("cpWidget",
 	'<div class="x_panel cpWidget-x-{{:type1}}" >'+

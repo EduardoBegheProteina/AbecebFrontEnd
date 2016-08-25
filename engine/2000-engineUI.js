@@ -7,7 +7,14 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 				});
 		}
 
+	if( data.dataShown ){
+		data.dataShown = preprocessCpDataShown( data.dataShown, data );
+	}
+
 	if( data.dataUpdated ){
+		data.dataUpdated = preprocessCpDataShown( data.dataUpdated, data );
+		
+		//set data.titlebarBadge 
 		data.titlebarBadge = true;
 		if(!data.titlebarBadgeStatus){
 			if( data.dataUpdated.updateStatus ){
@@ -16,7 +23,8 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 				data.titlebarBadgeStatus = "new";
 			}
 		}
-	}else{
+	}else{ // no data.dataUpdated
+		//set no data.titlebarBadge 
 		if(!data.titlebarBadge){
 		data.titlebarBadge = false;
 		}
@@ -27,7 +35,24 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 
 
 
+//sub-funcion para preprocesar data.dataShown y data.dataUpdated
+//necesitamos nodo dataShown y su parent data
+function preprocessCpDataShown( dataShown, data ){ 
+console.log ('preprocessCpDataShown', data)
 
+	//curzar tabledata with series
+	if ( dataShown.tabledata && data.series ){
+		for( var row=0; row<Math.min( data.series.length, dataShown.tabledata.length -1) ; row++ ){
+			console.log ('row', row, dataShown.tabledata[row+1][0] )
+			if( data.series[row]["userLabel"] ){
+				dataShown.tabledata[row+1][0] = data.series[row]["userLabel"];
+				}
+		}
+	} //curzar tabledata with series
+	
+	return dataShown;
+
+} //end preprocessCpDataShown
 
 
 function renderCpWidget( target, data, initCpObject ){

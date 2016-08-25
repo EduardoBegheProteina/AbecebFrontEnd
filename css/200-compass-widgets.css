@@ -19,6 +19,12 @@
 	margin-top:20px;
 	}
 
+.cpHtml P{
+	font-size:14px;
+	}
+.cpHtml HR{
+	}
+
 .cpObject.cpContainerNode {
     padding-left: 0;
     padding-right: 0;
