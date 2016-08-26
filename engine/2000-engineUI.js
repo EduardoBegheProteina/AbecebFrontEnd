@@ -38,12 +38,12 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 //sub-funcion para preprocesar data.dataShown y data.dataUpdated
 //necesitamos nodo dataShown y su parent data
 function preprocessCpDataShown( dataShown, data ){ 
-console.log ('preprocessCpDataShown', data)
+//console.log ('preprocessCpDataShown', data)
 
 	//curzar tabledata with series
 	if ( dataShown.tabledata && data.series ){
 		for( var row=0; row<Math.min( data.series.length, dataShown.tabledata.length -1) ; row++ ){
-			console.log ('row', row, dataShown.tabledata[row+1][0] )
+			//console.log ('row', row, dataShown.tabledata[row+1][0] )
 			if( data.series[row]["userLabel"] ){
 				dataShown.tabledata[row+1][0] = data.series[row]["userLabel"];
 				}
@@ -96,7 +96,7 @@ $(function() { // Handler for .ready() called.
 
 function initGraficos( container ){
 
-console.log ( 'initGraficos 412' );
+//console.log ( 'initGraficos 412' );
 
 var container = container || $('BODY');
 
@@ -279,7 +279,7 @@ for( var i=0; i<gData.datasets.length; i++){
 			}
 		}
 		
-		console.log ('2000 graph type: ', bestType, gData.datasets)
+		// console.log ('2000 graph type: ', bestType, gData.datasets)
 
 	new Chart(chartContainerObj, chartDataObj);	
     
@@ -513,7 +513,7 @@ function renderCpObject( container, data, beforeOrAfter ){
 		// $( $newCpObject )[0].cpData = data;
 			break;
 		case 'cpHtml':
-			console.log ('renderCpObject: cpHtml type');
+			// console.log ('renderCpObject: cpHtml type');
 			break;
 
 		case 'htList':
@@ -591,6 +591,28 @@ function jsRenderJSONstringifyNoChildren(value) {
 $.views.tags("JSONstringifyNoChildren", jsRenderJSONstringifyNoChildren);
 
 
+//register custom tag: tdFromTableData
+function tdFromTableData(value) {
+	var value = value.split("|");
+	
+	if(value.length==2){
+		var vObj = parseQueryString( value[1] );
+		}else{
+		var vObj = {};
+		}
+	
+	var r = "<td>";
+	if( vObj.um1 ){ r+=vObj.um1 };
+	r+= value[0] ;
+	if( vObj.um2 ){ r+=vObj.um2 };
+	r+= "</td>";
+
+	return r;
+		//'<td>'+value[0]+'</td>';
+}
+$.views.tags("tdFromTableData", tdFromTableData);
+
+
 
 
 /** utility functions **/
@@ -617,4 +639,18 @@ function getUagTimestampID(){
 
 	return ( uag36 + "-" + now36 ) ;
 }
+
+
+//https://www.joezimjs.com/javascript/3-ways-to-parse-a-query-string-in-a-url/
+var parseQueryString = function( queryString ) {
+    var params = {}, queries, temp, i, l;
+    // Split into key/value pairs
+    queries = queryString.split("&");
+    // Convert the array of strings into an object
+    for ( i = 0, l = queries.length; i < l; i++ ) {
+        temp = queries[i].split('=');
+        params[temp[0]] = temp[1];
+    }
+    return params;
+};
 
