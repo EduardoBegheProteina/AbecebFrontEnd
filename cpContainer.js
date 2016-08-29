@@ -58,39 +58,71 @@ $.templates("cpHtml",
 
 
 $.templates("cpDBList",
-'<div class="cpDBList">'+
-	'<div class="x_content">'+
-	'{{for items}}'+
-		'<h4>{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</h4>'+
-		'<ul>'+
-		'{{for items}}'+
-			'<li><a href="{{:cpHref}}">{{:cpTitle}}</a> {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</li>'+
-		'{{/for}}'+//items
-		'</ul>'+
-	'{{/for}}'+//items
-	'</div>'+//x_content
-'</div><div class="clearfix"></div>'
+'<div id="jstree" class="cpDBList jstree jstree-1 jstree-default">'+
+
+	'{{for items}}'+ //	'<!-- PAIS -->'+
+	'<ul class="jstree-container-ul jstree-children">'+
+		'<li class="jstree-node no-check jstree-last {{if opened && (opened=="true"||opened==true) }}jstree-open{{else}}jstree-closed{{/if}}">'+
+			'<i class="jstree-icon jstree-ocl v-align"></i>'+
+			'{{if territorios}}'+
+			'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
+			'{{/if}}'+//territorios
+			'<h4 class="v-align">{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</h4>'+
+			'<ul class="jstree-children" >'+
+			'{{for items}}'+
+				'<li class="jstree-node jstree-leaf">'+
+					'<i class="jstree-icon jstree-ocl"></i>'+
+					'<a href="{{:cpHref}}">{{if !cpIcon || cpIcon=="typeDataSet" || cpIcon==""}}<span class="li-icon typeDataSubSet"></span>{{else}}<i class="fa {{:cpIcon}}" aria-hidden="true"></i>{{/if}}{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</a>'+
+				'</li>'+
+			'{{/for}}'+//items
+			'</ul>'+
+		'</li>'+
+	'</ul>'+
+ 	'{{/for}}'+//items PAIS
+'</div>'+
+'<div class="clearfix"></div>'
 ); //cpDBList
+
+// 
+// $.templates("cpDBList",
+// '<div class="cpDBList jstree jstree-1 jstree-default">'+
+// 	'<div class="x_content">'+
+// 	'{{for items}}'+
+// 		'<h4>{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</h4>'+
+// 		'<ul>'+
+// 		'{{for items}}'+
+// 			'<li><a href="{{:cpHref}}">{{:cpTitle}}</a> {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</li>'+
+// 		'{{/for}}'+//items
+// 		'</ul>'+
+// 	'{{/for}}'+//items
+// 	'</div>'+//x_content
+// '</div><div class="clearfix"></div>'
+// ); //cpDBList
+// 
 
 
 $.templates("cpPagination",
 '<hr>'+
 '<div class="cpPagination" {{if style}}style="{{:style}}{{/if}}">'+
 	'<nav> <ul class="pagination pagination-lg">'+	
-		'<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
+		'<li class="page-item {{if pagerCurrent==1}}disabled inactive{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent-1}}{{:pagerURLpattern2}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
 		
 		'{{range start=1 end=pagerTotal}}'+
-
-		'<li {{if #index == pagerCurrent - 1}}class="active"{{/if}}><a href="{{:pagerURLpattern1}}{{:#index+1}}{{:pagerURLpattern2}}">{{:#index+1}}</a></li>'+
+		
+		'<li class="page-item {{if #index == #parent.parent.data.pagerCurrent - 1}}active{{/if}}">'+
+			'<a class="page-link" href="{{:#parent.parent.data.pagerURLpattern1}}{{:#index+1}}{{:#parent.parent.data.pagerURLpattern2}}">{{:#index+1}}</a>'+
+			
+			'</li>'+
 		
 		'{{/range}}'+
 
 		
-		'<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>'+
+		'<li class="page-item {{if pagerCurrent==pagerTotal}}disabled{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent+1}}{{:pagerURLpattern2}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>'+
 
 	'</ul></nav>'+
 '</div><div class="clearfix"></div>'
 ); //cpHtml
+
 
 $.templates("cpWidget",
 	'<div class="x_panel cpWidget-x-{{:type1}}" >'+

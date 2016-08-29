@@ -33,7 +33,20 @@
 .typeDataBase  {
   background-position: -69px -99px;
 }
-
+/* BLANK */
+.blank  {
+  background-position: -101px -99px;
+}
 .trash-icon {
   background-position: -264px -69px;
 }
+
+
+
+.cpDBList h4 { display: inline-block; margin: 0;}
+.cpDBList .territorio {display: inline-block; margin-right: 5px !important; height: 15px !important}
+.cpDBList .territorio .T0 { margin: 0 0 0 1px !important }
+.cpDBList .v-align {vertical-align: middle}
+.cpDBList .jstree-node { font-size: 14px }
+.cpDBList .jstree-container-ul { margin-bottom: 20px }
+.cpDBList .ver-mas { padding-top: 10px }
