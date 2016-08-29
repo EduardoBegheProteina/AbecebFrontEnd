@@ -1,5 +1,5 @@
 var currentSite = getActualInstance();
-var baseUrl = "/group/guest/home?ht"; 
+var baseUrl = "/group/compass-platform/home?ht"; 
 
 if(currentSite == instances.staff) {
 	baseUrl = "/group/catalogo-de-datos/impersonate?ht";

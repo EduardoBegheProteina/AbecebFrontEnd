@@ -562,10 +562,10 @@ function initContextMenu( callee ){
         		disabled: disabledOnRenderAncestor,
         		"name": "Editar título", "icon": "fa-pencil-square-o"
         		},
-        	"config-cphtml": {
+        	/*"config-cphtml": {
         		disabled: disabledOnRenderAncestor,
         		"name": "Editar contenido", "icon": "fa-pencil-square-o"
-        		},
+        		},*/
         		
         	"config-usrctnt1": {
         		disabled: disabledOnRenderAncestor,

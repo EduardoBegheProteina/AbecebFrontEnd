@@ -167,13 +167,14 @@ function saveWidgetToHT( data ){
 		// 'esta es la cpdata para mandar por JSON',
 		JSON.stringify ( data )
 		)
-	addChildrenToWorkspace(data.saveToHTid, data, events.widgetBuilderCreated);	
+	ws = addChildrenToWorkspace(data.saveToHTid, data, events.widgetBuilderCreated);	
 		
 	
 	//json magic con 'data' que obtuvimos
 	
 	NProgress.done();
-			
+	
+	return ws;
 }
 
 
@@ -277,21 +278,27 @@ function addChildrenToWorkspace(compassWorkspaceID, newChildren, evento){
 	console.log("Agregando elemento al espacio de trabajo");
 	var workspace;
 	var url = $workspaceServiceURL + "/addChildrenToWorkspace?compassWorkspaceID=" + compassWorkspaceID;
+	var result = null;
 	$.ajax({
 		type: 'POST',
 		data: JSON.stringify(newChildren),
 		dataType: 'json',
 		headers: { "Operation": $addChildrenToWorkspaceOperationJson , "Authorization" : $workspaceUserNamePassword, "jsEvent": evento, "impersonatedPersonID": $impersonatedPersonID },
 		url: url,
+		async: false,
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Elemento agregado exitosamente");
+			result = data;
+			result.status = data.httpResponseCode;
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			result = jqXHR;
 		}
 	});
+	return result;
 }
 
 function persistWorkspace(data, isNewWorkspace, evento){

@@ -625,9 +625,8 @@ function sortableFormFieldControlAdd(){
 function widgetSaveToHTinit(){
 	$('.widgetBuilderSavetoHT').submit(function() {
 		event.preventDefault();
-	  
-	  
-		messageModal("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
+		
+		// messageModal("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
 	
 		var data = widgetBuilderFormSerialize( $('.widgetBuilderOptionsForm') );
 		
@@ -642,7 +641,22 @@ function widgetSaveToHTinit(){
 		data["saveToHTid"] = $(this).closest('FORM').find("SELECT").val();
 		//widgetSaveToHTid es el select q indica HT donde guardar el widget
 		
-		saveWidgetToHT( data );		
+		receivedWorkspace = saveWidgetToHT( data );
+		status = receivedWorkspace.status;
+		
+		if ( status == 200 ) {
+			// Si es un widget agregado al workspace de convertir objetos compass, redirijo a editar el objeto
+			if ( data.saveToHTid == ids.consultantWorkspaceId ) {
+				// REDIR
+				//modalContinue("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
+				window.location = redirectUrls.editCompassObjectRedirectURL + receivedWorkspace.createdDataObjectId;
+			} else {
+				messageModal("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
+			}
+		} else if ( status == 500 ) {
+			messageModal("Creación de Widgets", "Ocurrio un error al crear el widget.");
+		}
+		
 	});
 }
 
