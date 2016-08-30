@@ -285,7 +285,8 @@ $.templates("cpWidget-x-tabla",
 			'{{range dataShown.tabledata start=0 end=1 }}'+
 			'<tr>'+
 			'{{for #data }}'+
-			'<th>{{:#data}}</th>'+
+				'{{tdFromTableData #data th /}}' +
+			// '<th>{{:#data}}</th>'+
 				'{{/for}}'+
 			'</tr>'+
 			'{{/range}}'+

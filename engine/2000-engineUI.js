@@ -592,8 +592,9 @@ $.views.tags("JSONstringifyNoChildren", jsRenderJSONstringifyNoChildren);
 
 
 //register custom tag: tdFromTableData
-function tdFromTableData(value) {
-	var value = value.split("|");
+function tdFromTableData(value, tag) {
+	var value = String(value).split("|");
+	var tag = this.tagCtx.params.args[1] || "td";
 	
 	if(value.length==2){
 		var vObj = parseQueryString( value[1] );
@@ -601,14 +602,14 @@ function tdFromTableData(value) {
 		var vObj = {};
 		}
 	
-	var r = "<td>";
+	var r = "<"+tag+">";
+	
 	if( vObj.um1 ){ r+=vObj.um1 };
 	r+= value[0] ;
 	if( vObj.um2 ){ r+=vObj.um2 };
-	r+= "</td>";
+	r+= "</"+tag+">";
 
 	return r;
-		//'<td>'+value[0]+'</td>';
 }
 $.views.tags("tdFromTableData", tdFromTableData);
 

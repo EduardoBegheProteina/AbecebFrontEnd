@@ -528,6 +528,38 @@ $('#modal-widget-update .modal-body .btn-default').click(function(event) {
 });
 
 
+$(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
+	console.log ( this )
+	$(this).removeClass('jstree-open').addClass('jstree-closed');
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+
+$(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
+	$(this).addClass('jstree-open').removeClass('jstree-closed');
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+	
+
+$(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
+	console.log ( this )
+	$(this).removeClass('jstree-open').addClass('jstree-closed');
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+
+$(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
+	$(this).addClass('jstree-open').removeClass('jstree-closed');
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+	
+
 }); //end document.ready
 
 
@@ -989,3 +1021,6 @@ function saveFileWithName (uri, filename) {
     window.open(uri);
   }
 }
+
+
+
