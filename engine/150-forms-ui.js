@@ -1,6 +1,8 @@
 //Create widget builder form
 function widgetBuilderForm( target, data ){
 
+console.log ( 'widgetBuilderForm', target, JSON.stringify( data ) );
+
 // set form defaults	
 // if( data.widgetType && data.widgetType == "monitor-variaciones" && !data.columnas ){
 if( !data.columnas){
