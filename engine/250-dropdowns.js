@@ -348,8 +348,8 @@ processWidgetContextMenu = function(itemKey, opt){
 			message: "¿Está seguro de que desea elminar este elemento?", 
 			callback: function(result){ 
 				
-					console.log("EDU");
-					console.log(contextHTli);
+//					console.log("EDU");
+//					console.log(contextHTli);
 					if(result){
 					
 					//eliminar widget?

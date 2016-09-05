@@ -39,9 +39,7 @@ Side Bar Menu:
 		var ajaxData = JSON.stringify(cpdata);
 		console.log('evento',evento);
 		NProgress.start();
-		
 		switch (evento){
-
 			case events.sidebarRename:
 				var workspaceID =  $('#sortableHtPages').attr('workspaceIDHolder');
 				var newTitle =  $('#sortableHtPages').attr('workspaceNameHolder');
@@ -167,6 +165,25 @@ function saveWidgetToHT( data ){
 		// 'esta es la cpdata para mandar por JSON',
 		JSON.stringify ( data )
 		)
+
+	if(data.dataShown.columnas){
+		var columnas = {
+			userLabel: [],
+			presentarDatoFormula: [],
+			calculationType: []
+		};
+		$.each(data.dataShown.columnas, function( index, value ) {
+			columnas.userLabel.push(value.userLabel);
+			columnas.presentarDatoFormula.push(value.presentarDatoFormula);
+			columnas.calculationType.push(value.calculationType);
+		});
+		data.dataShown.columnas = [];
+		data.dataShown.columnas.push(columnas);
+		data.columnas = [];
+		data.columnas.push(columnas);
+	}
+	console.log(JSON.stringify(data.dataShown.columnas));
+	console.log(JSON.stringify(data));
 	ws = addChildrenToWorkspace(data.saveToHTid, data, events.widgetBuilderCreated);	
 		
 	
@@ -326,7 +343,7 @@ function persistWorkspace(data, isNewWorkspace, evento){
 
 
 function removeWorkspace(compassWorkspaceID) {
-	console.log("Agregando elemento al espacio de trabajo");
+	console.log("Eliminando elemento del espacio de Trabajo");
 	var workspace;
 	var url = $workspaceServiceURL + "/deleteCompassWorkspace?compassWorkspaceID=" + compassWorkspaceID;
 	$.ajax({

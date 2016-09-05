@@ -608,7 +608,7 @@ function sortableFormFieldControlAdd(){
 	$(sortedKeysInput).val( newKey );
 	
 	// apply to fields
-	var newFieldIDobjs = $(newField).find(  "[id]"  );
+	var newFieldIDobjs = $(newField).find(  "[class=form-control]"  );
 	var re = new RegExp ( "Key" + oldKey, "gi" ); // "Key(\d+)" 
 	$( newFieldIDobjs ).each(function( index ) {
 		$(this).attr('id', $(this).attr('id').replace( re, "Key"+newKey ) )
