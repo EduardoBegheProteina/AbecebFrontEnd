@@ -568,8 +568,8 @@ ul.msg_list li a .message {
   line-height: 13px;
   padding: 2px 6px;
   position: absolute;
-  right: 2px;
-  top: 8px;
+  right: 12%;
+  top: 12%;
 }
 ul.to_do {
   padding: 0;
