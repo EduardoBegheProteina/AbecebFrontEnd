@@ -41,8 +41,10 @@ BODY, .colNav .nav.child_menu{
 	border-right:1px solid #ccc	;
 	}
 	.nav.side-menu{
+/*
 	border-left: 1px solid #ccc;
     margin-left: -1px;
+*/
     }
 
 .nav.side-menu> li{

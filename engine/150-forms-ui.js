@@ -42,7 +42,7 @@ if( !data.columnas){
 		
 		widgetBuilderFormInit( target );
 		
-		$('.widgetBuilderPreviewAndSavetoHT').pin()
+//		$('.widgetBuilderPreviewAndSavetoHT').pin()
 		
 		//procesamos cpObjects que acabamos de renderear
 		$( target ).find(".cpObjectToInit").cpObject().removeClass('cpObjectToInit');
