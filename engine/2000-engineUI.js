@@ -91,16 +91,17 @@ $(function() { // Handler for .ready() called.
 
 
 
+// $imagesPath
 
+// var chartProjectedValuePpat = new Image();
+// chartProjectedValuePpat.style.background = '#000000';
+// chartProjectedValuePpat.src = 'http://betweentwobrackets.com/content/images/2016/01/dots-1.png';
+// 
 
 
 function initGraficos( container ){
 
-//console.log ( 'initGraficos 412' );
-
 var container = container || $('BODY');
-
-//console.log ( 'initGraficos' );
 
 var graphBackgroundColors = [
 	"rgba(122, 204, 122, 0.6)", //"#7acc7a", 
@@ -110,6 +111,15 @@ var graphBackgroundColors = [
 	"rgba(204, 82, 82, 0.6)", //"#cc5252", 
 	"rgba(230, 161, 92, 0.6)", //"#e6a15c", 
 	"rgba(230, 230, 0, 0.6)" //"#e6e600"
+	]
+var graphProjectedBackgroundColors = [
+	"rgba(122, 204, 122, 0.25)", //"#7acc7a", 
+	"rgba(128, 213, 255, 0.25)", //"#80d5ff", 
+	"rgba(41, 123, 204, 0.25)", //"#297bcc", 
+	"rgba(183, 92, 230, 0.25)", //"#b75ce6", 
+	"rgba(204, 82, 82, 0.25)", //"#cc5252", 
+	"rgba(230, 161, 92, 0.25)", //"#e6a15c", 
+	"rgba(230, 230, 0, 0.25)" //"#e6e600"
 	]
 var graphBorderColors = [
 	"#7acc7a", 
@@ -121,9 +131,7 @@ gData = {};
 
 $(container).find('.cpWidget-x-grafico').each( function( index, el ) {
 
-	graphBackgroundColorIx = 0;
-
-	//console.log ('initgraficos each on ', $(el) )
+	graphColorIx = 0;
 
     var theCpData = ( $(el).parent().cpGetData() );
 	var gData = jQuery.extend(true, {}, theCpData.dataShown.graphdata );
@@ -146,8 +154,66 @@ if(gData.options){
 	}
 
 
-var bestType = gData.datasets[0].type; //"";
+var bestType = gData.datasets[0].type; 
 
+
+
+//Preprocesamos Datasets para generar series adicionales para dataProjected
+var gDataDatasets2 = [];
+
+for( var i=0; i<gData.datasets.length; i++){
+
+	//agregamos al nuevo array el elemento que estamos procesando
+	gDataDatasets2.push (gData.datasets[i]);
+
+	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
+	if(gData.datasets[i]["dataProjected"]){
+	
+		var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
+		gDataIdataSet["isProjected"] = true;
+		delete gDataIdataSet["dataProjected"];
+
+
+		if( gDataIdataSet["type"] == "line" || gDataIdataSet["type"] == "area" ){
+		//para graficos de linea o area, desplazamos valores
+			
+			//creamos array de NULLs para desplazar dataUpdated
+			//con un elementos MENOS que lenght de data
+			//dado que necesitaremos agregar el ultimo punto de data para empalmar la linea
+			var dataProjectedLeftNulls = []
+			for(var nullIx = 0; nullIx < gDataIdataSet["data"].length -1; nullIx++){
+				dataProjectedLeftNulls[nullIx] = null;
+				}
+
+			//desplazamos dataProjected, agregando como 1er elemento el ultimo de data
+			//de manera de que haya continuidad en la linea entre ultimo punto de data y 1ero de dataupdated
+			gDataIdataSet["data"] = dataProjectedLeftNulls.concat (
+				[ gData.datasets[i]["data"][ (gData.datasets[i]["data"].length - 1) ] ] ,
+				gData.datasets[i]["dataProjected"]
+				);
+			
+			//asignamos data del nuevo elemento
+			gDataIdataSet["borderDash"] = [10,5]
+			gDataIdataSet["label"] += " (Proy.)";
+
+		}else{
+		//para graficos bar, horizontal bar o pie, trabajamos con el area
+			gDataIdataSet[ "borderWidth" ] = 2;
+		//	gDataIdataSet["borderDash"] = [10,5] //bar no toma linea punteada
+			gDataIdataSet["label"] += " (Proy.)";
+		//	var ctx = (chartContainerObj).getContext("2d");
+		//	gDataIdataSet["color"] = ctx.createPattern(chartProjectedValuePpat, 'repeat');
+		//	gDataIdataSet["backgroundColor"] = "#ff0000" //ctx.createPattern(chartProjectedValuePpat, 'repeat');
+		}
+
+		//copiamos elemento conteniendo dataProjected a gDataDatasets2
+		gDataDatasets2.push ( gDataIdataSet );
+
+		
+	} // end if(gData.datasets[i]["dataProjected"])
+}
+
+gData.datasets = gDataDatasets2;
 
 
 //Procesamos Datasets
@@ -163,21 +229,29 @@ for( var i=0; i<gData.datasets.length; i++){
 
 
 	if( !gData.datasets[i]["backgroundColor"] ){
-	gData.datasets[i]["backgroundColor"] = graphBackgroundColors [graphBackgroundColorIx]
+		if( !gData.datasets[i]["isProjected"] ){
+		gData.datasets[i]["backgroundColor"] = graphBackgroundColors [graphColorIx]
+		}else{
+		gData.datasets[i]["backgroundColor"] = graphProjectedBackgroundColors [graphColorIx]
+		}
 	}
 	if( !gData.datasets[i]["borderColor"] ){
-	gData.datasets[i]["borderColor"] = graphBorderColors [graphBackgroundColorIx];
+	gData.datasets[i]["borderColor"] = graphBorderColors [graphColorIx];
 	}
-	gData.datasets[i]["pointBackgroundColor"] = graphBackgroundColors [graphBackgroundColorIx];
-	gData.datasets[i]["pointBorderColor"] = graphBorderColors [graphBackgroundColorIx];
+	gData.datasets[i]["pointBackgroundColor"] = graphBackgroundColors [graphColorIx];
+	gData.datasets[i]["pointBorderColor"] = graphBorderColors [graphColorIx];
 	
 	gData.datasets[i].fill = false;
 	gData.datasets[i]["pointRadius"] = 4;
 	gData.datasets[i]["lineTension"] = 0;
 			
 
-	graphBackgroundColorIx++
-	if( graphBackgroundColorIx > graphBackgroundColors.length ){ graphBackgroundColorIx = 0 };
+//Avanzamos el Ix de colores SOLO si no tenemos dataProjected
+//Si tenemos dataProjected, se empleara el mismo color para el proximo elemento
+if(!gData.datasets[i]["dataProjected"]){
+	graphColorIx++
+	if( graphColorIx > graphBackgroundColors.length ){ graphColorIx = 0 };
+	}
 	
 
 	bestType = getBestType( bestType, gData.datasets[i].type );
@@ -595,6 +669,7 @@ $.views.tags("JSONstringifyNoChildren", jsRenderJSONstringifyNoChildren);
 function tdFromTableData(value, tag) {
 	var value = String(value).split("|");
 	var tag = this.tagCtx.params.args[1] || "td";
+	var classes = "";
 	
 	if(value.length==2){
 		var vObj = parseQueryString( value[1] );
@@ -602,12 +677,16 @@ function tdFromTableData(value, tag) {
 		var vObj = {};
 		}
 	
-	var r = "<"+tag+">";
+	if(vObj.proj){
+		classes += "tdVarProjectedIs1 ";
+	}
+	
+	var r = '<'+tag+' class="'+ classes +'">';
 	
 	if( vObj.um1 ){ r+=vObj.um1 };
 	r+= value[0] ;
 	if( vObj.um2 ){ r+=vObj.um2 };
-	r+= "</"+tag+">";
+	r+= '</'+tag+'>';
 
 	return r;
 }

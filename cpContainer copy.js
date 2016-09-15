@@ -12,17 +12,22 @@ $.templates("cpContainerNode",
 			'{{if mode=="render"}} widgetsContainer-draggable {{/if}}'+
 			
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
+			
+//			' debug'+
 		'">'+
 		
 		'{{if type2=="cpRoot"}}'+
 			'{{if mode=="edit"}}{{include tmpl="cpRoot-topToolbar"/}}'+
 			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
+//			'<div id="cpRootContents">'+
 		'{{/if}}'+
 
 //		'MODE {{:mode}}'+
+//		'<span class="debug">cpContainerNode // {{:debug}}</span>'+
 			'{{for children tmpl="cpContainer"/}}'+
 
 		'{{if type2=="cpRoot"}}'+
+//			'</div>'+ //id="cpRootContents"
 		'{{/if}}'+
 		
 		'<\/div><div class="clearfix"></div>'
@@ -34,7 +39,9 @@ $.templates("cpObjectNode",
 		' class="cpObjectToInit'+
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
 			'{{if type=="cpWidget"}} contentWidget{{/if}}'+
+//			' debug'+
 		'">'+
+//		'<span class="debug">cpObjectNode // {{:type}}</span>'+
 		'{{if type=="cpWidget"}}{{include tmpl="cpWidget"/}}{{/if}}'+
 		'{{if type=="cpHtml"}}{{include tmpl="cpHtml"/}}{{/if}}'+
 		'{{if type=="cpDBList"}}{{include tmpl="cpDBList"/}}{{/if}}'+
@@ -76,6 +83,22 @@ $.templates("cpDBList",
 '<div class="clearfix"></div>'
 ); //cpDBList
 
+// 
+// $.templates("cpDBList",
+// '<div class="cpDBList jstree jstree-1 jstree-default">'+
+// 	'<div class="x_content">'+
+// 	'{{for items}}'+
+// 		'<h4>{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</h4>'+
+// 		'<ul>'+
+// 		'{{for items}}'+
+// 			'<li><a href="{{:cpHref}}">{{:cpTitle}}</a> {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</li>'+
+// 		'{{/for}}'+//items
+// 		'</ul>'+
+// 	'{{/for}}'+//items
+// 	'</div>'+//x_content
+// '</div><div class="clearfix"></div>'
+// ); //cpDBList
+// 
 
 
 $.templates("cpPagination",
@@ -122,6 +145,7 @@ $.templates("cpWidget",
 				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
 			'{{/if}}'+
 			'{{if !hideToolbar}}'+
+			// '<li><a class="collapse-link"><i class="fa fa-minus"></i></a></li>'+
 			'<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-onclick="contextmenu"><i class="fa fa-caret-down"></i></a></li>'+
 			'{{/if}}'+
 		'</ul>'+

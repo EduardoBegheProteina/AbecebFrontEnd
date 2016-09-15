@@ -330,38 +330,11 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 			'<input type="checkbox" value="true" id="widgetPresentarVariacion" name="widgetPresentarVariacion" {{if widgetPresentarVariacion && widgetPresentarVariacion!="false"}}checked="checked"{{/if}}>'+
 			'<label for="widgetPresentarVariacion" class="checkbox-label">Variación</label> '+
 			
-			'<div data-showifchecked="widgetPresentarVariacion" >'+
-			
+			'<span data-showifchecked="widgetPresentarVariacion" >'+
 			'<select id="widgetPresentarVariacionFormula" name="widgetPresentarVariacionFormula" class="form-control" NOTrequired >'+
 				'{{include tmpl="widgetBuilderFormOptions-variacionFormulaOptions"/}}'+
 			'</select>'+
-			
-				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
-			
-				'<span class="form-group">'+
-					//'<label class="checkbox-label">Estilo:</label>'+
-					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-green" />'+
-						'<span class="iconset-up-green trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-green trend-eq trend-arrow"></span>'+
-						'<span class="iconset-up-green trend-down trend-arrow"></span>'+
-					' &nbsp;</span>'+
-					
-					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-red" />'+
-						'<span class="iconset-up-red trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-red trend-eq trend-arrow"></span>'+
-						'<span class="iconset-up-red trend-down trend-arrow"></span>'+
-					' &nbsp;</span>'+
-						
-					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-gray" />'+
-						'<span class="iconset-up-gray trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-gray trend-eq trend-arrow"></span>'+
-						'<span class="iconset-up-gray trend-down trend-arrow"></span>'+
-					'</span>'+
-				'</span>'+
-			'</div>'+  // widgetPresentarVariacion
+			'</span>'+
 		'</div>'+//group
 	'</div>'+ //inline
 '</fieldset>'
@@ -369,72 +342,6 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 
 
 
-
-$.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
-
-'<div class="form-group">'+
-'<p>Número de períodos:&nbsp;</p>'+
-'<div class="input-group spinner">'+
-	'<input type="text" class="form-control" value="1" name="calculoVariacion-nroDePeriodos">'+
-	'<div class="input-group-btn-vertical">'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
-	'</div>'+
-'</div>'+ //spinner
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Valor de N:&nbsp;</p>'+
-'<div class="input-group spinner">'+
-	'<input type="text" class="form-control" value="1" name="calculoVariacion-valordeN">'+
-	'<div class="input-group-btn-vertical">'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
-	'</div>'+
-'</div>'+
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-tipoDeCalculo">'+
-	'<option value="suma">Suma</option>'+
-	'<option value="promedio">Promedio</option>'+
-	'</select>'+
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-sellectTipoCalculoDosPromedios">'+
-	'<option value="porPeriodicidad">Por periodicidad</option>'+
-	'<option value="porFechas">Por fechas</option>'+
-	'</select>'+
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-periodicidad">'+
-	'<option value="anual">Anual</option>'+
-	'<option value="semestral">Semestral</option>'+
-	'<option value="trimestral">Trimestral</option>'+
-	'<option value="bimestral">Bimestral</option>'+
-	'<option value="mensual">Mensual</option>'+
-	'<option value="semanal">Semanal</option>'+
-	'<option value="diaria">Diaria</option>'+
-	'</select>'+
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Fecha desde:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" name="calculoVariacion-fechaDesde">'+
-'</div>'+//group
-
-'<div class="form-group">'+
-'<p>Fecha hasta:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" name="calculoVariacion-fechaHasta">'+
-'</div>' //group
-
-				
-); //widgetBuilderFormOptions-variacionFormulaOptions
 
 
 
@@ -487,9 +394,6 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 				' class="form-control" NOTrequired >'+
 					'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions" ~presentarDatoFormula=presentarDatoFormula /}}'+
 			'</select>'+
-			
-			'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
-			
 		'</div> '+
 		'<div class="form-group inline cta-btn">'+
 			'<button class="btn btn-primary btn-sm sortableFormFieldControl-delete"><i class="fa fa-minus"></i></button> '+
@@ -597,9 +501,6 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 					'>'+
 					'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions"/}}'+
 				'</select>'+
-				
-				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
-				
 			'</div>'+
 			'{{/if}}'+
 			

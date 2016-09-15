@@ -111,8 +111,6 @@ $("#widgetBuilderOptionsForm input:checkbox:not(:checked)").each(function() {
 
 
 if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
-
-	//console.log( 'HAS formUI_sortableFormField-serie-sortedKeys')
 	
 	widgetBuilderFormData["series"] = [];
 	var sortedKeys = widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"]
@@ -331,8 +329,6 @@ previewData.widgetType = formData.widgetType;
 
 //armamos preview
 //y data especifica por cada tipo
-
-// console.log (  'formData.widgetType', formData.widgetType )
  
 switch ( formData.widgetType ){
 
@@ -526,7 +522,6 @@ function widgetBuilderTypeSelectInit(){
 		//get stored options
 //		var data = widgetBuilderFormSerialize( $('.widgetBuilderOptionsForm') );
 		var data = $(form).cpGetData()
-		// console.log( 'cpData from top click', JSON.stringify( data ) )
 	
 		//update typeSelect
 		$('.widgetBuilderTypeSelect .widgetTypeOption').removeClass('selected');
@@ -540,7 +535,6 @@ function widgetBuilderTypeSelectInit(){
 		data.widgetType = widgetType; // "grafico-cronologico";
 			
 		widgetBuilderForm( '#widgetBuilderOptionsFormContainer', data );
-		// console.log ('build from top', JSON.stringify( data ) )
 		widgetBuilderPreviewUpdate();
 	
 	});
@@ -565,6 +559,7 @@ $( ".sortableFormFieldsGroup" ).sortable({
 
 
 $( "input:checkbox" ).checkGroupedOptions();
+$( "select" ).selectGroupedOptions();
 
 
 $('.widgetBuilderOptionsForm').submit(function( event ) {
@@ -703,7 +698,7 @@ $.fn.serializeObject = function()
 
 
 
-// funcion para check groups
+// funcion para check y select groups
 (function( $ ) {
  
     $.fn.checkGroupedOptions = function() {
@@ -725,6 +720,21 @@ return this.each(function() {
     } )
     }
 
+//selectGroupedOptions()
+    $.fn.selectGroupedOptions = function() {
+
+return this.each(function() { 
+ 
+ 	var selectName = $(this).attr('name');
+ 	var selectVal = $(this).val();
+ 	 
+	$('[data-showifselectname="'+selectName+'"][data-showifselectval="'+selectVal+'"]').show(250);
+	$('[data-showifselectname="'+selectName+'"][data-showifselectval!="'+selectVal+'"]').hide();
+ 	
+    //return this;
+    } )
+    }
+    
   }( jQuery ));
 
 
@@ -732,3 +742,6 @@ $( "BODY" ).on( "click", "input:checkbox", function() {
 	$(this).checkGroupedOptions();
 });
 
+$( "BODY" ).on( "click,change", "select", function() {
+	$(this).selectGroupedOptions();
+});

@@ -147,7 +147,7 @@ div.territorio span.T1{
 
 
 BIG.trend-up, BIG.trend-eq, BIG.trend-down{
-	width:23px;
+	width:22px;
 	height:30px;
 	margin:0px 5px 0 0;
 	padding:0px;
@@ -158,14 +158,28 @@ BIG.trend-up, BIG.trend-eq, BIG.trend-down{
 	}
 
 BIG.trend-up {
-	background-image:url(../images/trend-up.png);
+	background-image:url(../images/trend-big-up-gray.png);
 	}
 BIG.trend-eq {
-	background-image:url(../images/trend-eq.png);
+	background-image:url(../images/trend-big-eq-gray.png);
 	}
 BIG.trend-down {
-	background-image:url(../images/trend-down.png);
+	background-image:url(../images/trend-big-down-gray.png);
 	}
+
+BIG.iconset-up-green.trend-up{
+	background-image:url(../images/trend-big-up-green.png);
+}
+BIG.iconset-up-green.trend-down{
+	background-image:url(../images/trend-big-down-red.png);
+}
+
+BIG.iconset-up-red.trend-up{
+	background-image:url(../images/trend-big-up-red.png);
+}
+BIG.iconset-up-red.trend-down{
+	background-image:url(../images/trend-big-down-green.png);
+}
 
 
 
@@ -174,31 +188,65 @@ BIG.trend-down {
 	margin-bottom:3px;
 	font-size:12px;
 	font-weight:bold;
+	color:#999;
 	}
-
-.trend-text1.trend-up{
-	color:#59AB59;
-	}
+/*
 .trend-text1.trend-eq{
 	color:#999;
 	}
-.trend-text1.trend-down{
-	color:#b72e33;
-	}
-
+*/
 .trend-arrow{
 	display:inline-block;
-	width:11px;
+	width:10px;
 	margin:0 3px 0 0;
 	background-position:top left;
 	background-repeat:no-repeat;
 	min-height:12px;
 	}
-.trend-text1.trend-up .trend-arrow{ background-image:url(../images/trend-up-small.png); }
-.trend-text1.trend-eq .trend-arrow{ background-image:url(../images/trend-eq-small.png); }
-.trend-text1.trend-down .trend-arrow{ background-image:url(../images/trend-down-small.png); }
 
+/*.trend-text1*/
+.trend-up .trend-arrow,
+.trend-up.trend-arrow{ background-image:url(../images/trend-sm-up-gray.png); }
+/*.trend-text1*/
+.trend-eq .trend-arrow,
+.trend-eq.trend-arrow{ background-image:url(../images/trend-sm-eq-gray.png); }
+/*.trend-text1*/
+.trend-down .trend-arrow,
+.trend-down.trend-arrow{ background-image:url(../images/trend-sm-down-gray.png); }
 
+/*.trend-text1.*/
+.iconset-up-green.trend-up{ color:#59AB59; }
+	/*.trend-text1.*/
+	.iconset-up-green.trend-up .trend-arrow,
+	.iconset-up-green.trend-up.trend-arrow{
+	background-image:url(../images/trend-sm-up-green.png);
+	}
+/*.trend-text1.*/
+.iconset-up-green.trend-down{ color:#b72e33; }
+	/*.trend-text1.*/
+	.iconset-up-green.trend-down .trend-arrow,
+	.iconset-up-green.trend-down.trend-arrow{
+	background-image:url(../images/trend-sm-down-red.png);
+	}
+
+/*.trend-text1.*/
+.iconset-up-red.trend-up{ color:#b72e33; }
+	/*.trend-text1.*/
+	.iconset-up-red.trend-up .trend-arrow,
+	.iconset-up-red.trend-up.trend-arrow{
+	background-image:url(../images/trend-sm-up-red.png);
+	}
+/*.trend-text1.*/
+.iconset-up-red.trend-down{ color:#59AB59; }
+	/*.trend-text1.*/
+	.iconset-up-red.trend-down .trend-arrow,
+	.iconset-up-red.trend-down.trend-arrow{
+	background-image:url(../images/trend-sm-down-green.png);
+	}
+
+	
+	
+	
 .trend-value, .trend-um, .trend-description,  {
 /*
 	display:inline-block;	
@@ -526,3 +574,12 @@ textarea.bootbox-input.bootbox-input-textarea.form-control{
 	background:transparent;
 }
 /*.nav .open>a, .nav .open>a:focus, .nav .open>a:hover*/
+
+
+
+/* TD vars */
+.tdVarProjectedIs1{
+	color: #ccc;
+	background: #fff url("../images/tri7ccc8x8.png") no-repeat left top;
+	padding:0 4px;
+}
