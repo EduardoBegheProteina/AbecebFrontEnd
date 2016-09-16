@@ -268,6 +268,7 @@ function getWorkspace( compassWorkspaceID , callback){
 			console.log("error: " + errorThrown);
 		}
 	});
+	setDefaultWorkspace(compassWorkspaceID);
 }
 
 function getMyWorkspaces(callback){
@@ -315,6 +316,7 @@ function addChildrenToWorkspace(compassWorkspaceID, newChildren, evento){
 			result = jqXHR;
 		}
 	});
+	setDefaultWorkspace(compassWorkspaceID);
 	return result;
 }
 
@@ -330,6 +332,7 @@ function persistWorkspace(data, isNewWorkspace, evento){
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Espacio Persistido Correctamente");
+			setDefaultWorkspace(data.abecebObjectId);
 			if(isNewWorkspace){
 				getSidebar();
 			}
@@ -383,6 +386,7 @@ function renameWorkspace(compassWorkspaceID, newTitle) {
 			console.log("error: " + errorThrown);
 		}
 	});
+	setDefaultWorkspace(compassWorkspaceID);
 }
 
 function httpGet(theUrl)

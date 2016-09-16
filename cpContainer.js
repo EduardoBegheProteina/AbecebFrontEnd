@@ -12,6 +12,7 @@ $.templates("cpContainerNode",
 			'{{if mode=="render"}} widgetsContainer-draggable {{/if}}'+
 			
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
+			
 		'">'+
 		
 		'{{if type2=="cpRoot"}}'+
@@ -75,7 +76,6 @@ $.templates("cpDBList",
 '</div>'+
 '<div class="clearfix"></div>'
 ); //cpDBList
-
 
 
 $.templates("cpPagination",
@@ -262,7 +262,6 @@ $.templates("cpWidget-x-tabla",
 			'<tr>'+
 			'{{for #data }}'+
 				'{{tdFromTableData #data th /}}' +
-			// '<th>{{:#data}}</th>'+
 				'{{/for}}'+
 			'</tr>'+
 			'{{/range}}'+
@@ -272,7 +271,6 @@ $.templates("cpWidget-x-tabla",
 			'<tr>'+
 				'{{range #data start=0 }}'+
 					'{{tdFromTableData : /}}' +
-					//'<td>{{:}}</td>'+
 				'{{/range}}'+
 			'</tr>'+
 				'{{/range}}'+
@@ -407,6 +405,13 @@ $.templates("cpRoot-topToolbar",
 				'</a>'+
 			'</li>'+
 			'<li class="vr"></li>'+
+			'<li class="iconTop iconBig toolbarIcon toolbarIcon-share">'+
+				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+				'<i class="fa fa-share-alt" aria-hidden="true"></i>'+
+				'Compartir...'+
+				'</a>'+
+			'</li>'+
+			'<li class="vr"></li>'+
 			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 				'<a href="#" class="btn btn-tool btn-lg">'+
 				'<i class="fa fa-download" aria-hidden="true"></i>'+
@@ -417,7 +422,6 @@ $.templates("cpRoot-topToolbar",
 	'</div>'+ //col
 	'</div>'+ //row
 '</div>' //toolbar
-//'<div class="clearfix">'+ '</div>'
 
 ); //cpRoot-topToolbar
 
@@ -432,6 +436,5 @@ $.templates("cpRoot-topHTtitle",
 		'</div>'+
 	'</div>'+ //row
 '</div>' //toolbar
-//'<div class="clearfix">'+ '</div>'
 
 ); //cpRoot-topToolbar

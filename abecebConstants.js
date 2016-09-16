@@ -31,7 +31,8 @@ var conflictingCharacters = {
 
 var redirectUrls = {
 		// Valor tomado de CompassConstants.COMPASS_DATAOBJECT_REDIRECT_URL
-		editCompassObjectRedirectURL : friendlyURLs.compass + "editar-objetos-compass?id="
+		editCompassObjectRedirectURL : friendlyURLs.compass + "editar-objetos-compass?id=",
+		editWorkspaceURL : friendlyURLs.compass + "home?ht="
 }
 
 var ids = {
