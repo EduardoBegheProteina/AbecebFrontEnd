@@ -16,7 +16,7 @@
 .jstree-anchor {
   display: inline-block;
   color: black;
-  white-space: nowrap;
+  white-space: normal;
   padding: 0 4px 0 1px;
   margin: 0;
   vertical-align: top;
@@ -382,7 +382,17 @@
 }
 .jstree-default .jstree-anchor {
   line-height: 24px;
+  padding-left: 50px;
+
+/* opcional: una linea por item, cortada a la derecha, puntos suspensivos */
+/*
   height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  max-width:90%;
+*/
+
 }
 .jstree-default .jstree-icon {
   width: 24px;
@@ -455,6 +465,7 @@
 }
 .jstree-default .jstree-checkbox {
   background-position: -164px -4px;
+  margin-left: -50px
 }
 .jstree-default .jstree-checkbox:hover {
   background-position: -164px -36px;
@@ -908,6 +919,7 @@
 /* THEME CLASSES */
 
 .no-check > a .jstree-checkbox {display: none}
+.no-check > .jstree-anchor > .li-icon {margin-left: -50px}
 .metadatos { padding-left: 25px }
 .metadatos span { font-style: italic }
 .metadatos .jstree-ocl {background-position: -73px -4px;}
