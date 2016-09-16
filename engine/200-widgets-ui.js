@@ -149,7 +149,10 @@ compassGlobalUI.htMenuItemAcceptWidget = function( what, event, ui ){
 			contextWidgetAlreadyInTarget = true;
 			}
 		}
-	
+	//Verifico que no sea un workspace de rol
+	if($(widgetTarget)[0].cpData.fromRole){
+		contextWidgetAlreadyInTarget = true;
+	}
 	//si el widget había sido aceptado previamente, lo rechazamos.
 	//animacion de rechazo:
 	if( contextWidgetAlreadyInTarget ){

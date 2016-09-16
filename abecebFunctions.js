@@ -13,3 +13,7 @@ function getActualInstance(){
 	}
 	return site;
 }
+
+function editCompassWorkspace(workspaceID) {
+	window.location = redirectUrls.editWorkspaceURL + workspaceID;
+}

@@ -170,7 +170,13 @@ $("#sortableHtPages").on('click', '.dropdown-menu>LI>A', function() {
 			document.location.href= ( $( contextHTli ).cpGetData().downloadHref );
 			}
 		break;
-		
+	
+    case "share":
+    	
+    	var htId = $( contextHTli ).cpGetData().abecebObjectId;
+		var url = "/group/compass-platform/share-workspace-role-selection?ht=" + htId;
+		document.location.href=url;
+    	break;
 
     case "delete":
         bootbox.confirm({ 
