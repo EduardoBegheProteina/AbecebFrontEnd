@@ -341,6 +341,27 @@ processWidgetContextMenu = function(itemKey, opt){
         break;
 
 
+	case "config-autoupdate-toggle":
+		//cual es el valor del autoupdate flag?
+		var widgetVarAutoUpdate = $( contextWidget )[0].cpData["autoUpdate"];
+		widgetVarAutoUpdate = widgetVarAutoUpdate || false;
+		console.log( "widgetVarAutoUpdate", widgetVarAutoUpdate );
+
+		console.log ( 1, $( contextWidget )[0].cpData["autoUpdate"] )
+		
+		//toggle value
+		widgetVarAutoUpdate = !widgetVarAutoUpdate
+		//store value in cpData
+		$(contextWidget).cpSetData( { 'autoUpdate': widgetVarAutoUpdate } );
+
+		//update menu item
+		//????
+
+		//persist HT 	
+		$(contextWidget).cpPersist( events.widgetResize );
+
+		 break;
+	
 	
 	case "delete":
 
@@ -409,7 +430,8 @@ processWidgetContextMenu = function(itemKey, opt){
 };
 
 
-// initContextMenu( );
+//inicializamos menues de widgets
+initContextMenu( );
 
 
 
@@ -488,6 +510,17 @@ function initContextMenu( callee ){
 			return ( $(contextWidget).find("canvas").length == 0);
 		}
 	};
+	
+// 	var contextIconIfAutoUpdate = function( key, opt ){
+// 		var contextWidget = getContextWidget( opt.$trigger )[0];
+// 		
+// 		if(	$(contextWidget)[0].cpData &&
+// 			$(contextWidget)[0].cpData.autoUpdate ){
+// 			return "fa-check";
+// 			}else{
+// 			return "";
+// 			}		
+// 	};
 
 
 /*
@@ -589,6 +622,55 @@ function initContextMenu( callee ){
             }, //end resize submenu
             
             "sep4": "---------",
+            
+            yesno: {
+                name: "Boolean", 
+                type: 'checkbox', 
+                selected: true
+            },
+            
+            
+            
+            "config-autoupdate-toggle": {
+            	// disabled: disabledOnRenderAncestor,
+        		"name": function(){
+        			return "Actualizar automáticamente"
+        			},
+        			
+        		// "icon": "fa-check"
+        		
+				"icon": function(opt, $itemElement, itemKey, item){
+					
+					// Set the content to the menu trigger selector and add an bootstrap icon to the item.
+					$itemElement.html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + opt.selector);
+		
+					// Add the context-menu-icon-updated class to the item
+					return 'context-menu-icon-updated';
+					
+
+					// var items = ["fa-text-width", "fa-text-width", "fa-text-width"]
+// 					var theItem = items[Math.floor(Math.random()*items.length)]
+// 					
+// 					console.log ( theItem )
+// 					return theItem;
+					
+					// if(opt && opt.$trigger ){
+// 					var contextWidget = getContextWidget( opt.$trigger )[0];
+// 					console.log ( contextWidget );
+// 		
+// 					if(	$(contextWidget)[0].cpData &&
+// 						$(contextWidget)[0].cpData.autoUpdate ){
+// 						return "fa-check";
+// 						}else{
+// 						return "";
+// 						}//end if cpData.autoUpdate
+// 			
+// 					}//end if opt.$trigger
+				}// end fn
+				
+        		},
+            
+            "sep5": "---------",
             
             "delete": {"name": "Eliminar", "icon": "fa-trash-o", disabled: disabledOnRenderAncestor}
 
