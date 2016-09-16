@@ -413,6 +413,13 @@ $.templates("cpRoot-topToolbar",
 				'Exportar'+
 				'</a>'+
 			'</li>'+
+			'<li class="vr"></li>'+
+			'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
+				'<a href="#" class="btn btn-tool btn-lg">'+
+				'<i class="fa fa-refresh" aria-hidden="true"></i>'+
+				'Actualizar…'+
+				'</a>'+
+			'</li>'+
 		'</ul>'+
 	'</div>'+ //col
 	'</div>'+ //row
