@@ -554,6 +554,97 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 		var url = "/group/compass-platform/share-workspace-role-selection?ht=" + htId;
 		document.location.href=url;
 	
+	}else if( $( clickedObj ).hasClass( "toolbarIcon-update" ) ){
+	
+		var autoUpdateHTvar = $( clickedObj ).cpGetAncestor().cpGetData('autoUpdate') ;
+
+		console.log ( autoUpdateHTvar )
+		console.log ( $( clickedObj ).cpGetAncestor().cpGetData() )
+		
+		if ( !autoUpdateHTvar ){ //autoupdate activado
+		bootbox.dialog({
+		  title: "Actualizar datos…",
+		  message: "¿Está seguro de que desea actualizar los datos de todos los objetos de esta Hoja de Trabajo?<br><br>Esta acción no puede ser revertida.",
+
+		  buttons: {
+
+			cancel: {
+			  label: "Cancelar",
+			  className: "btn-default",
+			  callback: function() {
+			  }
+			}, 
+			
+			updatenow: {
+			 label: "Actualizar todos los objetos",
+			  className: "btn-primary",
+			  callback: function() {
+			  	//actualizar todos los widgets
+			  	$("#cpRoot").find(".contentWidget").each(function() {
+					updateWidgetData( $( this ) , false); //no persistir cada update individual, persistiremos la HT una sola vez
+				});
+			  	
+			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
+			  }
+			},
+			
+			autoupdate: {
+			  label: "Activar actualización automática",
+			  className: "btn-primary",
+			  callback: function() {
+			  	//actualizar todos los widgets
+			  	$("#cpRoot").find(".contentWidget").each(function() {
+					updateWidgetData( $( this ) , false); //no persistir cada update individual, persistiremos la HT una sola vez
+				});
+				
+			  	$( clickedObj ).addClass("green")
+			  	$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': true } );
+			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
+			  	
+				console.log("Activada actualización automática");
+			  }
+			}
+			
+		  }
+
+
+
+		});
+		}else{ //autoupdate desactivado
+		bootbox.dialog({
+		  title: "Actualización automática activada",
+		  message: "Una vez desactivada la actualización automática para la Hoja de Trabajo, podrá actualizar manualmente la hoja completa o cada objeto.",
+
+		  buttons: {
+
+			cancel: {
+			  label: "Cancelar",
+			  className: "btn-default",
+			  callback: function() {
+			  }
+			}, 
+						
+			autoupdateoff: {
+			  label: "Desactivar actualización automática",
+			  className: "btn-primary",
+			  callback: function() {
+			  	$( clickedObj ).removeClass("green")
+				$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': false } );
+			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
+				console.log("Desactivada actualización automática");
+			  }
+			}
+			
+		  }
+
+
+
+
+		});
+		
+		}
+
+	
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-copiar" ) ){
 		
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-cortar" ) ){

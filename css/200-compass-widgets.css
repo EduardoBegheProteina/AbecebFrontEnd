@@ -482,7 +482,7 @@ ul.msg_list li a .message {
 	display:none;
 	}
 
-.panel_toolbox .updatedBadge {
+.panel_toolbox .updatedBadge, .panel_toolbox .autoUpdateBadge{
     /*z-index: 501;*/
 /*
     border-radius: 6px;
@@ -497,26 +497,43 @@ ul.msg_list li a .message {
 	color: #D10003;
 	padding-right:3px;
 	background: #fff;
+/*	display:none;*/
 	}
+
+.panel_toolbox .autoUpdateBadge{
+	display:none;
+	}
+
+.panel_toolbox .autoUpdateBadge.autoUpdateStatus-true{
+	display: inline;
+	color: green;
+	}
+	
 
 .panel_toolbox .updatedBadge[data-toggle="tooltip"]{
     cursor:pointer;
     }
-	.updatedBadge.updatedBadgeStatus-new{
+
+	.panel_toolbox .updatedBadge.updatedBadgeStatus-new{
 		/*background:red;*/
 		color: #D10003;
 		}
-	.updatedBadge.updatedBadgeStatus-ignored{
+	.panel_toolbox .updatedBadge.updatedBadgeStatus-ignored{
 		/*background:#ccc;*/
 		color: #ccc;
 		}
-	.updatedBadge.updatedBadgeStatus-old{
+	.panel_toolbox .updatedBadge.updatedBadgeStatus-old{
 		/*background:#ccc;*/
 		color: #ccc;
 		}
-	.updatedBadge.updatedBadgeStatus-applied{
+	.panel_toolbox .updatedBadge.updatedBadgeStatus-applied{
 		color:green;
 		}
+	
+.panel_toolbox .autoUpdatedBadge.autoUpdatedBadgeStatus-applied{
+	display: inline;
+	color:green;
+	}
 
 
 

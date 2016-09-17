@@ -567,9 +567,11 @@ $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
 
 
 
-function updateWidgetData( contextWidget ){
+function updateWidgetData( contextWidget , doPersist ){ //doPersist: optional, persistir widget luego de update
+	var doPersist = (typeof doPersist !== 'undefined') ?  doPersist : true;
 
-	var cpData = $( contextWidget )[0].cpData;	
+	var cpData = $( contextWidget )[0].cpData;
+	if( !cpData.dataUpdated ){ return false; } //abort if there's no data to update
 
 	//procesamos comments
 		//default comments
@@ -602,7 +604,9 @@ function updateWidgetData( contextWidget ){
 	renderCpWidget( $( contextWidget ), cpData, true );
 	
 	//persistir espacio de trabajo
-	$( contextWidget ).cpPersist(events.widgetUpdate);
+	if(doPersist){
+		$( contextWidget ).cpPersist(events.widgetUpdate);
+		}
 	
 }
 

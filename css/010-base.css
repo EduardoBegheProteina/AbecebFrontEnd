@@ -404,7 +404,8 @@ body .container.body .colCtnt{
 .purple {
   color: #9B59B6;
 }
-.green {
+.green,
+.green .btn-tool{
   color: #1ABB9C;
 }
 .aero {

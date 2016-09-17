@@ -11,7 +11,7 @@ function htRenameDialog( contextHTli ){
 				} else {
 					$( contextHTli ).find('.var-title').text( result );
 					$( contextHTli ).cpSetData( {'title': result})
-					console.log("Renombrar a: " + result);
+					//console.log("Renombrar a: " + result);
 					$('#sortableHtPages').attr("workspaceNameHolder", result);
 					$('#sortableHtPages').attr("workspaceIDHolder", contextHTli.attr("workspaceID"));
 					$('#sortableHtPages').cpPersist(events.sidebarRename);
@@ -346,25 +346,52 @@ processWidgetContextMenu = function(itemKey, opt){
 
         break;
 
+	case "update":
+	
+		updateWidgetData( $(contextWidget) );		
+    
+    	break;
+        
 
 	case "config-autoupdate-toggle":
 		//cual es el valor del autoupdate flag?
 		var widgetVarAutoUpdate = $( contextWidget )[0].cpData["autoUpdate"];
 		widgetVarAutoUpdate = widgetVarAutoUpdate || false;
-		console.log( "widgetVarAutoUpdate", widgetVarAutoUpdate );
-
-		console.log ( 1, $( contextWidget )[0].cpData["autoUpdate"] )
 		
 		//toggle value
 		widgetVarAutoUpdate = !widgetVarAutoUpdate
-		//store value in cpData
+		//store autoUpdate value in cpData
 		$(contextWidget).cpSetData( { 'autoUpdate': widgetVarAutoUpdate } );
 
-		//update menu item
-		//????
+		
+		//si se activo la autoactualizacion, actualizamos
+		if( widgetVarAutoUpdate ){ //usr Aactivo autoupdate
+		
+			if( $(contextWidget)[0].cpData["dataUpdated"] ){
+				//si hay datos actualizados a mostrar,
+				//esta funcion se encarga de actualizar el widget completo, incluyendo toolbar,
+				//y de persistir HT 
+				updateWidgetData( contextWidget )
+				}else{
+				//no hay datos actualizados a mostrar.
+				//solo persistimos la opcion.
+				$(contextWidget).cpPersist( events.widgetUpdate );
+				}
+			
+				$( contextWidget ).find(".x_panel .x_title .panel_toolbox .autoUpdateBadge").removeClass("autoUpdateStatus-false").addClass("autoUpdateStatus-true");
+				
+			}else{ //usr desactivo autoupdate
+			
+			
+				$( contextWidget ).find(".x_panel .x_title .panel_toolbox .autoUpdateBadge").removeClass("autoUpdateStatus-true").addClass("autoUpdateStatus-false");
+			 
+				//persist HT 
+				$(contextWidget).cpPersist( events.widgetUpdate );
+			}
+		
+		//store autoUpdate value in cpData
+		$(contextWidget).cpSetData( { 'autoUpdate': widgetVarAutoUpdate } );
 
-		//persist HT 	
-		$(contextWidget).cpPersist( events.widgetResize );
 
 		 break;
 	
@@ -383,7 +410,7 @@ processWidgetContextMenu = function(itemKey, opt){
 					if( contextWidget.length > 0){
 						var dataRoot = $(contextWidget).cpGetDataRoot();
 						contextWidget.remove();
-						console.log(dataRoot.cpGetData());
+						//console.log(dataRoot.cpGetData());
 						$( dataRoot ).cpPersist(events.widgetDelete);
 						compassGlobalUI.update();
 					}else{
@@ -452,7 +479,7 @@ initContextMenu( );
 
 function initContextMenu( callee ){
 	$.contextMenu( 'destroy' );
-	console.log( 'initContextMenu', callee )
+	//console.log( 'initContextMenu', callee )
  
 // init widget contextmenu
 // https://swisnl.github.io/jQuery-contextMenu/
@@ -517,16 +544,15 @@ function initContextMenu( callee ){
 		}
 	};
 	
-// 	var contextIconIfAutoUpdate = function( key, opt ){
-// 		var contextWidget = getContextWidget( opt.$trigger )[0];
-// 		
-// 		if(	$(contextWidget)[0].cpData &&
-// 			$(contextWidget)[0].cpData.autoUpdate ){
-// 			return "fa-check";
-// 			}else{
-// 			return "";
-// 			}		
-// 	};
+	var disabledOnNoPossibleUpdate = function ( key, opt ){
+		var contextWidget = getContextWidget( opt.$trigger )[0];
+ 		if( $(contextWidget).cpGetData('dataUpdated') ){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 
 
 /*
@@ -560,7 +586,7 @@ function initContextMenu( callee ){
 	htItems["copyToHTsepBeforeNew"] = "---------";
 	htItems["copyToHT-new"] = {"name": "Nueva Hoja de Trabajo", "icon": "fa-plus-square" };
 
-	console.log ('htItems', JSON.stringify( htItems ) )
+//	console.log ('htItems', JSON.stringify( htItems ) )
 	
 
 
@@ -629,75 +655,53 @@ function initContextMenu( callee ){
             
             "sep4": "---------",
             
-            yesno: {
-                name: "Boolean", 
-                type: 'checkbox', 
-                selected: true
-            },
-            
-            
+            "update": {
+            	disabled: disabledOnNoPossibleUpdate,
+            	"icon": "fa-refresh",
+            	"name": "Actualizar ahora"
+            	},
+           
             
             "config-autoupdate-toggle": {
-            	// disabled: disabledOnRenderAncestor,
-        		"name": function(){
-        			return "Actualizar automáticamente"
-        			},
-        			
-        		// "icon": "fa-check"
-        		
+            	"name": "Actualizar automáticamente",
 				"icon": function(opt, $itemElement, itemKey, item){
-					
-					// Set the content to the menu trigger selector and add an bootstrap icon to the item.
-					$itemElement.html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + opt.selector);
-		
-					// Add the context-menu-icon-updated class to the item
-					return 'context-menu-icon-updated';
-					
 
-					// var items = ["fa-text-width", "fa-text-width", "fa-text-width"]
-// 					var theItem = items[Math.floor(Math.random()*items.length)]
-// 					
-// 					console.log ( theItem )
-// 					return theItem;
+					if(opt && opt.context){
+					var contextWidget = getContextWidget( opt.context )[0];
 					
-					// if(opt && opt.$trigger ){
-// 					var contextWidget = getContextWidget( opt.$trigger )[0];
-// 					console.log ( contextWidget );
-// 		
-// 					if(	$(contextWidget)[0].cpData &&
-// 						$(contextWidget)[0].cpData.autoUpdate ){
-// 						return "fa-check";
-// 						}else{
-// 						return "";
-// 						}//end if cpData.autoUpdate
-// 			
-// 					}//end if opt.$trigger
-				}// end fn
-				
-        		},
+					if(	$(contextWidget)[0].cpData &&
+						$(contextWidget)[0].cpData.autoUpdate ){
+						return (" context-menu-icon context-menu-icon--fa fa fa-check ");
+						}else{
+						return "";
+						}//end if cpData.autoUpdate
+					
+					}//end if opt.$trigger
+
+				}
+        		
+        	},// end config-autoupdate-toggle
             
             "sep5": "---------",
             
             "delete": {"name": "Eliminar", "icon": "fa-trash-o", disabled: disabledOnRenderAncestor}
 
-        } //end cpObjectWidgetContexMenuItems        
+		} //end cpObjectWidgetContexMenuItems        
         
 
+		/*
+			"name": "Copiar a Hoja de Trabajo", 
+			"icon": "fa-files-o",
+			"items": //htItems
+				{
+				"copyToHT-ht-1_ObjectId":{"name":"Hoja de trabajo 1","icon":"fa-folder-o"},
+				"copyToHT-ht-2_ObjectId":{"name":"Hoja de Trabajo Numero Dos","icon":"fa-folder-o"},
+				"copyToHT-cpRootWitgets0_ObjectId":{"name":"Esta HT no tiene downloadHref, no se puede exportar","icon":"fa-folder-o"},
+				"copyToHT-id1": {"name": "Mis Indicadores", "icon": "fa-folder-o"},
+				"copyToHT-new": {"name": "Crear nueva Hoja de Trabajo…", "icon": "fa-plus-square"}
+				} 
 
-            /*
-                "name": "Copiar a Hoja de Trabajo", 
-                "icon": "fa-files-o",
-                "items": //htItems
-                	{
-                	"copyToHT-ht-1_ObjectId":{"name":"Hoja de trabajo 1","icon":"fa-folder-o"},
-                	"copyToHT-ht-2_ObjectId":{"name":"Hoja de Trabajo Numero Dos","icon":"fa-folder-o"},
-                	"copyToHT-cpRootWitgets0_ObjectId":{"name":"Esta HT no tiene downloadHref, no se puede exportar","icon":"fa-folder-o"},
-                    "copyToHT-id1": {"name": "Mis Indicadores", "icon": "fa-folder-o"},
-                    "copyToHT-new": {"name": "Crear nueva Hoja de Trabajo…", "icon": "fa-plus-square"}
-                	} 
-
-               */
-
+		   */
 
 		//only .cpObject items are 'live'
          $.contextMenu({

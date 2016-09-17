@@ -117,10 +117,15 @@ $.templates("cpWidget",
 		'</div>' +
 		'<ul class="nav navbar-right panel_toolbox">'+
 			'{{if titlebarBadge}}'+
-				'<span class="updatedBadge updatedBadgeStatus-{{:titlebarBadgeStatus}}"'+
-				'{{if titlebarBadgeStatus!="applied" && titlebarBadgeStatus!="old"}} data-toggle="tooltip" title="Actualización de datos disponible."{{/if}}'+
+				'<span class="updatedBadge" updatedBadgeStatus-{{:titlebarBadgeStatus}}"'+
+					' data-toggle="tooltip" title="Actualización de datos disponible." '+
+//				'<span class="updatedBadge updatedBadgeStatus-{{:titlebarBadgeStatus}}"'+
+//				'{{if titlebarBadgeStatus!="applied" && titlebarBadgeStatus!="old"}} data-toggle="tooltip" title="Actualización de datos disponible."{{/if}}'+
 				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
 			'{{/if}}'+
+			'<span class="autoUpdateBadge autoUpdateStatus-{{if autoUpdate}}true{{else}}false{{/if}}" '+
+				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+			
+			
 			'{{if !hideToolbar}}'+
 			'<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-onclick="contextmenu"><i class="fa fa-caret-down"></i></a></li>'+
 			'{{/if}}'+
