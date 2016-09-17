@@ -10,6 +10,7 @@ $.templates("cpContainerNode",
 			'{{if type2=="cpRoot"}} cpRoot {{/if}}'+
 			'{{if mode=="edit"}} widgetsContainer-sortable {{/if}}'+
 			'{{if mode=="render"}} widgetsContainer-draggable {{/if}}'+
+			'{{if autoUpdate}} htHasautoUpdate {{/if}}'+
 			
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
 			

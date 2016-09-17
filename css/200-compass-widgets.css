@@ -508,6 +508,11 @@ ul.msg_list li a .message {
 	display: inline;
 	color: green;
 	}
+.htHasautoUpdate .panel_toolbox .autoUpdateBadge{
+	display: inline;
+	color: #1ABB9C;
+	}
+
 	
 
 .panel_toolbox .updatedBadge[data-toggle="tooltip"]{

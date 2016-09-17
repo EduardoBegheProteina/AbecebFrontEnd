@@ -558,8 +558,6 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 	
 		var autoUpdateHTvar = $( clickedObj ).cpGetAncestor().cpGetData('autoUpdate') ;
 
-		console.log ( autoUpdateHTvar )
-		console.log ( $( clickedObj ).cpGetAncestor().cpGetData() )
 		
 		if ( !autoUpdateHTvar ){ //autoupdate activado
 		bootbox.dialog({
@@ -598,6 +596,7 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 				});
 				
 			  	$( clickedObj ).addClass("green")
+			  	$( clickedObj ).cpGetAncestor().addClass("htHasautoUpdate");
 			  	$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': true } );
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
 			  	
@@ -629,6 +628,7 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  className: "btn-primary",
 			  callback: function() {
 			  	$( clickedObj ).removeClass("green")
+		  		$( clickedObj ).cpGetAncestor().removeClass("htHasautoUpdate");
 				$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': false } );
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
 				console.log("Desactivada actualización automática");

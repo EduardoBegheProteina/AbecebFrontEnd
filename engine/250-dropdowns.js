@@ -544,12 +544,23 @@ function initContextMenu( callee ){
 		}
 	};
 	
-	var disabledOnNoPossibleUpdate = function ( key, opt ){
+	var disabledIfCannotUpdate = function ( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];
  		if( $(contextWidget).cpGetData('dataUpdated') ){
 			return false;
 		}else{
 			return true;
+		}
+	}
+
+	var disabledIfCannotAutoUpdate = function ( key, opt ){
+		var contextWidget = getContextWidget( opt.$trigger )[0];
+		var autoUpdateHTvar = $( contextWidget ).cpGetAncestor().cpGetData('autoUpdate') ;
+		
+ 		if( autoUpdateHTvar ){
+			return true; //si la HT tiene autoUpdate, desactivamos opcion de autoupdate para el widget
+		}else{
+			return false;
 		}
 	}
 	
@@ -656,13 +667,14 @@ function initContextMenu( callee ){
             "sep4": "---------",
             
             "update": {
-            	disabled: disabledOnNoPossibleUpdate,
+            	disabled: disabledIfCannotUpdate,
             	"icon": "fa-refresh",
             	"name": "Actualizar ahora"
             	},
            
             
             "config-autoupdate-toggle": {
+            	disabled: disabledIfCannotAutoUpdate,
             	"name": "Actualizar automáticamente",
 				"icon": function(opt, $itemElement, itemKey, item){
 
