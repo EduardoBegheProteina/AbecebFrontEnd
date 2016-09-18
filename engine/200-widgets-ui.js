@@ -229,6 +229,7 @@ function getWidgetDraggableHelper( ui ){
 
 
 function initDraggableWidgets( container ){
+	evenWidgetHeights( container );
 	
 	$( container ).find( ".widgetsContainer-sortable" ).sortable({
 		items: ".contentWidget",
@@ -245,8 +246,12 @@ function initDraggableWidgets( container ){
 		
 		
 		start: function( event, ui ) {
+			///reset widget height, placeholder's height
+			var widgetForcedHeight = ui.item.innerHeight();
+			ui.item.innerHeight("auto");
 			ui.placeholder.height( ui.item.innerHeight()-24 );
 			ui.placeholder.width( ui.item.innerWidth()-21 );
+			// ui.item.innerHeight( widgetForcedHeight );
 			},
 		over: function( event, ui ) {
 			$( this ).addClass('droppingInside')
@@ -261,6 +266,10 @@ function initDraggableWidgets( container ){
 			this.wasDroppedInsideContainer = ( collision( $(ui.helper), $( this ) ) );
 			},
 		stop: function( event, ui ) {
+		
+			//even heights
+			evenWidgetHeights( this );
+			
 			$( this ).removeClass('droppingInside')
 				.removeClass('droppingOutside');
 
@@ -532,7 +541,6 @@ $('#modal-widget-update .modal-body .btn-default').click(function(event) {
 
 
 $(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
-	console.log ( this )
 	$(this).removeClass('jstree-open').addClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
 	}).on('click','a',function(e) {
@@ -548,7 +556,6 @@ $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
 	
 
 $(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
-	console.log ( this )
 	$(this).removeClass('jstree-open').addClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
 	}).on('click','a',function(e) {
@@ -608,6 +615,89 @@ function updateWidgetData( contextWidget , doPersist ){ //doPersist: optional, p
 		$( contextWidget ).cpPersist(events.widgetUpdate);
 		}
 	
+	//reset widget heights
+	evenWidgetHeights( $(contextWidget).closest( ".widgetsContainer" ) ); 
+	
+}
+
+
+
+
+
+function evenWidgetHeights( container ){
+
+//if not a last level widget container, call again for all widgetsContainer children
+if( $( container ).find(".widgetsContainer").length != 0 ){
+	$( container ).find(".widgetsContainer").each(function() {
+		evenWidgetHeights( this )
+	});
+}
+
+//get container width
+var containerWidth = $(container).width();
+
+//get widgets
+var widgets = $(container).find('.contentWidget')
+
+//reset all widget heights
+$(widgets).each(function() { $( this ).height( "auto" ); });
+
+//init buffer, maxheight, sumwidths
+var widgetsBuffer = [];
+var widgetsBufferMaxHeight = 0;
+var sumWidths = 0;
+
+//for each widget
+$(widgets).each(function() {
+	
+	//if widget width overflows container, process buffer
+	sumWidths += $(this).width();
+	
+	if(sumWidths>containerWidth){
+		//this widget starts a new line.
+		//process last line buffer widgets: assign their line's max height to all
+			$( widgetsBuffer ).each(function() {
+				$(this).height( widgetsBufferMaxHeight )
+			});
+		
+		//reset for next loop iteration		
+			//reset sumWidths for a new line
+			sumWidths = $(this).width();
+			//reset widgetsBufferMaxHeight to this widget's height
+			widgetsBufferMaxHeight = $(this).height();
+			//reset widgetsBuffer with widget as first and only item
+			widgetsBuffer = [ this ];
+		
+	}else{
+		//last line still has width for this widget
+		//add it to buffer
+		widgetsBuffer.push ( this )
+		//set widgetsBufferMaxHeight
+		widgetsBufferMaxHeight = Math.max( widgetsBufferMaxHeight, $(this).height() )
+		
+	}
+
+
+});
+
+
+}
+
+
+function resetWidgetHeights( container ){
+
+//if not a last level widget container, call again for all widgetsContainer children
+if( $( container ).find(".widgetsContainer").length != 0 ){
+	$( container ).find(".widgetsContainer").each(function() {
+		resetWidgetHeights( this )
+	});
+}
+
+$(container).find('.contentWidget').each(function() {
+	$( this ).height( "auto" );
+	});
+
+
 }
 
 
@@ -809,7 +899,6 @@ var Canvas2Image = function () {
 
 	/**
 	 * create bitmap image
-	 * 按照规则生成图片响应头和响应体
 	 */
 	var genBitmapImage = function (oData) {
 

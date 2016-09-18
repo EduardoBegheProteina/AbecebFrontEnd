@@ -223,6 +223,8 @@ processWidgetContextMenu = function(itemKey, opt){
 
 	var contextWidget = getContextWidget( opt.$trigger );
 	var contextDataRoot = $(contextWidget).cpGetDataRoot;
+	var contextWidgetContainer = $(contextWidget).closest( ".widgetsContainer" );
+	
 
 	switch( itemKey ) {
 	
@@ -230,15 +232,32 @@ processWidgetContextMenu = function(itemKey, opt){
 	case "resize-4":
 	case "resize-6":
 	case "resize-12":
+		
+		//reset all heights
+		resetWidgetHeights( $(contextWidgetContainer) );
+		
 		//reset widget size
 		for(var i=1; i<=12; i++ ){
 			contextWidget.removeClass("col-md-"+i+" col-sm-"+i );
 			}
 		var requestedSize = itemKey.substr(7);
 		contextWidget.addClass('col-md-'+requestedSize+' col-sm-'+requestedSize);
+				
+// 		setTimeout(function( ){
+// 		console.log ( "TIME", contextWidgetContainer )
+// 		  evenWidgetHeights( $(contextWidgetContainer) );
+// 		}, 250);
+// 		setTimeout(function( ){
+// 		console.log ( "TIME", contextWidgetContainer )
+// 		  evenWidgetHeights( $(contextWidgetContainer) );
+// 		}, 500);
+
 		
 		$(contextWidget).cpSetData( { 'gridWidth': requestedSize } );
 		$(contextWidget).cpPersist( events.widgetResize );
+	
+		//normalize heights
+		evenWidgetHeights( $(contextWidgetContainer) );
 
 		break;
 		
@@ -402,15 +421,12 @@ processWidgetContextMenu = function(itemKey, opt){
 			message: "¿Está seguro de que desea elminar este elemento?", 
 			callback: function(result){ 
 				
-//					console.log("EDU");
-//					console.log(contextHTli);
 					if(result){
 					
 					//eliminar widget?
 					if( contextWidget.length > 0){
 						var dataRoot = $(contextWidget).cpGetDataRoot();
 						contextWidget.remove();
-						//console.log(dataRoot.cpGetData());
 						$( dataRoot ).cpPersist(events.widgetDelete);
 						compassGlobalUI.update();
 					}else{

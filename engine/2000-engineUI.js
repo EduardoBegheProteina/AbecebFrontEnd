@@ -376,10 +376,24 @@ if(!gData.datasets[i]["dataProjected"]){
 			datasets: gData.datasets
 			}
 		}
+
+	chartDataObj.options.animation = {
+//			duration: 2000,
+			onComplete: function() {
+			evenWidgetHeights( "BODY" );
+			console.log('////////// animation complete', this )
+			}
+		}
+
 		
 		// console.log ('2000 graph type: ', bestType, gData.datasets)
 
+
 	new Chart(chartContainerObj, chartDataObj);	
+
+
+
+
     
 });
 
