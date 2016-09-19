@@ -302,10 +302,17 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormula",
 	'<div class="row">'+
 	'<div class="col-lg-6">'+
 		'<div class="form-group">'+
-			'<select name="widgetPresentarDatoFormula" class="form-control" NOTrequired >'+
+			'<select '+
+			' data-groupname="PresentarDatoFormula" '+
+				'name="widgetPresentarDatoFormula" class="form-control" NOTrequired >'+
 				'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions" ~presentarDatoFormula=widgetPresentarDatoFormula /}}'+
 			'</select>'+
 		'</div>'+
+		
+		'{{if widgetType=="grafico-partentotales"}}'+
+			'{{include ~fieldPrefix="" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
+		'{{/if}}'+
+
 	'</div>'+
 	'</div>'+
 '</fieldset>'
