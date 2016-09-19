@@ -544,6 +544,14 @@ function initContextMenu( callee ){
 			}		
 	};
 
+	var disabledOnNotEditableCpHtml = function( key, opt ){
+		//es no editable?
+		if( disabledOnRenderItem ( key, opt ) ){ return true; }	
+		//es cphtml?
+		var contextWidget = getContextWidget( opt.$trigger )[0];	
+		var type1 = ( $(contextWidget).cpGetData('type1') );
+		return ( !(type1 == "cphtml") );
+	};
 
 
 	var disabledOnNoCanvasOrImgSrc = function( key, opt ){
