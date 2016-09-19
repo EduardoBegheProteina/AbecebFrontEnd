@@ -81,7 +81,6 @@ function widgetSaveToHTidUpdate(){
 		$("#widgetSaveToHTid option").remove();
 
 		$.each( htList.children, function(index, item) {
-			//console.log(item.fromRole);
 			if(item.fromRole==undefined) {
 				$("#widgetSaveToHTid").append(new Option(item["cpTitle"], item["abecebObjectId"]));
 			}
@@ -119,8 +118,6 @@ $("#widgetBuilderOptionsForm input:checkbox:not(:checked)").each(function() {
 
 
 if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
-
-	//console.log( 'HAS formUI_sortableFormField-serie-sortedKeys')
 	
 	widgetBuilderFormData["series"] = [];
 	var sortedKeys = widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"]
@@ -257,6 +254,10 @@ var previewData = {
 	"gridWidth":"6"
 	};
 
+if( formData.iconSet ){
+	previewData["iconSet"] = formData.iconSet
+	}
+
 
 //ejemplo de como tomar un dato de la raiz de formData
 //y moverlo a previewData.dataShown
@@ -340,7 +341,6 @@ previewData.widgetType = formData.widgetType;
 //armamos preview
 //y data especifica por cada tipo
 
-// console.log (  'formData.widgetType', formData.widgetType )
  
 switch ( formData.widgetType ){
 
@@ -431,28 +431,63 @@ switch ( formData.widgetType ){
 	case "grafico-partcronologico": 
 		previewData.type1 = "grafico";
 //		previewData.type2 = formData.widgetType;
+
+		if( previewData.dataShown.widgetRangoFechas1 ){
+			var theLabels = [];
+			var fechaIx = 1;
+			for(var i=-1; i<previewData.dataShown.widgetRangoFechas1; i++ ){
+				theLabels.push( "Fecha " + ( fechaIx++ ) );
+			}
+			if( previewData.dataShown.widgetRangoFechas2 ){
+				for(var i=0; i<previewData.dataShown.widgetRangoFechas2; i++ ){
+					theLabels.push( "Fecha " + ( fechaIx++ ) );
+				}
+			}
+		}else{
+			var theLabels = ["Fecha 1","Fecha 2","Fecha 3","Fecha 4"]
+		}
+
 		previewData["dataShown"]["graphdata"] = {
-			"labels": ["Fecha 1","Fecha 2","Fecha 3","Fecha 4"],
+			"labels": theLabels,
 			"datasets": []
 			};
 			
 		for (var serie in formData.series) {
+		
+		var datos = [];
+		var datosProjected = [];
+			
+		if( previewData.dataShown.widgetRangoFechas1 ){
+			for(var i=-1; i<previewData.dataShown.widgetRangoFechas1; i++ ){
+				datos.push( rnd100() + 100 )
+			}
+			if( previewData.dataShown.widgetRangoFechas2 ){
+				for(var i=0; i<previewData.dataShown.widgetRangoFechas2; i++ ){
+					datosProjected.push( rnd100() + 100 )
+				}
+			}
+		}else{
+			datos = [ rnd100() + 100, rnd100() + 100, rnd100() + 100, rnd100() + 100 ]
+		}
 
-			var datos = [ rnd100() + 100, rnd100() + 100, rnd100() + 100, rnd100() + 100 ]
+			
 			
 			var pd = previewData["dataShown"]["graphdata"]["datasets"];
-		
-			pd.push ( 
-				{
+			
+			var dataObj = {
 					"chartType": formData.widgetType ==
 						"grafico-partcronologico" ?
 							"horizontalBar-stacked":
 							formData.series[serie].chartType,
 					"userLabel": formData.series[serie].userLabel,
 					"ejeCero": formData.series[serie].ejeCero,
-					"data": datos 
+					"data": datos
 					}
-				)
+			if( datosProjected.length>0 ){
+				dataObj["dataProjected"] = datosProjected;
+				}
+		
+			pd.push ( dataObj );
 		}//end for (var serie in formData.series
 		
 		//para grafico part. cronologico,
@@ -506,6 +541,7 @@ switch ( formData.widgetType ){
 	$('.widgetBuilderPreview')[0].cpData={}
 	$('.widgetBuilderPreview').cpObject( previewData );
 	renderCpWidget( $('.widgetBuilderPreview'), previewData, true );
+	console.log ( JSON.stringify( previewData ) )
 	
 	
 	//store previewData in form cpObject
@@ -534,7 +570,6 @@ function widgetBuilderTypeSelectInit(){
 		//get stored options
 //		var data = widgetBuilderFormSerialize( $('.widgetBuilderOptionsForm') );
 		var data = $(form).cpGetData()
-		// console.log( 'cpData from top click', JSON.stringify( data ) )
 	
 		//update typeSelect
 		$('.widgetBuilderTypeSelect .widgetTypeOption').removeClass('selected');
@@ -548,7 +583,6 @@ function widgetBuilderTypeSelectInit(){
 		data.widgetType = widgetType; // "grafico-cronologico";
 			
 		widgetBuilderForm( '#widgetBuilderOptionsFormContainer', data );
-		// console.log ('build from top', JSON.stringify( data ) )
 		widgetBuilderPreviewUpdate();
 	
 	});

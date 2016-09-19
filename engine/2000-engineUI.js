@@ -148,11 +148,26 @@ if(gData.options){
 	}
 
 
-var bestType = gData.datasets[0].type; 
+var bestType;
+
+if( gData.datasets[0].type ){
+	bestType = gData.datasets[0].type;
+	}else if (gData.datasets[0].chartType) {
+	bestType = gData.datasets[0].chartType
+	}else{
+	bestType = "line"
+	}
+
+
 
 //Preprocesamos Datasets para generar series adicionales para dataProjected
 var gDataDatasets2 = [];
 for( var i=0; i<gData.datasets.length; i++){
+
+	if( gData.datasets[i]["chartType"] ){
+		gData.datasets[i]["type"] = gData.datasets[i]["chartType"]
+		}
+		
 	//agregamos al nuevo array el elemento que estamos procesando
 	gDataDatasets2.push (gData.datasets[i]);
 	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
@@ -231,9 +246,6 @@ gData.datasets = gDataDatasets2;
 
 //Procesamos Datasets
 for( var i=0; i<gData.datasets.length; i++){
-	if( gData.datasets[i]["chartType"] ){
-		gData.datasets[i]["type"] = gData.datasets[i]["chartType"]
-		}
 	if( gData.datasets[i]["userLabel"] ){
 		gData.datasets[i]["label"] = gData.datasets[i]["userLabel"]
 		}
@@ -293,7 +305,16 @@ if(!gData.datasets[i]["dataProjected"]){
 		if( graphColorIx > graphBackgroundColors.length ){ graphColorIx = 0 };
 	}
 	
-	bestType = getBestType( bestType, gData.datasets[i].type );
+	var gDataChartType;
+	if( gData.datasets[i].type ){
+		gDataChartType = gData.datasets[i].type
+		}else if ( gData.datasets[i].chartType ){
+		gDataChartType = gData.datasets[i].chartType
+		}else{
+		gDataChartType = "line"
+		}
+
+	bestType = getBestType( bestType, gDataChartType );
 	
 	switch ( gData.datasets[i].type ){
 	

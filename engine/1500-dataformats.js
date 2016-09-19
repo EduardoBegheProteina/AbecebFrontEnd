@@ -56,7 +56,6 @@ function cpDataFormat(dato,format,vars,loc){
 //loc> default ""
 	loc = loc || "";
 	
-console.log(dato,format,vars,loc)
 
 //parsear segun format solicitado; si no existe, se aplica default
 	if( cpDataFormats[format +"_"+loc] ){
