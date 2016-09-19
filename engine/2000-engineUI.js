@@ -38,12 +38,10 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 //sub-funcion para preprocesar data.dataShown y data.dataUpdated
 //necesitamos nodo dataShown y su parent data
 function preprocessCpDataShown( dataShown, data ){ 
-//console.log ('preprocessCpDataShown', data)
 
 	//curzar tabledata with series
 	if ( dataShown.tabledata && data.series ){
 		for( var row=0; row<Math.min( data.series.length, dataShown.tabledata.length -1) ; row++ ){
-			//console.log ('row', row, dataShown.tabledata[row+1][0] )
 			if( data.series[row]["userLabel"] ){
 				dataShown.tabledata[row+1][0] = data.series[row]["userLabel"];
 				}
@@ -96,11 +94,7 @@ $(function() { // Handler for .ready() called.
 
 function initGraficos( container ){
 
-//console.log ( 'initGraficos 412' );
-
 var container = container || $('BODY');
-
-//console.log ( 'initGraficos' );
 
 var graphBackgroundColors = [
 	"rgba(122, 204, 122, 0.6)", //"#7acc7a", 
@@ -112,13 +106,13 @@ var graphBackgroundColors = [
 	"rgba(230, 230, 0, 0.6)" //"#e6e600"
 	]
 var graphProjectedBackgroundColors = [
-	"rgba(122, 204, 122, 0.25)", //"#7acc7a", 
-	"rgba(128, 213, 255, 0.25)", //"#80d5ff", 
-	"rgba(41, 123, 204, 0.25)", //"#297bcc", 
-	"rgba(183, 92, 230, 0.25)", //"#b75ce6", 
-	"rgba(204, 82, 82, 0.25)", //"#cc5252", 
-	"rgba(230, 161, 92, 0.25)", //"#e6a15c", 
-	"rgba(230, 230, 0, 0.25)" //"#e6e600"
+	"rgba(122, 204, 122, 0.2)", //"#7acc7a", 
+	"rgba(128, 213, 255, 0.2)", //"#80d5ff", 
+	"rgba(41, 123, 204, 0.2)", //"#297bcc", 
+	"rgba(183, 92, 230, 0.2)", //"#b75ce6", 
+	"rgba(204, 82, 82, 0.2)", //"#cc5252", 
+	"rgba(230, 161, 92, 0.2)", //"#e6a15c", 
+	"rgba(230, 230, 0, 0.2)" //"#e6e600"
 	]
 var graphBorderColors = [
 	"#7acc7a", 
@@ -132,7 +126,6 @@ $(container).find('.cpWidget-x-grafico').each( function( index, el ) {
 
 	graphBackgroundColorIx = 0;
 
-	//console.log ('initgraficos each on ', $(el) )
 	graphColorIx = 0;
     var theCpData = ( $(el).parent().cpGetData() );
 	var gData = jQuery.extend(true, {}, theCpData.dataShown.graphdata );
@@ -158,105 +151,128 @@ if(gData.options){
 var bestType = gData.datasets[0].type; 
 
 //Preprocesamos Datasets para generar series adicionales para dataProjected
-
 var gDataDatasets2 = [];
-
 for( var i=0; i<gData.datasets.length; i++){
-
 	//agregamos al nuevo array el elemento que estamos procesando
-
 	gDataDatasets2.push (gData.datasets[i]);
-
 	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
-
 	if(gData.datasets[i]["dataProjected"]){	
 
-		var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
+		if( gData.datasets[i]["type"] == "line" || gData.datasets[i]["type"] == "area" ){
 
-		gDataIdataSet["isProjected"] = true;
-
-		delete gDataIdataSet["dataProjected"];
-
-		if( gDataIdataSet["type"] == "line" || gDataIdataSet["type"] == "area" ){
-
+			var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
+			gDataIdataSet["isProjected"] = true;
+			delete gDataIdataSet["dataProjected"];
+		
 		//para graficos de linea o area, desplazamos valores
-
 			//creamos array de NULLs para desplazar dataUpdated
-
 			//con un elementos MENOS que lenght de data
-
 			//dado que necesitaremos agregar el ultimo punto de data para empalmar la linea
-
 			var dataProjectedLeftNulls = []
-
 			for(var nullIx = 0; nullIx < gDataIdataSet["data"].length -1; nullIx++){
-
 				dataProjectedLeftNulls[nullIx] = null;
-
 				}
-
 			//desplazamos dataProjected, agregando como 1er elemento el ultimo de data
-
 			//de manera de que haya continuidad en la linea entre ultimo punto de data y 1ero de dataupdated
-
 			gDataIdataSet["data"] = dataProjectedLeftNulls.concat (
-
 				[ gData.datasets[i]["data"][ (gData.datasets[i]["data"].length - 1) ] ] ,
-
 				gData.datasets[i]["dataProjected"]
-
 				);
-
 			//asignamos data del nuevo elemento
-
 			gDataIdataSet["borderDash"] = [10,5]
-
 			gDataIdataSet["label"] += " (Proy.)";
+		
+			//copiamos elemento conteniendo dataProjected a gDataDatasets2
+			gDataDatasets2.push ( gDataIdataSet );
 
 		}else{
 
-		//para graficos bar, horizontal bar o pie, trabajamos con el area
 
+			gData.datasets[i]["hasProjectedFrom"] = gData.datasets[i]["data"].length;		
+			gData.datasets[i]["data"] = gData.datasets[i]["data"].concat ( gData.datasets[i]["dataProjected"] );
+			gData.datasets[i]["label"] += " (con proy.)";
+			delete gData.datasets[i]["dataProjected"];
+
+//opcion: como en line y area, dataupdated en serie aparte (genera columnas del 50% de ancho)
+
+/*
+			var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
+			gDataIdataSet["isProjected"] = true;
+			delete gDataIdataSet["dataProjected"];
+
+		//para graficos bar o horizontal bar, desplazamos valores con NULL
+		//sin necesitar dato de empalme
+			//creamos array de NULLs para desplazar dataUpdated
+			//con mismo lenght que data
+			var dataProjectedLeftNulls = []
+			for(var nullIx = 0; nullIx < gDataIdataSet["data"].length; nullIx++){
+				dataProjectedLeftNulls[nullIx] = null;
+				}
+			//desplazamos dataProjected
+			gDataIdataSet["data"] = dataProjectedLeftNulls.concat (
+				gData.datasets[i]["dataProjected"]
+				);
+			
+		//para graficos bar, horizontal bar o pie, identificamos datos proyectados con atributos de area
 			gDataIdataSet[ "borderWidth" ] = 2;
-
-		//	gDataIdataSet["borderDash"] = [10,5] //bar no toma linea punteada
-
 			gDataIdataSet["label"] += " (Proy.)";
-
-		//	var ctx = (chartContainerObj).getContext("2d");
-
-		//	gDataIdataSet["color"] = ctx.createPattern(chartProjectedValuePpat, 'repeat');
-
-		//	gDataIdataSet["backgroundColor"] = "#ff0000" //ctx.createPattern(chartProjectedValuePpat, 'repeat');
+		
+		//copiamos elemento conteniendo dataProjected a gDataDatasets2
+		gDataDatasets2.push ( gDataIdataSet );
+*/
 
 		}
 
-		//copiamos elemento conteniendo dataProjected a gDataDatasets2
-
-		gDataDatasets2.push ( gDataIdataSet );
-
+		
 	} // end if(gData.datasets[i]["dataProjected"])
-
 }
 
 gData.datasets = gDataDatasets2;
 
 //Procesamos Datasets
 for( var i=0; i<gData.datasets.length; i++){
-
 	if( gData.datasets[i]["chartType"] ){
 		gData.datasets[i]["type"] = gData.datasets[i]["chartType"]
 		}
-
 	if( gData.datasets[i]["userLabel"] ){
 		gData.datasets[i]["label"] = gData.datasets[i]["userLabel"]
 		}
 
+	//if backgroundColor was not defined by JSON, apply palette
 	if( !gData.datasets[i]["backgroundColor"] ){
-		if( !gData.datasets[i]["isProjected"] ){
-			gData.datasets[i]["backgroundColor"] = graphBackgroundColors [graphColorIx]
-		}else{
+	
+		//if is a Projected series, use projected colors
+		if( gData.datasets[i]["isProjected"] ){
 			gData.datasets[i]["backgroundColor"] = graphProjectedBackgroundColors [graphColorIx]
+
+		}else{
+		//It is not a Projected series. Does it have projected data in it?
+			if( !gData.datasets[i]["hasProjectedFrom"] ){
+			//Has no projected data, use normal color:
+			gData.datasets[i]["backgroundColor"] = graphBackgroundColors[graphColorIx]
+
+			}else{
+			//Has projected data, define background color array
+
+			var backgroundColorArray = [];
+			
+			var hasProjectedFrom = gData.datasets[i]["hasProjectedFrom"]
+			var hasProjectedTo = gData.datasets[i]["data"].length
+
+			//data bars will have filled color
+			for(var bgcaIx=0; bgcaIx < hasProjectedFrom; bgcaIx++){
+				backgroundColorArray.push( graphBackgroundColors[graphColorIx] );
+				}
+			//dataProjected bars will have projected color
+			for(var bgcaIx=bgcaIx; bgcaIx< hasProjectedTo ; bgcaIx++ ){
+				backgroundColorArray.push( graphProjectedBackgroundColors[graphColorIx] );
+				}
+			
+			//apply background color array to serie
+			gData.datasets[i]["backgroundColor"] = backgroundColorArray;
+			
+			}
+			
 		}
 	}
 	if( !gData.datasets[i]["borderColor"] ){
@@ -270,7 +286,6 @@ for( var i=0; i<gData.datasets.length; i++){
 	gData.datasets[i]["lineTension"] = 0;
 			
 //Avanzamos el Ix de colores SOLO si no tenemos dataProjected
-
 //Si tenemos dataProjected, se empleara el mismo color para el proximo elemento
 
 if(!gData.datasets[i]["dataProjected"]){
@@ -281,24 +296,25 @@ if(!gData.datasets[i]["dataProjected"]){
 	bestType = getBestType( bestType, gData.datasets[i].type );
 	
 	switch ( gData.datasets[i].type ){
+	
 		case 'line':
 			gData.datasets[i].fill = false;			
 			break;
+			
 		case 'area':
 			gData.datasets[i].type = 'line';
 			gData.datasets[i].fill = true;
-//			bestType = "line";
 			break;
+			
 		case 'bar':
 			gData.datasets[i].type = 'bar';
 			gData.datasets[i].fill = true;
-//			bestType = "bar";
+			gData.datasets[i][ "borderWidth" ] = 1;
 			break;
+			
 		case 'columnas-stacked': case 'bar-stacked':
 			gData.datasets[i].type = 'bar';
-//			bestType = "bar";
-			// scales.yAxes.["stacked"]: true
-			// scales.xAxes.["stacked"]: true
+			gData.datasets[i][ "borderWidth" ] = 1;
 			jQuery.extend(true, graphOptions, {
 				"scales": {
 					    "xAxes": [{
@@ -310,16 +326,15 @@ if(!gData.datasets[i]["dataProjected"]){
 					    }
 					}
 			);
-		
 			break;
 		
 		case 'horizontalBar':
-//			bestType = "horizontalBar";
+			gData.datasets[i][ "borderWidth" ] = 1;
 			break;
 		
 		case 'horizontalBar-stacked':
 			gData.datasets[i].type = 'horizontalBar';
-//			bestType = "horizontalBar";
+			gData.datasets[i][ "borderWidth" ] = 1;
 
 			jQuery.extend(true, graphOptions, 
 				{
@@ -333,15 +348,6 @@ if(!gData.datasets[i]["dataProjected"]){
 			break;
 
 		case 'pie':
-//			bestType = "pie";
-			/*
-			if( bestType == "" || bestType == "pie" ){
-				bestType = "pie";
-				}else{
-				//no podemos combinar torta con otro tipo. Usamos el mejor definido:
-				gData.datasets[i].type = bestType
-				}
-				*/
 			gData.datasets[i].backgroundColor = graphBorderColors;
 			gData.datasets[i].borderColor = graphBorderColors;
 			graphOptions.scales = {};
@@ -381,12 +387,9 @@ if(!gData.datasets[i]["dataProjected"]){
 //			duration: 2000,
 			onComplete: function() {
 			evenWidgetHeights( this.chart.canvas );
-//			console.log('////////// animation complete', this.chart.canvas )
 			}
 		}
 
-		
-		// console.log ('2000 graph type: ', bestType, gData.datasets)
 
 
 	new Chart(chartContainerObj, chartDataObj);	
@@ -495,7 +498,6 @@ function renderHTlistContainer( target, data ){
 		$( target ).find(".cpObjectToInit").cpObject().removeClass('cpObjectToInit');
 		
 		//actualizamos menu "guardar widget en HT", si existe
-		// console.log('2000 widgetSaveToHTidUpdate')
 		widgetSaveToHTidUpdate();
 
 		
@@ -613,8 +615,7 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  	$( clickedObj ).cpGetAncestor().addClass("htHasautoUpdate");
 			  	$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': true } );
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
-			  	
-				console.log("Activada actualización automática");
+
 			  }
 			}
 			
@@ -645,7 +646,6 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 		  		$( clickedObj ).cpGetAncestor().removeClass("htHasautoUpdate");
 				$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': false } );
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
-				console.log("Desactivada actualización automática");
 			  }
 			}
 			
@@ -861,9 +861,6 @@ $.views.helpers({
   getPaginationArray: getPaginationArray
   });
   
-
-
-
 
 
 
