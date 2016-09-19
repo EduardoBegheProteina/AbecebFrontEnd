@@ -200,16 +200,16 @@ $.templates("cpWidget-x-indicador",
 
 	'<div class="x_content_dato">'+
 		'{{if dataShown.trend!=undefined && !dataShown.trendDescription }}'+
-			'{{if dataShown.trend == 1 }}<big class="trend-up"></big>{{/if}}'+
-			'{{if dataShown.trend == "0" || dataShown.trend == "eq" }}<big class="trend-eq"></big>{{/if}}'+
-			'{{if dataShown.trend == -1 }}<big class="trend-down"></big>{{/if}}'+
+			'{{if dataShown.trend == 1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-up"></big>{{/if}}'+
+			'{{if dataShown.trend == "0" || dataShown.trend == "eq" }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-eq"></big>{{/if}}'+
+			'{{if dataShown.trend == -1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-down"></big>{{/if}}'+
 		'{{/if}}'+
 		'<span class="valor">{{:dataShown.valor}}</span>'+
 		'<span class="valorUM{{if dataShown.valorUM.length < 3 }} big{{/if}}">{{:dataShown.valorUM}}</span>'+
 	'</div>'+
 	
 	'{{if dataShown.trendDescription }}'+
-		'<div class="trend-text1 '+
+		'<div class="trend-text1 {{if iconSet}}iconset-{{:iconSet}}{{/if}} '+
 			'{{if dataShown.trend == 1 }} trend-up{{/if}}'+
 			'{{if dataShown.trend == 0 || dataShown.trend == "eq" }} trend-eq{{/if}}'+
 			'{{if dataShown.trend == -1 }} trend-down{{/if}}'+

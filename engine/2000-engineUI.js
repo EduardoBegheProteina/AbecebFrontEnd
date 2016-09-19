@@ -826,8 +826,21 @@ function tdFromTableData(value, tag) {
 	}
 	var r = '<'+tag+' class="'+ classes +'">';
 	
+	var dato = value[0] ;
+	var formato = "default";
+	
+	if( vObj.cpDataFormat ){ formato = vObj.cpDataFormat; }
+	if( vObj.cpNumberFormat ){ formato = vObj.cpNumberFormat; }
+	if( vObj.f ){ formato = vObj.f; }
+	
+	
+	
+	if( $.isNumeric( dato ) ){
+		dato = cpDataFormat( dato, formato );
+	}
+	
 	if( vObj.um1 ){ r+=vObj.um1 };
-	r+= value[0] ;
+	r+= dato ;
 	if( vObj.um2 ){ r+=vObj.um2 };
 	r+= '</'+tag+'>';
 
