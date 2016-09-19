@@ -510,21 +510,14 @@ function initContextMenu( callee ){
 	};
 	
 	var disabledIfCantEditContent = function( key, opt ){
+		//es no editable?
 		if(disabledOnRenderAncestor( key, opt )){ return true; }
+		if( disabledOnRenderItem ( key, opt ) ){ return true; }
 		
 		var contextWidget = getContextWidget( opt.$trigger )[0];
-		if(
-			$(contextWidget).cpGetData('type1') == 'cphtml'
-			&&
-			$(contextWidget).cpGetData('mode') == 'edit'
-			){
-			return false;
-			}else{
-			return true;
-			}
-			
+		var type1 = ( $(contextWidget).cpGetData('type1') );
+		return ( !(type1 == "cphtml") );
 	}
-
 
 	var disabledOnNoDownloadHref = function( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];		
@@ -551,15 +544,7 @@ function initContextMenu( callee ){
 			}		
 	};
 
-	var disabledOnNotEditableCpHtml = function( key, opt ){
-		//es no editable?
-		if( disabledOnRenderItem ( key, opt ) ){ return true; }
-		
-		//es cphtml?
-		var contextWidget = getContextWidget( opt.$trigger )[0];	
-		var type1 = ( $(contextWidget).cpGetData('type1') );
-		return ( !(type1 == "cphtml") );
-	};
+
 
 	var disabledOnNoCanvasOrImgSrc = function( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];
@@ -574,6 +559,9 @@ function initContextMenu( callee ){
 	};
 	
 	var disabledIfCannotUpdate = function ( key, opt ){
+		if(disabledOnRenderItem( key, opt )){ return true; }
+		if(disabledOnRenderAncestor( key, opt )){ return true; }
+		
 		var contextWidget = getContextWidget( opt.$trigger )[0];
  		if( $(contextWidget).cpGetData('dataUpdated') ){
 			return false;
@@ -583,6 +571,9 @@ function initContextMenu( callee ){
 	}
 
 	var disabledIfCannotAutoUpdate = function ( key, opt ){
+		if(disabledOnRenderItem( key, opt )){ return true; }
+		if(disabledOnRenderAncestor( key, opt )){ return true; }
+
 		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var autoUpdateHTvar = $( contextWidget ).cpGetAncestor().cpGetData('autoUpdate') ;
 		
