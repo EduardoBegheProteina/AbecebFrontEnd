@@ -384,9 +384,12 @@ if(!gData.datasets[i]["dataProjected"]){
 		}
 
 	chartDataObj.options.animation = {
-//			duration: 2000,
+			duration: 50,
 			onComplete: function() {
 			evenWidgetHeights( this.chart.canvas );
+			//procesar foldable widgetsContainers
+			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
+			
 			}
 		}
 
@@ -695,6 +698,13 @@ function renderCpContainer( target, data ){
 		
 		initGraficos();
 		initTopToolbarListeners();
+		
+		//backup processing cpCollapsableClosedAfterRender, in case no graphics were inited
+		setTimeout(function(){
+			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
+			}, 250);
+
+		
 
 		
 	}); //end when.done

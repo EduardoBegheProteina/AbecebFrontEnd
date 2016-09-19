@@ -6,6 +6,41 @@
     color: #000;
 }
 
+.cpContainerNode{
+overflow: hidden;
+}
+/* closed widget container */
+.cpContainerNode.cpCollapsable{}
+.cpContainerNode.cpCollapsableClosedAfterRender>:not(.cpContainerTitle){
+	}
+.cpContainerNode.cpCollapsableClosed>:not(.cpContainerTitle){
+	display:none;
+	}
+
+
+
+.cpContainerTitle{
+    padding: 0 10px 0 20px;
+    color: #000;
+}
+.cpContainerTitle.cpContainerTitleCollapsable{
+	padding-left:10px;
+	cursor:pointer;
+}
+
+.cpContainerTitle .v-align{
+	display:inline-block;
+	white-space: nowrap;
+    vertical-align: middle;
+}
+
+.cpContainerTitle .territorio {
+    display: inline-block;
+    margin-right: 5px !important;
+    height: 15px !important;
+}
+
+
 
 
 div.territorio, span.territorio {

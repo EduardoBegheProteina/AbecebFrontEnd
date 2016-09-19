@@ -589,13 +589,14 @@ $('#modal-widget-update .modal-body .btn-default').click(function(event) {
 });
 
 
+//Tree on Results widgets
 $(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
 	$(this).removeClass('jstree-open').addClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
 	}).on('click','a',function(e) {
         e.stopPropagation();
    });
-
+   
 $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
 	$(this).addClass('jstree-open').removeClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
@@ -603,21 +604,24 @@ $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
         e.stopPropagation();
    });
 	
-
-$(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
-	$(this).removeClass('jstree-open').addClass('jstree-closed');
-	event.preventDefault(); event.stopPropagation();
-	}).on('click','a',function(e) {
-        e.stopPropagation();
-   });
-
-$(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
-	$(this).addClass('jstree-open').removeClass('jstree-closed');
-	event.preventDefault(); event.stopPropagation();
-	}).on('click','a',function(e) {
-        e.stopPropagation();
-   });
 	
+//Tree on cpContainers
+$(document).on('click', '.cpContainerTitle.jstree-open', function(event) {
+	$(this).removeClass('jstree-open').addClass('jstree-closed');
+	$(this).closest('.cpCollapsable').removeClass('cpCollapsableOpened').addClass('cpCollapsableClosed');	
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+
+$(document).on('click', '.cpContainerTitle.jstree-closed', function(event) {
+	$(this).addClass('jstree-open').removeClass('jstree-closed');
+	$(this).closest('.cpCollapsable').addClass('cpCollapsableOpened').removeClass('cpCollapsableClosed');
+	event.preventDefault(); event.stopPropagation();
+	}).on('click','a',function(e) {
+        e.stopPropagation();
+   });
+
 
 }); //end document.ready
 

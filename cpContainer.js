@@ -5,7 +5,7 @@ $.templates("cpContainer",
 
 $.templates("cpContainerNode",
 	'<div id="{{:abecebObjectId}}" data-cpdata=\'{{JSONstringifyNoChildren #data/}}\' '+
-		'class="cpObjectToInit cpContainerNode '+
+		'class="cpObjectToInit cpContainerNode jstree-default '+
 			'{{if type1=="widgetsContainer"}} widgetsContainer {{/if}}'+
 			'{{if type2=="cpRoot"}} cpRoot {{/if}}'+
 			'{{if mode=="edit"}} widgetsContainer-sortable {{/if}}'+
@@ -14,6 +14,10 @@ $.templates("cpContainerNode",
 			
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
 			
+			'{{if cpCollapsable}} cpCollapsable '+
+				'{{if opened}} cpCollapsableOpened {{else}} cpCollapsableClosedAfterRender {{/if}}'+
+			'{{/if}}'+
+			
 		'">'+
 		
 		'{{if type2=="cpRoot"}}'+
@@ -21,14 +25,22 @@ $.templates("cpContainerNode",
 			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
 		'{{/if}}'+
 
-
-'{{if cpHtmlTitle}}{{:cpHtmlTitle}}{{/if}}'+
-'{{if cpCollapsable}}cpCollapsable{{/if}}'+
-'{{if opened}}opened{{/if}}'+
-'{{if territorios}}'+
-'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
-'{{/if}}'+//territorios
-
+'{{if cpHtmlTitle || cpCollapsable}}'+
+	'<div class="cpContainerTitle cpContainerTitleCollapsable {{if opened}} jstree-open {{else}} jstree-closed {{/if}} ">'+
+		'{{if cpCollapsable}}<i class="jstree-icon jstree-ocl v-align"></i>{{/if}}'+
+		'{{if territorios}}'+
+		'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
+		'{{/if}}'+//territorios
+		'{{if cpHtmlTitle}}'+
+		'<div class="titulo v-align">{{:cpHtmlTitle}}</div>'+
+		'{{/if}}'+ //cpHtmlTitle
+	'</div>'+
+// 	'<div class="cpContainerTitle {{if cpCollapsable}}cpContainerTitleCollapsable{{/if}} ">'+
+// 		'{{if cpHtmlTitle}}{{:cpHtmlTitle}}{{/if}}'+
+// 		'{{if cpCollapsable}}cpCollapsable{{/if}}'+
+// 		'{{if opened}}opened{{/if}}'+
+// 	'</div>'+ //.cpContainerTitle
+'{{/if}}'+//cpHtmlTitle || cpCollapsable
 
 
 		'{{for children tmpl="cpContainer"/}}'+
@@ -59,7 +71,7 @@ $.templates("cpHtml",
 
 
 $.templates("cpDBList",
-'<div id="jstree" class="cpDBList jstree jstree-1 jstree-default">'+
+'<div id="" class="cpDBList jstree jstree-1 jstree-default">'+
 
 	'{{for items}}'+ //	'<!-- PAIS -->'+
 	'<ul class="jstree-container-ul jstree-children">'+
