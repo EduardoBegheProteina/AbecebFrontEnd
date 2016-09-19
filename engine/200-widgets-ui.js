@@ -190,7 +190,53 @@ compassGlobalUI.htMenuItemAcceptWidget = function( what, event, ui ){
 getContextWidget = function ( fromChildItem ){
 	return $( fromChildItem ).closest('.contentWidget');
 	}
-	
+
+
+
+/** cpAlert // PNotify **/
+PNotify.prototype.options.styling = "fontawesome";
+//compassGlobalUI.PNstack = {"dir1": "down", "dir2": "right", "push": "top"};
+function cpAlert( options ){
+	new PNotify( options );
+}
+
+/* 
+cpAlert es un wrapper de PNotify.
+
+USAGE
+
+text: texto a presentar
+title: opcional
+hide: opcional; "false" para evitar fade luego de cierto tiempo.
+
+Ejemplos:
+Notice:
+	cpAlert({
+		text: 'Check me out! I\'m a sticky notice. You\'ll have to close me yourself.',
+	});
+
+Info:
+	cpAlert({
+		title: 'New Thing',
+		text: 'Just to let you know, something happened.',
+		type: 'info'
+	});
+
+Success:
+	cpAlert({
+		text: 'That thing that you were trying to do worked!',
+		type: 'success'
+	});
+
+Error:
+	cpAlert({
+		title: 'Uh Oh!',
+		text: 'Something really terrible happened. You really need to read this, so I won\'t close automatically.',
+		type: 'error',
+		hide: false
+	});
+
+*/	
 	
 	
 ///////////// end compassGlobalUI /////////////
