@@ -21,11 +21,17 @@ $.templates("cpContainerNode",
 			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
 		'{{/if}}'+
 
-//		'MODE {{:mode}}'+
-			'{{for children tmpl="cpContainer"/}}'+
 
-		'{{if type2=="cpRoot"}}'+
-		'{{/if}}'+
+'{{if cpHtmlTitle}}{{:cpHtmlTitle}}{{/if}}'+
+'{{if cpCollapsable}}cpCollapsable{{/if}}'+
+'{{if opened}}opened{{/if}}'+
+'{{if territorios}}'+
+'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
+'{{/if}}'+//territorios
+
+
+
+		'{{for children tmpl="cpContainer"/}}'+
 		
 		'<\/div><div class="clearfix"></div>'
 ); //cpContainerNode
@@ -79,27 +85,34 @@ $.templates("cpDBList",
 ); //cpDBList
 
 
+
 $.templates("cpPagination",
 '<hr>'+
 '<div class="cpPagination" {{if style}}style="{{:style}}{{/if}}">'+
 	'<nav> <ul class="pagination pagination-lg">'+	
 		'<li class="page-item {{if pagerCurrent==1}}disabled inactive{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent-1}}{{:pagerURLpattern2}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
-		
-		'{{range start=1 end=pagerTotal}}'+
-		
-		'<li class="page-item {{if #index == #parent.parent.data.pagerCurrent - 1}}active{{/if}}">'+
-			'<a class="page-link" href="{{:#parent.parent.data.pagerURLpattern1}}{{:#index+1}}{{:#parent.parent.data.pagerURLpattern2}}">{{:#index+1}}</a>'+
-			
-			'</li>'+
-		
-		'{{/range}}'+
+
+
+'{{for ~getPaginationArray(pagerCurrent, pagerTotal, 3) ~pagerCurrent=pagerCurrent ~pagerTotal=pagerTotal ~pagerURLpattern1=pagerURLpattern1 ~pagerURLpattern2=pagerURLpattern2 }}'+
+
+	'{{if #data == "..." }}'+
+		'<li class="page-item"><a>&hellip;</a></li>'+	
+	'{{else}}'+
+		'<li class="page-item {{if #data == ~pagerCurrent }}active{{/if}}">'+
+		'<a class="page-link" href="{{:~pagerURLpattern1}}{{:#data}}{{:~pagerURLpattern2}}">{{:#data}}</a>'+
+		'</li>'+
+	'{{/if}}'+
+
+'{{/for}}'+
+
 
 		
 		'<li class="page-item {{if pagerCurrent==pagerTotal}}disabled{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent+1}}{{:pagerURLpattern2}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>'+
 
 	'</ul></nav>'+
 '</div><div class="clearfix"></div>'
-); //cpHtml
+); //cpPagination
+
 
 
 $.templates("cpWidget",

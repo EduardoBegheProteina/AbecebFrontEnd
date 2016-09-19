@@ -381,7 +381,7 @@ if(!gData.datasets[i]["dataProjected"]){
 //			duration: 2000,
 			onComplete: function() {
 			evenWidgetHeights( "BODY" );
-			console.log('////////// animation complete', this )
+//			console.log('////////// animation complete', this )
 			}
 		}
 
@@ -824,6 +824,48 @@ function tdFromTableData(value, tag) {
 	return r;
 }
 $.views.tags("tdFromTableData", tdFromTableData);
+
+
+
+//https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
+function getPaginationArray(current, last, delta) {
+    var delta = delta || 2,
+    	left = current - delta,
+        right = current + delta + 1,
+        range = [],
+        rangeWithDots = [],
+        l;
+
+    for (var i = 1; i <= last; i++) {
+        if (i == 1 || i == last || i >= left && i < right) {
+            range.push(i);
+        }
+    }
+
+    for (var i of range) {
+        if (l) {
+            if (i - l === 2) {
+                rangeWithDots.push(l + 1);
+            } else if (i - l !== 1) {
+                rangeWithDots.push('...');
+            }
+        }
+        rangeWithDots.push(i);
+        l = i;
+    }
+
+    return rangeWithDots;
+}
+
+$.views.helpers({
+  getPaginationArray: getPaginationArray
+  });
+  
+
+
+
+
+
 
 
 
