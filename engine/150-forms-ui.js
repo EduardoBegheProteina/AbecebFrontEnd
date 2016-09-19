@@ -320,8 +320,13 @@ if( formData.widgetType != "indicador"){
 		//build table THEAD
 		var tableData = [ ["Serie"] ]; // [ ["Serie","Col 1","Col 2","Col 3"] ];	
 		if( formData.widgetType=="monitor-variaciones" ){
+			var colIx = 1;
 			for( col in formData.columnas ){
+				if(formData.columnas[col]['userLabel']){
 				tableData[0].push (formData.columnas[col]['userLabel'] );
+				}else{
+				tableData[0].push ("Columna "+colIx)
+				}
 			}
 		}else{
 			for(var i = 1; i<=3; i++){
