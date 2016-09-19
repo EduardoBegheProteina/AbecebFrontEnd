@@ -332,7 +332,11 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 			
 			'<div data-showifchecked="widgetPresentarVariacion" >'+
 			
-			'<select id="widgetPresentarVariacionFormula" name="widgetPresentarVariacionFormula" class="form-control" NOTrequired >'+
+			'<select '+
+				' data-groupname="PresentarDatoFormula" '+
+				' id="widgetPresentarVariacionFormula" '+
+				' name="widgetPresentarVariacionFormula" '+
+				' class="form-control" NOTrequired >'+
 				'{{include tmpl="widgetBuilderFormOptions-variacionFormulaOptions"/}}'+
 			'</select>'+
 			
@@ -376,10 +380,29 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 // formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula
 // '<h1> ( {{: ~fieldPrefix }} ) </h1>'+ // test
 
-'<div class="form-group">'+
+'<div class="form-group"'+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
+	+' >'+
+'<p>Tipo de cálculo:&nbsp;</p>'+
+'<select class="form-control" '+
+	' data-groupname="calculoVariacion-selectTipoCalculoDosPromedios" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios">'+
+	'<option value="porPeriodicidad">Por periodicidad</option>'+
+	'<option value="porFechas">Por fechas</option>'+
+	'</select>'+
+'</div>'+//group
+
+
+'<div class="form-group" '+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="BetweenDatesAverage,BetweenDatesSum,BetweenDatesAveragesVariation" '+
+	+' >'+
 '<p>Número de períodos:&nbsp;</p>'+
 '<div class="input-group spinner">'+
 	'<input type="text" class="form-control" value="1" '+
+//		' data-groupname="calculoVariacion-nroDePeriodos" '+
 		' name="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos" '+
 		' id="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos"> '+
 	'<div class="input-group-btn-vertical">'+
@@ -389,10 +412,14 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 '</div>'+ //spinner
 '</div>'+//group
 
-'<div class="form-group">'+
+'<div class="form-group" '+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="RangedMovingAverage,RangedMovingAveragesVariation" '+
+	+' >'+
 '<p>Valor de N:&nbsp;</p>'+
 '<div class="input-group spinner">'+
 	'<input type="text" class="form-control" value="1" '+
+//		' data-groupname="calculoVariacion-valordeN" '+
 		' name="{{: ~fieldPrefix}}calculoVariacion-valordeN" '+
 		' id="{{: ~fieldPrefix}}calculoVariacion-valordeN">'+
 	'<div class="input-group-btn-vertical">'+
@@ -402,9 +429,13 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 '</div>'+
 '</div>'+//group
 
-'<div class="form-group">'+
+'<div class="form-group" '+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="AccumulatedVariation" '+
+	+' >'+
 '<p>Tipo de cálculo:&nbsp;</p>'+
 '<select class="form-control" '+
+//	' data-groupname="calculoVariacion-tipoDeCalculo" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo">'+
 	'<option value="suma">Suma</option>'+
@@ -412,19 +443,15 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 	'</select>'+
 '</div>'+//group
 
-'<div class="form-group">'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select class="form-control" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios">'+
-	'<option value="porPeriodicidad">Por periodicidad</option>'+
-	'<option value="porFechas">Por fechas</option>'+
-	'</select>'+
-'</div>'+//group
 
-'<div class="form-group">'+
+
+'<div class="form-group"'+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="BetweenDatesAveragesVariation, RangedMovingAveragesVariation, LastPeriodVariation" '+
+	+' >'+
 '<p>Tipo de cálculo:&nbsp;</p>'+
 '<select class="form-control" '+
+//	' data-groupname="calculoVariacion-periodicidad" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-periodicidad" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-periodicidad">'+
 	'<option value="anual">Anual</option>'+
@@ -438,20 +465,31 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 '</div>'+//group
 
 
-'<div class="form-group">'+
+'<div class="form-group"'+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="MomentInTimeVariation, BetweenDatesAveragesVariation" '+
+	+' >'+
 '<p>Fecha hasta:&nbsp;</p>'+
 '<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+//	' data-groupname="calculoVariacion-fechaHasta" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHasta" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHasta">'+
 '</div>'+ //group
 
-'<div class="form-group">'+
+'<div class="form-group"'+
+	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
+	+' >'+
 '<p>2&ordm; Per&iacute;odo: Fecha desde:&nbsp;</p>'+
 '<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+//	' data-groupname="calculoVariacion-fechaDesdeSegundoCalculo" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo">'+
 '<p>2&ordm; Per&iacute;odo: Fecha hasta:&nbsp;</p>'+
 '<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+// 	' data-showifgroupselect="PresentarDatoFormula" '+
+// 	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
+//	' data-groupname="calculoVariacion-fechaHastaSegundoCalculo" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo">'+
 '</div>'//group
@@ -505,6 +543,7 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 		'<div class="form-group inline">'+
 			'<label for="formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula">Mostrar</label>'+
 			'<select'+
+				' data-groupname="PresentarDatoFormula" '+
 				' id="formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula" '+
 				' name="formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula" '+
 				' class="form-control" NOTrequired >'+
@@ -617,6 +656,7 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 			'<div class="form-group inline">'+
 				'<label for="formUI_sortableFormField-serieKey{{:#parent.index}}-PresentarDatoFormula">Mostrar</label>'+
 				'<select id="mostrar" class="form-control" NOTrequired '+
+					' data-groupname="PresentarDatoFormula" '+
 					' id="formUI_sortableFormField-serieKey{{:#parent.index}}-PresentarDatoFormula" '+
 					' name="formUI_sortableFormField-serieKey{{:#parent.index}}-PresentarDatoFormula" '+
 					'>'+

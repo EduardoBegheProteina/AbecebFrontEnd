@@ -121,7 +121,7 @@ $("#widgetBuilderOptionsForm input:checkbox:not(:checked)").each(function() {
 if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 
 	var theFormFields = [
-		"id", "dbName", "dbDatoAlegend", "userLabel", "presentarDatoFormula", //required
+		"id", "dbName", "dbDatoAlegend", "userLabel", "PresentarDatoFormula", //required
 		"chartType", "ejeCero", //optional
 		//calculos:
 		"calculoVariacion-nroDePeriodos",
@@ -166,7 +166,7 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
 
 	var theFormFields = [
-		"userLabel", "presentarDatoFormula", //required
+		"userLabel", "PresentarDatoFormula", //required
 		//calculos:
 		"calculoVariacion-nroDePeriodos",
 		"calculoVariacion-valordeN",
@@ -634,6 +634,7 @@ $( ".sortableFormFieldsGroup" ).sortable({
 
 
 $( "input:checkbox" ).checkGroupedOptions();
+$( "select" ).selectGroupedOptions();
 
 
 $('.widgetBuilderOptionsForm').submit(function( event ) {
@@ -772,12 +773,14 @@ $.fn.serializeObject = function()
 
 
 
-// funcion para check groups
-(function( $ ) {
- 
-    $.fn.checkGroupedOptions = function() {
 
-return this.each(function() { 
+(function( $ ) {
+
+	// funcion para check groups
+	
+	$.fn.checkGroupedOptions = function() {
+
+	return this.each(function() { 
  
  	var checkboxName = $(this).attr('name');
  	var checked = $(this).prop('checked');
@@ -794,10 +797,69 @@ return this.each(function() {
     } )
     }
 
+
+	// funcion para select groups
+	
+	$.fn.selectGroupedOptions = function() {
+
+	return this.each(function() { 
+ 
+ 	//var selectName = $(this).attr('name');
+ 	var groupName = $(this).data( "groupname" );
+ 	var selectVal = $(this).val();
+ 	//console.log('groupName', groupName, selectVal)
+ 	
+ 	//inferir el contenedor
+ 	var groupContainer = $(this).closest('.subfieldset') //sub grouped options
+	if($(groupContainer).length==0){
+ 		groupContainer = $(this).closest('.sortableFormField') //sortable fields
+ 		}
+ 	if($(groupContainer).length==0){
+ 		groupContainer = $(this).closest('fieldset') //global fields
+	 	}
+ 	
+ 	if( $(groupContainer).length>0) {
+
+ 	$(groupContainer).find('[data-showifgroupselect~="'+groupName+'"]').each(function( index ) {
+		//console.log ('testing item: ', this )
+		var showifgroupselectvalues = $(this).data('showifgroupselectvalues');
+		showifgroupselectvalues = showifgroupselectvalues.split(",");
+		//console.log ('groupName in', groupName, showifgroupselectvalues)
+		if(showifgroupselectvalues.indexOf(selectVal)>-1 ){
+			//console.log('show', this)
+			$(this).show(250);
+		}else{
+			//console.log('hide', this)
+			$(this).hide(250);
+		}
+		
+
+		}); //end each
+	
+	}//end existe groupContainer
+
+ 	
+ 	 
+//  	if(checked){
+//  		$('[data-showifchecked="'+checkboxName+'"]').show(250);
+//  		$('[data-showifnotchecked="'+checkboxName+'"]').hide();
+//  	}else{
+//  		$('[data-showifchecked="'+checkboxName+'"]').hide();
+//  		$('[data-showifnotchecked="'+checkboxName+'"]').show(250);
+//  	}
+ 	
+    //return this;
+    } )
+    }
+
   }( jQuery ));
 
 
 $( "BODY" ).on( "click", "input:checkbox", function() {
 	$(this).checkGroupedOptions();
+});
+
+$( "BODY" ).on( "click, change", "select", function() {
+	$(this).selectGroupedOptions();
 });
 
