@@ -117,7 +117,22 @@ $("#widgetBuilderOptionsForm input:checkbox:not(:checked)").each(function() {
     });
 
 
+
 if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
+
+	var theFormFields = [
+		"id", "dbName", "dbDatoAlegend", "userLabel", "presentarDatoFormula", //required
+		"chartType", "ejeCero", //optional
+		//calculos:
+		"calculoVariacion-nroDePeriodos",
+		"calculoVariacion-valordeN",
+		"calculoVariacion-tipoDeCalculo",
+		"calculoVariacion-selectTipoCalculoDosPromedios",
+		"calculoVariacion-periodicidad",
+		"calculoVariacion-fechaHasta",
+		"calculoVariacion-fechaDesdeSegundoCalculo",
+		"calculoVariacion-fechaHastaSegundoCalculo"
+	]
 	
 	widgetBuilderFormData["series"] = [];
 	var sortedKeys = widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"]
@@ -130,24 +145,15 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 	
 	$.each( sortedKeys , function( index, value ) {
 	
-	
-		widgetBuilderFormData["series"][index] = {
-			id : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-ID"],
-			dbName : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-dbName"],
-			dbDatoAlegend : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-dbDatoAlegend"],
-			
-			userLabel : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-userLabel"],
-			presentarDatoFormula : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-PresentarDatoFormula"]
-			}
+		widgetBuilderFormData["series"][index] = {};
 		
-		if( widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-chartType"] ){
-			widgetBuilderFormData["series"][index]["chartType"] =
-				widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-chartType"];
+		for( var theFieldIx in theFormFields){
+			var theFieldName = theFormFields[theFieldIx];
+			if( widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-" + theFieldName] ){
+			widgetBuilderFormData["series"][index][theFieldName] =
+				widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-" + theFieldName];
 				}
-		if(widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-ejeCero"]){
-			widgetBuilderFormData["series"][index]["ejeCero"] =
-				widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-ejeCero"];
-				}
+		}
 
 		
 	}); //end each sortedKeys
@@ -155,7 +161,23 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 }//end if serie-sortedKeys
 
 
+
+
 if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
+
+	var theFormFields = [
+		"userLabel", "presentarDatoFormula", //required
+		//calculos:
+		"calculoVariacion-nroDePeriodos",
+		"calculoVariacion-valordeN",
+		"calculoVariacion-tipoDeCalculo",
+		"calculoVariacion-selectTipoCalculoDosPromedios",
+		"calculoVariacion-periodicidad",
+		"calculoVariacion-fechaHasta",
+		"calculoVariacion-fechaDesdeSegundoCalculo",
+		"calculoVariacion-fechaHastaSegundoCalculo"
+	]
+	
 
 	widgetBuilderFormData["columnas"] = [];
 	
@@ -167,12 +189,17 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
 
 	$.each( sortedKeys , function( index, value ) {
 
-		var columnaOptions = {
-			userLabel : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-userLabel"],
-			presentarDatoFormula : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-PresentarDatoFormula"]
-			}
-
-		widgetBuilderFormData["columnas"][index] = columnaOptions;
+		widgetBuilderFormData["columnas"][index] = {};
+		
+		for( var theFieldIx in theFormFields){
+			var theFieldName = theFormFields[theFieldIx];
+			if( widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName] ){
+			widgetBuilderFormData["columnas"][index][theFieldName] =
+				widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName];
+				}
+		}
+		
+		
 	}); //end each sortedKeys
 
 

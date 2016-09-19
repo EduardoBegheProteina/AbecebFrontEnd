@@ -372,10 +372,16 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 
 $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
+// formUI_sortableFormField-serieKey{{:#parent.index}}-chartType
+// formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula
+// '<h1> ( {{: ~fieldPrefix }} ) </h1>'+ // test
+
 '<div class="form-group">'+
 '<p>Número de períodos:&nbsp;</p>'+
 '<div class="input-group spinner">'+
-	'<input type="text" class="form-control" value="1" name="calculoVariacion-nroDePeriodos">'+
+	'<input type="text" class="form-control" value="1" '+
+		' name="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos" '+
+		' id="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos"> '+
 	'<div class="input-group-btn-vertical">'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
@@ -386,7 +392,9 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 '<div class="form-group">'+
 '<p>Valor de N:&nbsp;</p>'+
 '<div class="input-group spinner">'+
-	'<input type="text" class="form-control" value="1" name="calculoVariacion-valordeN">'+
+	'<input type="text" class="form-control" value="1" '+
+		' name="{{: ~fieldPrefix}}calculoVariacion-valordeN" '+
+		' id="{{: ~fieldPrefix}}calculoVariacion-valordeN">'+
 	'<div class="input-group-btn-vertical">'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
@@ -396,7 +404,9 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
 '<div class="form-group">'+
 '<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-tipoDeCalculo">'+
+'<select class="form-control" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo">'+
 	'<option value="suma">Suma</option>'+
 	'<option value="promedio">Promedio</option>'+
 	'</select>'+
@@ -404,7 +414,9 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
 '<div class="form-group">'+
 '<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-sellectTipoCalculoDosPromedios">'+
+'<select class="form-control" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios">'+
 	'<option value="porPeriodicidad">Por periodicidad</option>'+
 	'<option value="porFechas">Por fechas</option>'+
 	'</select>'+
@@ -412,7 +424,9 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
 '<div class="form-group">'+
 '<p>Tipo de cálculo:&nbsp;</p>'+
-'<select name="calculoVariacion-periodicidad">'+
+'<select class="form-control" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-periodicidad" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-periodicidad">'+
 	'<option value="anual">Anual</option>'+
 	'<option value="semestral">Semestral</option>'+
 	'<option value="trimestral">Trimestral</option>'+
@@ -423,15 +437,24 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 	'</select>'+
 '</div>'+//group
 
-'<div class="form-group">'+
-'<p>Fecha desde:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" name="calculoVariacion-fechaDesde">'+
-'</div>'+//group
 
 '<div class="form-group">'+
 '<p>Fecha hasta:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" name="calculoVariacion-fechaHasta">'+
-'</div>' //group
+'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHasta" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHasta">'+
+'</div>'+ //group
+
+'<div class="form-group">'+
+'<p>2&ordm; Per&iacute;odo: Fecha desde:&nbsp;</p>'+
+'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo">'+
+'<p>2&ordm; Per&iacute;odo: Fecha hasta:&nbsp;</p>'+
+'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo">'+
+'</div>'//group
 
 				
 ); //widgetBuilderFormOptions-variacionFormulaOptions
@@ -487,8 +510,10 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 				' class="form-control" NOTrequired >'+
 					'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions" ~presentarDatoFormula=presentarDatoFormula /}}'+
 			'</select>'+
-			
-			'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
+
+			//'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
+			'{{include ~fieldPrefix="formUI_sortableFormField-columnaKey"+#parent.index+"-" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
+
 			
 		'</div> '+
 		'<div class="form-group inline cta-btn">'+
@@ -598,7 +623,7 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 					'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions"/}}'+
 				'</select>'+
 				
-				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
+				'{{include ~fieldPrefix="formUI_sortableFormField-serieKey"+#parent.index+"-" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 				
 			'</div>'+
 			'{{/if}}'+

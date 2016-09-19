@@ -164,16 +164,23 @@ if( gData.datasets[0].type ){
 var gDataDatasets2 = [];
 for( var i=0; i<gData.datasets.length; i++){
 
-	if( gData.datasets[i]["chartType"] ){
-		gData.datasets[i]["type"] = gData.datasets[i]["chartType"]
+
+	var gDataChartType;
+	if( gData.datasets[i].type ){
+		gDataChartType = gData.datasets[i].type
+		}else if ( gData.datasets[i].chartType ){
+		gDataChartType = gData.datasets[i].chartType
+		}else{
+		gDataChartType = "line"
 		}
-		
+
+
 	//agregamos al nuevo array el elemento que estamos procesando
 	gDataDatasets2.push (gData.datasets[i]);
 	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
 	if(gData.datasets[i]["dataProjected"]){	
 
-		if( gData.datasets[i]["type"] == "line" || gData.datasets[i]["type"] == "area" ){
+		if( gDataChartType == "line" || gDataChartType == "area" ){
 
 			var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
 			gDataIdataSet["isProjected"] = true;
