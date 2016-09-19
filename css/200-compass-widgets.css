@@ -55,7 +55,7 @@
 
 .contentWidget{
 	float:left;
-	overflow: hidden;
+/*	overflow: hidden;*/
 	}
 .contentWidget>DIV{
 	border-radius:2px;

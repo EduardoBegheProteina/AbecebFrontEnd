@@ -380,8 +380,8 @@ if(!gData.datasets[i]["dataProjected"]){
 	chartDataObj.options.animation = {
 //			duration: 2000,
 			onComplete: function() {
-			evenWidgetHeights( "BODY" );
-//			console.log('////////// animation complete', this )
+			evenWidgetHeights( this.chart.canvas );
+//			console.log('////////// animation complete', this.chart.canvas )
 			}
 		}
 

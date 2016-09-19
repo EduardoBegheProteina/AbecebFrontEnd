@@ -360,8 +360,11 @@ $( "#htMenuItemLI,#htMenuItemLI>UL>LI,#sortableHtPages>LI" ).droppable({
 
 function addNewTextWidget(){
 	
-	var container = $('#topToolbar');
-	var beforeOrAfter = 'after';
+	//var container = $('#topToolbar');
+	//var beforeOrAfter = 'after';
+
+	var container = $("#cpRoot").find(".widgetsContainer").first(); //text widget will be inserted in first widgetsContainer available.
+	var beforeOrAfter = 'before'; //instruct to prepend new widget before other widgets
 	
 	var data = {
 		"abecebObjectId": "newTextWidget" + getUagTimestampID() + "-ObjectId",
@@ -626,18 +629,35 @@ function updateWidgetData( contextWidget , doPersist ){ //doPersist: optional, p
 
 function evenWidgetHeights( container ){
 
-//if not a last level widget container, call again for all widgetsContainer children
-if( $( container ).find(".widgetsContainer").length != 0 ){
-	$( container ).find(".widgetsContainer").each(function() {
-		evenWidgetHeights( this )
-	});
-}
+//For greater flexibility:
+
+	//if not a last level widget container, call again for all widgetsContainer children
+	if( $( container ).find(".widgetsContainer").length != 0 ){
+		$( container ).find(".widgetsContainer").each(function() {
+			evenWidgetHeights( this )
+		});
+		return false; //stop processing elements
+	}
+	//if not a widget container, find it's container up and call again
+	if( ! ($( container ).hasClass("widgetsContainer") ) ) {
+		var theWidgetsContainer = $( container ).closest( ".widgetsContainer" );
+		if(theWidgetsContainer.length != 0){ 
+			evenWidgetHeights( theWidgetsContainer )
+			}
+		return false; //stop processing elements
+	}
+
+
+//From this point onwards, we have a container.
 
 //get container width
 var containerWidth = $(container).width();
 
 //get widgets
-var widgets = $(container).find('.contentWidget')
+var widgets = $(container).children('.contentWidget')
+
+// console.log ('container', $(container).width(), container)
+// console.log ( 'widgets', widgets)
 
 //reset all widget heights
 $(widgets).each(function() { $( this ).height( "auto" ); });
@@ -649,13 +669,18 @@ var sumWidths = 0;
 
 //for each widget
 $(widgets).each(function() {
+
+	// console.log('processing w h this', $(this).width(), $(this).height(), this )
 	
-	//if widget width overflows container, process buffer
+	//add widget's width to processed sumWidths
 	sumWidths += $(this).width();
-	
+
+	//if widget width overflows container, process buffer
 	if(sumWidths>containerWidth){
+		// console.log ( 'this widget starts a new line' );
 		//this widget starts a new line.
 		//process last line buffer widgets: assign their line's max height to all
+			// console.log( widgetsBufferMaxHeight, widgetsBuffer )
 			$( widgetsBuffer ).each(function() {
 				$(this).height( widgetsBufferMaxHeight )
 			});
@@ -715,6 +740,13 @@ function tryToLocalizeTimestamp( d, format ){
 	return moment (d).format(format);
 	
 }
+
+
+
+
+
+
+
 
 
 

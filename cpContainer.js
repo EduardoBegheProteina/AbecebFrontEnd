@@ -96,7 +96,7 @@ $.templates("cpPagination",
 '{{for ~getPaginationArray(pagerCurrent, pagerTotal, 3) ~pagerCurrent=pagerCurrent ~pagerTotal=pagerTotal ~pagerURLpattern1=pagerURLpattern1 ~pagerURLpattern2=pagerURLpattern2 }}'+
 
 	'{{if #data == "..." }}'+
-		'<li class="page-item"><a>&hellip;</a></li>'+	
+		'<li class="page-item disabled"><span>&hellip;</span></li>'+	
 	'{{else}}'+
 		'<li class="page-item {{if #data == ~pagerCurrent }}active{{/if}}">'+
 		'<a class="page-link" href="{{:~pagerURLpattern1}}{{:#data}}{{:~pagerURLpattern2}}">{{:#data}}</a>'+

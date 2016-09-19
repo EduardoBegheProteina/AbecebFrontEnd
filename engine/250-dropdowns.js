@@ -133,6 +133,8 @@ function showEditContentDialog( contextWidget ){
 						//aplicamos cpHtml en root y root.dataShown del objeto
 						$( contextWidget )[0].cpData[usrctntKey] = newCpHtml;
 						$( contextWidget )[0].cpData['dataShown'][usrctntKey] = newCpHtml;
+						
+						evenWidgetHeights( $( contextWidget ) );
 
 						$( contextWidget ).cpPersist(events.widgetEdit);
 						
@@ -233,7 +235,7 @@ processWidgetContextMenu = function(itemKey, opt){
 	case "resize-6":
 	case "resize-12":
 		
-		//reset all heights
+		//reset all heights so graph could scale
 		resetWidgetHeights( $(contextWidgetContainer) );
 		
 		//reset widget size
@@ -243,22 +245,15 @@ processWidgetContextMenu = function(itemKey, opt){
 		var requestedSize = itemKey.substr(7);
 		contextWidget.addClass('col-md-'+requestedSize+' col-sm-'+requestedSize);
 				
-// 		setTimeout(function( ){
-// 		console.log ( "TIME", contextWidgetContainer )
-// 		  evenWidgetHeights( $(contextWidgetContainer) );
-// 		}, 250);
-// 		setTimeout(function( ){
-// 		console.log ( "TIME", contextWidgetContainer )
-// 		  evenWidgetHeights( $(contextWidgetContainer) );
-// 		}, 500);
-
-		
 		$(contextWidget).cpSetData( { 'gridWidth': requestedSize } );
 		$(contextWidget).cpPersist( events.widgetResize );
+		
+		//ONLY if NOT a graph widget, evenWidgetHeights
+		//if IS a graph widget, let the graph call evenWidgetHeights after redrawing
+		if(	$(contextWidget).find('canvas').length == 0 ){
+			evenWidgetHeights( $(contextWidgetContainer) );	
+		}
 	
-		//normalize heights
-		evenWidgetHeights( $(contextWidgetContainer) );
-
 		break;
 		
 
@@ -324,6 +319,7 @@ processWidgetContextMenu = function(itemKey, opt){
 						$( contextWidget ).find(targetFinder).text( result )
 						$( contextWidget )[0].cpData[usrctntKey] = result;
 						$( contextWidget )[0].cpData['dataShown'][usrctntKey] = result;
+						evenWidgetHeights( $( contextWidget ) );
 						$( contextWidget ).cpPersist(events.widgetEdit);
 					}
 				}
@@ -358,6 +354,7 @@ processWidgetContextMenu = function(itemKey, opt){
 					} else {
 						$( contextWidget ).find(targetFinder).text( result )
 						$( contextWidget )[0].cpData['dataShown'][usrctntKey] = result;
+						evenWidgetHeights( $( contextWidget ) );
 						$( contextWidget ).cpPersist(events.widgetEdit);
 					}
 				}
@@ -511,6 +508,22 @@ function initContextMenu( callee ){
 		var editMode = ( $(contextWidget).cpGetAncestor().cpGetData('mode') );
 		return ( !(editMode == "edit") );
 	};
+	
+	var disabledIfCantEditContent = function( key, opt ){
+		if(disabledOnRenderAncestor( key, opt )){ return true; }
+		
+		var contextWidget = getContextWidget( opt.$trigger )[0];
+		if(
+			$(contextWidget).cpGetData('type1') == 'cphtml'
+			&&
+			$(contextWidget).cpGetData('mode') == 'edit'
+			){
+			return false;
+			}else{
+			return true;
+			}
+			
+	}
 
 
 	var disabledOnNoDownloadHref = function( key, opt ){
@@ -654,10 +667,10 @@ function initContextMenu( callee ){
         		disabled: disabledOnRenderAncestor,
         		"name": "Editar título", "icon": "fa-pencil-square-o"
         		},
-        	/*"config-cphtml": {
-        		disabled: disabledOnRenderAncestor,
+        	"config-cphtml": {
+        		disabled: disabledIfCantEditContent,
         		"name": "Editar contenido", "icon": "fa-pencil-square-o"
-        		},*/
+        		},
         		
         	"config-usrctnt1": {
         		disabled: disabledOnRenderAncestor,
