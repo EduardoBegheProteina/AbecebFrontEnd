@@ -380,20 +380,26 @@
   margin-left: 24px;
   min-width: 24px;
 }
+
 .jstree-default .jstree-anchor {
   line-height: 24px;
   padding-left: 50px;
 
-/* opcional: una linea por item, cortada a la derecha, puntos suspensivos */
-/*
-  height: 24px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space:nowrap;
-  max-width:90%;
-*/
+/* opcion A: mostrar parrafo completo // hay conflictos con CSS de framework */
+/*  display: inline-block;*/
 
+/* opcion B: una linea por item, cortada a la derecha, puntos suspensivos */
+  height: 24px!important;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+  white-space:nowrap!important;
+  max-width:95%!important;
 }
+
+.jstree-default .jstree-anchor .jstree-anchor{
+	padding-left: 0px;
+}
+
 .jstree-default .jstree-icon {
   width: 24px;
   height: 24px;
@@ -465,7 +471,7 @@
 }
 .jstree-default .jstree-checkbox {
   background-position: -164px -4px;
-  margin-left: -50px
+  margin-left: -50px!important
 }
 .jstree-default .jstree-checkbox:hover {
   background-position: -164px -36px;
