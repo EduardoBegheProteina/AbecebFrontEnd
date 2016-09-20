@@ -880,7 +880,10 @@ $.views.tags("tdFromTableData", tdFromTableData);
 
 //https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
 function getPaginationArray(current, last, delta) {
-    var delta = delta || 2,
+
+    var current = Number( current ),
+    	last = Number( last ),
+    	delta = Number( delta ) || 2,
     	left = current - delta,
         right = current + delta + 1,
         range = [],
