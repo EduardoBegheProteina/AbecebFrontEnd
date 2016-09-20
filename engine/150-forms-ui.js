@@ -326,7 +326,6 @@ for( ix in formData.columnas ){
 	if( formData.columnas[ix].presentarDatoFormula ){
 		formData.columnas[ix].calculationType = formData.columnas[ix].presentarDatoFormula
 		}//end if presentarDatoFormula
-	}//end for
 	if( formData.columnas[ix].PresentarDatoFormula ){
 		formData.columnas[ix].calculationType = formData.columnas[ix].PresentarDatoFormula
 		}//end if presentarDatoFormula
