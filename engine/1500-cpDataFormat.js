@@ -5,7 +5,7 @@ numeral.language('es');
 cpDataFormats = {
 
 
-	default: function(dato,vars,loc){
+	defaultValue: function(dato,vars,loc){
 		//formato no especificado o invalido. Default: separador de miles, dos decimales
 		return numeral(dato).format('0,000.00');
 	},
@@ -63,7 +63,7 @@ function cpDataFormat(dato,format,vars,loc){
 	}else if( cpDataFormats[format] ){
 		return cpDataFormats[format](dato,vars,loc);
 	}else{
-		return cpDataFormats["default"](dato,vars);
+		return cpDataFormats["defaultValue"](dato,vars);
 	}
 
 }
