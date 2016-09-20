@@ -314,6 +314,9 @@ for( ix in formData.series ){
 	if( formData.series[ix].presentarDatoFormula ){
 		formData.series[ix].calculationType = formData.series[ix].presentarDatoFormula
 		}//end if presentarDatoFormula
+	if( formData.series[ix].PresentarDatoFormula ){
+		formData.series[ix].calculationType = formData.series[ix].PresentarDatoFormula
+		}//end if presentarDatoFormula
 	}//end for
 }//end if formData.series
 
@@ -322,6 +325,10 @@ if(formData.columnas){
 for( ix in formData.columnas ){
 	if( formData.columnas[ix].presentarDatoFormula ){
 		formData.columnas[ix].calculationType = formData.columnas[ix].presentarDatoFormula
+		}//end if presentarDatoFormula
+	}//end for
+	if( formData.columnas[ix].PresentarDatoFormula ){
+		formData.columnas[ix].calculationType = formData.columnas[ix].PresentarDatoFormula
 		}//end if presentarDatoFormula
 	}//end for
 }//end if formData.columnas
