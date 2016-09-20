@@ -121,7 +121,7 @@ $("#widgetBuilderOptionsForm input:checkbox:not(:checked)").each(function() {
 if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 
 	var theFormFields = [
-		"id", "dbName", "dbDatoAlegend", "userLabel", "PresentarDatoFormula", //required
+//		"id", "dbName", "dbDatoAlegend", "userLabel", "PresentarDatoFormula", //required
 		"chartType", "ejeCero", //optional
 		//calculos:
 		"calculoVariacion-nroDePeriodos",
@@ -145,7 +145,16 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 	
 	$.each( sortedKeys , function( index, value ) {
 	
-		widgetBuilderFormData["series"][index] = {};
+		widgetBuilderFormData["series"][index] = {
+			id : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-ID"],
+			dbName : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-dbName"],
+			dbDatoAlegend : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-dbDatoAlegend"],
+			
+			userLabel : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-userLabel"],
+			presentarDatoFormula : widgetBuilderFormData["formUI_sortableFormField-serieKey"+value+"-PresentarDatoFormula"]
+			}
+
+		// widgetBuilderFormData["series"][index] = {};
 		
 		for( var theFieldIx in theFormFields){
 			var theFieldName = theFormFields[theFieldIx];
@@ -166,7 +175,7 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
 if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
 
 	var theFormFields = [
-		"userLabel", "PresentarDatoFormula", //required
+//		"userLabel", "PresentarDatoFormula", //required
 		//calculos:
 		"calculoVariacion-nroDePeriodos",
 		"calculoVariacion-valordeN",
@@ -189,7 +198,14 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
 
 	$.each( sortedKeys , function( index, value ) {
 
-		widgetBuilderFormData["columnas"][index] = {};
+		//widgetBuilderFormData["columnas"][index] = {};
+
+		var columnaOptions = {
+			userLabel : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-userLabel"],
+			presentarDatoFormula : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-PresentarDatoFormula"]
+			}
+
+		widgetBuilderFormData["columnas"][index] = columnaOptions;
 		
 		for( var theFieldIx in theFormFields){
 			var theFieldName = theFormFields[theFieldIx];
