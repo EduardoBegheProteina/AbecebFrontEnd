@@ -32,7 +32,7 @@
 				$( this ).removeAttr("data-" + "cpdata");
 
 			}else{
-				//si se pas— cpData como objeto, lo preservamos.
+				//si se pasï¿½ cpData como objeto, lo preservamos.
 				if(!$(this)[0]["cpData"] ){
 					$(this)[0].cpData = { };
 				}
@@ -58,7 +58,7 @@
 	
 	$.fn.cpGetData = function( nodo ){
 	
-		if( $(this)[0].cpData ){
+		if($(this)[0] && $(this)[0].cpData ){
 			if( nodo ){
 				if( $(this)[0].cpData[nodo] ){
 					return $(this)[0].cpData[nodo]
@@ -84,7 +84,7 @@
 				return result;
 			}
 
-		}else{ //no cpData
+		} else{ //no cpData
 			console.log ( '$.fn.cpGetData: objeto no tiene cpData', this);
 			return false;
 		}//end if cpData

@@ -213,10 +213,13 @@ function persistSidebar(jsonData){
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Sidebar Persistida");
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 }
@@ -241,10 +244,13 @@ function getSidebar(){
 				var url = httpGet(data.compassConsultorAvatarURL);
 				$('#compassConsultorDiv img').attr("src", url);
 			}
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 }
@@ -261,11 +267,14 @@ function getWorkspace( compassWorkspaceID , callback){
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Espacio obtenido correctamente");
+			createAlert(data);
 			callback(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -283,11 +292,14 @@ function getMyWorkspaces(callback){
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Espacio obtenido correctamente");
+			createAlert(data);
 			callback(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 }
@@ -309,11 +321,14 @@ function addChildrenToWorkspace(compassWorkspaceID, newChildren, evento){
 			console.log("Elemento agregado exitosamente");
 			result = data;
 			result.status = data.httpResponseCode;
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
 			result = jqXHR;
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -336,10 +351,13 @@ function persistWorkspace(data, isNewWorkspace, evento){
 			if(isNewWorkspace){
 				getSidebar();
 			}
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 }
@@ -358,10 +376,13 @@ function removeWorkspace(compassWorkspaceID) {
 		contentType: "application/json",
 		success: function(data) {
 			console.log("Elemento Elminado");
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 }
@@ -380,10 +401,13 @@ function renameWorkspace(compassWorkspaceID, newTitle) {
 		success: function(data) {
 			console.log("Elemento Renombrado");
 			getSidebar();
+			createAlert(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log("textStatus: " + textStatus);
 			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -395,4 +419,17 @@ function httpGet(theUrl)
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );
     return xmlHttp.responseText;
+}
+
+function createAlert(data)
+{
+	if(data.cpAlert) {
+		alert = data.cpAlert;
+		cpAlert({
+			title: alert.title,
+			text: alert.text,
+			type: alert.type,
+			hide: alert.hide
+		});
+	}	
 }
