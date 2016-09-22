@@ -167,23 +167,37 @@ function saveWidgetToHT( data ){
 		)
 
 	if(data.dataShown.columnas){
-		var columnas = {
-			userLabel: [],
-			presentarDatoFormula: [],
-			calculationType: []
-		};
+		var columnas = [];
 		$.each(data.dataShown.columnas, function( index, value ) {
-			columnas.userLabel.push(value.userLabel);
-			columnas.presentarDatoFormula.push(value.presentarDatoFormula);
-			columnas.calculationType.push(value.calculationType);
+			var columna = { };
+			columna.userLabel = value.userLabel;
+			columna.presentarDatoFormula = value.presentarDatoFormula;
+			columna.calculationType = value.calculationType;
+			columnas.push(columna);
 		});
-		data.dataShown.columnas = [];
-		data.dataShown.columnas.push(columnas);
-		data.columnas = [];
-		data.columnas.push(columnas);
+//		data.dataShown.columnas = [];
+//		data.dataShown.columnas.push(columnas);
+		data.dataShown.columnas = columnas;
+		
+//		var columnas = {
+//				userLabel: [],
+//				presentarDatoFormula: [],
+//				calculationType: []
+//			};
+//			$.each(data.dataShown.columnas, function( index, value ) {
+//				columnas.userLabel.push(value.userLabel);
+//				columnas.presentarDatoFormula.push(value.presentarDatoFormula);
+//				columnas.calculationType.push(value.calculationType);
+//			});
+//			data.dataShown.columnas = [];
+//			data.dataShown.columnas.push(columnas);
+		
+		
+//		data.columnas = [];
+//		data.columnas.push(columnas);
 	}
-	console.log(JSON.stringify(data.dataShown.columnas));
-	console.log(JSON.stringify(data));
+//	console.log(JSON.stringify(data.dataShown.columnas));
+//	console.log(JSON.stringify(data));
 	ws = addChildrenToWorkspace(data.saveToHTid, data, events.widgetBuilderCreated);	
 		
 	

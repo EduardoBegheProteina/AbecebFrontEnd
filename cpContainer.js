@@ -11,13 +11,10 @@ $.templates("cpContainerNode",
 			'{{if mode=="edit"}} widgetsContainer-sortable {{/if}}'+
 			'{{if mode=="render"}} widgetsContainer-draggable {{/if}}'+
 			'{{if autoUpdate}} htHasautoUpdate {{/if}}'+
-			
 			'{{if gridWidth}} col-md-{{:gridWidth}} col-md-{{:gridWidth}} col-xs-12 {{/if}}'+
-			
 			'{{if cpCollapsable}} cpCollapsable '+
 				'{{if opened}} cpCollapsableOpened {{else}} cpCollapsableClosedAfterRender {{/if}}'+
 			'{{/if}}'+
-			
 		'">'+
 		
 		'{{if type2=="cpRoot"}}'+
@@ -25,22 +22,22 @@ $.templates("cpContainerNode",
 			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
 		'{{/if}}'+
 
-'{{if cpHtmlTitle || cpCollapsable}}'+
-	'<div class="cpContainerTitle cpContainerTitleCollapsable {{if opened}} jstree-open {{else}} jstree-closed {{/if}} ">'+
-		'{{if cpCollapsable}}<i class="jstree-icon jstree-ocl v-align"></i>{{/if}}'+
-		'{{if territorios}}'+
-		'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
-		'{{/if}}'+//territorios
-		'{{if cpHtmlTitle}}'+
-		'<div class="titulo v-align">{{:cpHtmlTitle}}</div>'+
-		'{{/if}}'+ //cpHtmlTitle
-	'</div>'+
-// 	'<div class="cpContainerTitle {{if cpCollapsable}}cpContainerTitleCollapsable{{/if}} ">'+
-// 		'{{if cpHtmlTitle}}{{:cpHtmlTitle}}{{/if}}'+
-// 		'{{if cpCollapsable}}cpCollapsable{{/if}}'+
-// 		'{{if opened}}opened{{/if}}'+
-// 	'</div>'+ //.cpContainerTitle
-'{{/if}}'+//cpHtmlTitle || cpCollapsable
+		'{{if cpHtmlTitle || cpCollapsable}}'+
+			'<div class="cpContainerTitle cpContainerTitleCollapsable {{if opened}} jstree-open {{else}} jstree-closed {{/if}} ">'+
+				'{{if cpCollapsable}}<i class="jstree-icon jstree-ocl v-align"></i>{{/if}}'+
+				'{{if territorios}}'+
+				'<div class="territorio v-align"><span class="T0 xh-flag xh-{{toClassName:territorios[0]}}"></span></div>'+
+				'{{/if}}'+//territorios
+				'{{if cpHtmlTitle}}'+
+				'<div class="titulo v-align">{{:cpHtmlTitle}}</div>'+
+				'{{/if}}'+ //cpHtmlTitle
+			'</div>'+
+		// 	'<div class="cpContainerTitle {{if cpCollapsable}}cpContainerTitleCollapsable{{/if}} ">'+
+		// 		'{{if cpHtmlTitle}}{{:cpHtmlTitle}}{{/if}}'+
+		// 		'{{if cpCollapsable}}cpCollapsable{{/if}}'+
+		// 		'{{if opened}}opened{{/if}}'+
+		// 	'</div>'+ //.cpContainerTitle
+		'{{/if}}'+//cpHtmlTitle || cpCollapsable
 
 
 		'{{for children tmpl="cpContainer"/}}'+
@@ -71,7 +68,7 @@ $.templates("cpHtml",
 
 
 $.templates("cpDBList",
-'<div id="" class="cpDBList jstree jstree-1 jstree-default">'+
+	'<div id="" class="cpDBList jstree jstree-1 jstree-default">'+
 
 	'{{for items}}'+ //	'<!-- PAIS -->'+
 	'<ul class="jstree-container-ul jstree-children">'+
@@ -97,34 +94,38 @@ $.templates("cpDBList",
 ); //cpDBList
 
 
-
 $.templates("cpPagination",
 '<hr>'+
 '<div class="cpPagination" {{if style}}style="{{:style}}{{/if}}">'+
 	'<nav> <ul class="pagination pagination-lg">'+	
 		'<li class="page-item {{if pagerCurrent==1}}disabled inactive{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent-1}}{{:pagerURLpattern2}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
-
-
-'{{for ~getPaginationArray(pagerCurrent, pagerTotal, 3) ~pagerCurrent=pagerCurrent ~pagerTotal=pagerTotal ~pagerURLpattern1=pagerURLpattern1 ~pagerURLpattern2=pagerURLpattern2 }}'+
-
-	'{{if #data == "..." }}'+
-		'<li class="page-item disabled"><span>&hellip;</span></li>'+	
-	'{{else}}'+
-		'<li class="page-item {{if #data == ~pagerCurrent }}active{{/if}}">'+
-		'<a class="page-link" href="{{:~pagerURLpattern1}}{{:#data}}{{:~pagerURLpattern2}}">{{:#data}}</a>'+
-		'</li>'+
-	'{{/if}}'+
-
-'{{/for}}'+
-
-
 		
+		'{{range start=1 end=pagerTotal}}'+
+		
+		'<li class="page-item {{if #index == #parent.parent.data.pagerCurrent - 1}}active{{/if}}">'+
+			'<a class="page-link" href="{{:#parent.parent.data.pagerURLpattern1}}{{:#index+1}}{{:#parent.parent.data.pagerURLpattern2}}">{{:#index+1}}</a>'+
+			
+			'</li>'+
+		
+		'{{/range}}'+
+
+		'{{for ~getPaginationArray(pagerCurrent, pagerTotal, 3) ~pagerCurrent=pagerCurrent ~pagerTotal=pagerTotal ~pagerURLpattern1=pagerURLpattern1 ~pagerURLpattern2=pagerURLpattern2 }}'+
+
+			'{{if #data == "..." }}'+
+				'<li class="page-item disabled"><span>&hellip;</span></li>'+	
+			'{{else}}'+
+				'<li class="page-item {{if #data == ~pagerCurrent }}active{{/if}}">'+
+				'<a class="page-link" href="{{:~pagerURLpattern1}}{{:#data}}{{:~pagerURLpattern2}}">{{:#data}}</a>'+
+				'</li>'+
+			'{{/if}}'+
+
+		'{{/for}}'+
+
 		'<li class="page-item {{if pagerCurrent==pagerTotal}}disabled{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent+1}}{{:pagerURLpattern2}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>'+
 
 	'</ul></nav>'+
 '</div><div class="clearfix"></div>'
 ); //cpPagination
-
 
 
 $.templates("cpWidget",
@@ -133,10 +134,11 @@ $.templates("cpWidget",
 		'<div class="territorio">'+
 
 			'{{for territorios}}'+
-				'<span class="T0 xh-flag xh-{{toClassName:#data.split("|")[0]}}"><var>{{:#data.split("|")[0]}}</var></span>'+
-
-				'{{if #data.split("|").length>1  }}'+
-				'<span class="T1">{{:#data.split("|")[1]}}</span>'+
+				'{{if #data  }}'+
+					'<span class="T0 xh-flag xh-{{toClassName:#data.split("|")[0]}}"><var>{{:#data.split("|")[0]}}</var></span>'+
+					'{{if #data.split("|").length>1  }}'+
+						'<span class="T1">{{:#data.split("|")[1]}}</span>'+
+					'{{/if}}'+
 				'{{/if}}'+
 
 			'{{/for}}'+
@@ -150,8 +152,7 @@ $.templates("cpWidget",
 				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
 			'{{/if}}'+
 			'<span class="autoUpdateBadge autoUpdateStatus-{{if autoUpdate}}true{{else}}false{{/if}}" '+
-				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+			
-			
+				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+	
 			'{{if !hideToolbar}}'+
 			'<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-onclick="contextmenu"><i class="fa fa-caret-down"></i></a></li>'+
 			'{{/if}}'+
@@ -423,7 +424,7 @@ $.templates("cpRoot-topToolbar",
 
 		'<div class="col-md-4">'+
 		'<ul class="topToolbarTools">'+
-			'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
+			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 				'<i class="fa fa-text-width" aria-hidden="true"></i>'+
 				'Crear texto'+
@@ -444,7 +445,7 @@ $.templates("cpRoot-topToolbar",
 				'</a>'+
 			'</li>'+
 			'<li class="vr"></li>'+
-			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+			'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 				'<a href="#" class="btn btn-tool btn-lg">'+
 				'<i class="fa fa-download" aria-hidden="true"></i>'+
 				'Exportar'+

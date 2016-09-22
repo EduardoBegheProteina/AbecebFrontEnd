@@ -185,10 +185,16 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
         "calculoVariacion-fechaHasta",
         "calculoVariacion-fechaDesdeSegundoCalculo",
         "calculoVariacion-fechaHastaSegundoCalculo"
-    ]
+    ];
     
-
+//    var theSeriesFields = [
+//        "id",
+//        "dbName",
+//        "dbDatoAlegend"
+//    ];
+    
     widgetBuilderFormData["columnas"] = [];
+//    widgetBuilderFormData["columnasFlat"] = [];
     
     var sortedKeys = widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"]
     //normalize keys - if only 1 object, we will receive string instead of array
@@ -203,18 +209,25 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
         var columnaOptions = {
             userLabel : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-userLabel"],
             presentarDatoFormula : widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-PresentarDatoFormula"]
+ 
             }
 
         widgetBuilderFormData["columnas"][index] = columnaOptions;
+        //console.log("**** widgetBuilderFormData");
+        //console.log(widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"]);
         
         for( var theFieldIx in theFormFields){
             var theFieldName = theFormFields[theFieldIx];
+           // console.log("**** key columnas");
+           // console.log("formUI_sortableFormField-columnaKey"+value+"-" + theFieldName);
             if( widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName] ){
-            widgetBuilderFormData["columnas"][index][theFieldName] =
-                widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName];
-                }
+            	widgetBuilderFormData["columnas"][index][theFieldName] =
+            		widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName];
+            }
+            
         }
         
+
         
     }); //end each sortedKeys
 
