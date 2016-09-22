@@ -437,13 +437,18 @@ function httpGet(theUrl)
 
 function createAlert(data)
 {
-	if(data.cpAlert) {
-		alert = data.cpAlert;
-		cpAlert({
-			title: alert.title,
-			text: alert.text,
-			type: alert.type,
-			hide: alert.hide
-		});
-	}	
+	if (data){
+		if(data.cpAlert) {
+			alert = data.cpAlert;
+			cpAlert({
+				title: alert.title,
+				text: alert.text,
+				type: alert.type,
+				hide: alert.hide
+			});
+		}	
+	}else{
+		console.log("Error no esta definido data");
+	}
+	
 }
