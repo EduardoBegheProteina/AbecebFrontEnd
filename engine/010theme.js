@@ -137,7 +137,8 @@ $(document).ready(function() {
 // Tooltip
 $(document).ready(function() {
 	$("body").tooltip({
-		selector: '[data-toggle="tooltip"]'
+		selector: '[data-toggle="tooltip"]',
+		container: 'body'
 	});
 
 	//     $('[data-toggle="tooltip"]').tooltip({
