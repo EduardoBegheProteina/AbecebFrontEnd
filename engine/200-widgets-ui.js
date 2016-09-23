@@ -538,14 +538,16 @@ $(document).on('click', '.updatedBadge:not(.updatedBadgeStatus-applied,.updatedB
 			data1.gridWidth = data2.gridWidth = 12; //los widgets se mostraran full size dentro de col-md-6 en el modal
 			data1.hideToolbar = data2.hideToolbar = true;
 
+			data1.abecebObjectId = "previewInstanceId-" + getUagTimestampID() + "-data1";
 			data1.abecebObjectInstanceId = "previewInstanceId-" + getUagTimestampID() + "-data1";
-			data1.titlebarBadge = true;
-			data1.titlebarBadgeStatus = "old";
+			data1.titlebarBadge = false;
+// 			data1.titlebarBadge = true; data1.titlebarBadgeStatus = "old"; //model changed
 			delete data1.dataUpdated;
 
+			data2.abecebObjectId = "previewInstanceId-" + getUagTimestampID() + "-data2";
 			data2.abecebObjectInstanceId = "previewInstanceId-" + getUagTimestampID() + "-data2";
-			data2.titlebarBadge = true;
-			data2.titlebarBadgeStatus = "applied";
+			data2.titlebarBadge = false;
+// 			data2.titlebarBadge = true; data2.titlebarBadgeStatus = "applied"; //model changed
 			data2.dataShown = data2.dataUpdated;
 			delete data2.dataUpdated;
 
