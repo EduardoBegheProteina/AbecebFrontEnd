@@ -409,8 +409,9 @@ function addNewTextWidget(){
 	//var container = $('#topToolbar');
 	//var beforeOrAfter = 'after';
 
-	var container = $("#cpRoot").find(".widgetsContainer").first(); //text widget will be inserted in first widgetsContainer available.
-	var beforeOrAfter = 'before'; //instruct to prepend new widget before other widgets
+//	var container = $("#cpRoot").find(".widgetsContainer").first(); //text widget will be inserted in first widgetsContainer available.
+	var container = $("#topToolbar")[0];
+	var beforeOrAfter = 'after';
 	
 	var data = {
 		"abecebObjectId": "newTextWidget" + getUagTimestampID() + "-ObjectId",
