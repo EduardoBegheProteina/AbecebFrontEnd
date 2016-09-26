@@ -415,34 +415,45 @@ $.templates("cpRoot-topToolbar",
 
 		'<div class="col-md-4">'+
 		'<ul class="topToolbarTools">'+
-			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+		
+			// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+			'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
 				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 				'<i class="fa fa-text-width" aria-hidden="true"></i>'+
 				'Crear texto'+
 				'</a>'+
 			'</li>'+
+			
 			'<li class="vr"></li>'+
+			
 			'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
 				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 				'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
 				'Cambiar nombre…'+
 				'</a>'+
 			'</li>'+
+			
 			'<li class="vr"></li>'+
+			
 			'<li class="iconTop iconBig toolbarIcon toolbarIcon-share">'+
 				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 				'<i class="fa fa-share-alt" aria-hidden="true"></i>'+
 				'Compartir...'+
 				'</a>'+
 			'</li>'+
-			'<li class="vr"></li>'+
-			'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+			
+			// '<li class="vr"></li>'+
+			
+			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+			//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 				'<a href="#" class="btn btn-tool btn-lg">'+
 				'<i class="fa fa-download" aria-hidden="true"></i>'+
 				'Exportar'+
 				'</a>'+
 			'</li>'+
+			
 			'<li class="vr"></li>'+
+			
 			'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
 				'<a href="#" class="btn btn-tool btn-lg">'+
 				'<i class="fa fa-refresh" aria-hidden="true"></i>'+

@@ -405,17 +405,17 @@ $( "#htMenuItemLI,#htMenuItemLI>UL>LI,#sortableHtPages>LI" ).droppable({
 
 
 function addNewTextWidget(){
-	
-	//var container = $('#topToolbar');
-	//var beforeOrAfter = 'after';
 
+	var beforeOrAfter = 'before'; //instruct to prepend new widget before other widgets
 	var container = $("#cpRoot").find(".widgetsContainer").first(); //text widget will be inserted in first widgetsContainer available.
 	if(container.length == 0){
 		//si no hay widgetsContainer explicitamente declarado, usamos primer contenedor disponible
-		container = $("#cpRoot").find(".cpContainerNode").first();
+		//container = $("#cpRoot").find(".cpContainerNode").first();
+		
+		//si no hay widgetsContainer explicitamente declarado, agregaremos el widget despues de topToolbar
+		var container = $('#topToolbar');
+		var beforeOrAfter = 'after';
 		}
-	
-	var beforeOrAfter = 'before'; //instruct to prepend new widget before other widgets
 	
 	var data = {
 		"abecebObjectId": "newTextWidget" + getUagTimestampID() + "-ObjectId",
@@ -686,6 +686,9 @@ function updateWidgetData( contextWidget , doPersist ){ //doPersist: optional, p
 
 function evenWidgetHeights( container ){
 
+//como encontrar DIV al que se aplico Sortable:
+//console.log ($(container).closest('.widgetsContainer-sortable'));
+
 //For greater flexibility:
 
 	//if not a last level widget container, call again for all widgetsContainer children
@@ -708,6 +711,7 @@ function evenWidgetHeights( container ){
 
 
 //From this point onwards, we have a container.
+//console.log('** container is: ', container)
 
 //get container width
 var containerWidth = $(container).width();
