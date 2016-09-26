@@ -333,25 +333,25 @@ if(
 
 	bestType = getBestType( bestType, gDataChartType );
 	
-	switch ( gData.datasets[i].type ){
+	switch ( gDataChartType ){ // gData.datasets[i].type ){
 	
 		case 'line':
 			gData.datasets[i].fill = false;			
 			break;
 			
 		case 'area':
-			gData.datasets[i].type = 'line';
+			gDataChartType = 'line';
 			gData.datasets[i].fill = true;
 			break;
 			
 		case 'bar':
-			gData.datasets[i].type = 'bar';
+			gDataChartType = 'bar';
 			gData.datasets[i].fill = true;
 			gData.datasets[i][ "borderWidth" ] = 1;
 			break;
 			
 		case 'columnas-stacked': case 'bar-stacked':
-			gData.datasets[i].type = 'bar';
+			gDataChartType = 'bar';
 			gData.datasets[i][ "borderWidth" ] = 1;
 			jQuery.extend(true, graphOptions, {
 				"scales": {
@@ -371,7 +371,7 @@ if(
 			break;
 		
 		case 'horizontalBar-stacked':
-			gData.datasets[i].type = 'horizontalBar';
+			gDataChartType = 'horizontalBar';
 			gData.datasets[i][ "borderWidth" ] = 1;
 
 			jQuery.extend(true, graphOptions, 
@@ -394,7 +394,8 @@ if(
 		default: //line
 			gData.datasets[i].fill = false;
 			break;
-	}
+
+	} //end switch gDataChartType
 	
 
 	if( gData.datasets[i].ejeCero && gData.datasets[i].ejeCero != "false" ) {
@@ -405,16 +406,19 @@ if(
 					    }
 					}
 				); //end jQuery.extend
-			}//end if
-	
-	}//end for
+		}//end if
+
+
+//apply serie.type/charType as serie.type as needed by charts.js
+gData.datasets[i].type = gDataChartType;
+
+}//end for i in gData.datasets.length
 
 	
 	//construimos el grafico
 	var chartDataObj = {
 		options: graphOptions,
-		//type: gData.datasets[0].type,
-		type: bestType, //gData.datasets[0].type,
+		type: bestType, // gDataChartType, //gData.datasets[0].type, 
 		data: {
 			labels: gData.labels,
 			datasets: gData.datasets
@@ -432,7 +436,7 @@ if(
 		}
 
 
-
+	//console.log ('chartDataObj: ', JSON.stringify(chartDataObj) )
 	new Chart(chartContainerObj, chartDataObj);	
 
 
