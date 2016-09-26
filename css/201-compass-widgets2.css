@@ -421,6 +421,10 @@ table.table-var td{
 	padding:4px 2px;
 }
 
+table.table-var TD:first-child {
+    white-space: nowrap;
+}
+
 
 .trend-up-small, .trend-eq-small, .trend-down-small {
 	width:11px;
