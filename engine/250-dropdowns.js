@@ -251,8 +251,12 @@ processWidgetContextMenu = function(itemKey, opt){
 		//ONLY if NOT a graph widget, evenWidgetHeights
 		//if IS a graph widget, let the graph call evenWidgetHeights after redrawing
 		if(	$(contextWidget).find('canvas').length == 0 ){
-			evenWidgetHeights( $(contextWidgetContainer) );	
+			evenWidgetHeights( "BODY" );	
+			// evenWidgetHeights( $(contextWidgetContainer) );	
 		}
+		
+		//last resort
+		setTimeout(function(){ evenWidgetHeights("BODY"); }, 500);
 	
 		break;
 		
