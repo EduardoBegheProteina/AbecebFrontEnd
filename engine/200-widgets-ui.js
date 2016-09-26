@@ -410,6 +410,11 @@ function addNewTextWidget(){
 	//var beforeOrAfter = 'after';
 
 	var container = $("#cpRoot").find(".widgetsContainer").first(); //text widget will be inserted in first widgetsContainer available.
+	if(container.length == 0){
+		//si no hay widgetsContainer explicitamente declarado, usamos primer contenedor disponible
+		container = $("#cpRoot").find(".cpContainerNode").first();
+		}
+	
 	var beforeOrAfter = 'before'; //instruct to prepend new widget before other widgets
 	
 	var data = {
@@ -684,15 +689,17 @@ function evenWidgetHeights( container ){
 //For greater flexibility:
 
 	//if not a last level widget container, call again for all widgetsContainer children
-	if( $( container ).find(".widgetsContainer").length != 0 ){
-		$( container ).find(".widgetsContainer").each(function() {
+	if( $( container ).find(".cpContainerNode").length != 0 ){
+		// $( container ).find(".widgetsContainer").each(function() {
+		$( container ).find(".cpContainerNode").each(function() {
 			evenWidgetHeights( this )
 		});
 		return false; //stop processing elements
 	}
 	//if not a widget container, find it's container up and call again
-	if( ! ($( container ).hasClass("widgetsContainer") ) ) {
-		var theWidgetsContainer = $( container ).closest( ".widgetsContainer" );
+	//if( ! ($( container ).hasClass("widgetsContainer") ) ) {
+	if( ! ($( container ).hasClass("cpContainerNode") ) ) {
+		var theWidgetsContainer = $( container ).closest( ".cpContainerNode" );
 		if(theWidgetsContainer.length != 0){ 
 			evenWidgetHeights( theWidgetsContainer )
 			}

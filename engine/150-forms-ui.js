@@ -869,23 +869,23 @@ $.fn.serializeObject = function()
  
     var groupName = $(this).data( "groupname" );
     var selectVal = $(this).val();
-    console.log('groupName', groupName, selectVal)
+    // console.log('groupName', groupName, selectVal)
     
     //inferir el contenedor
     var groupContainer = $(this).closest('.subfieldset') //sub grouped options
-    console.log ( 1, $(groupContainer) )
+    // console.log ( 1, $(groupContainer) )
     
     if($(groupContainer).length==0){
         groupContainer = $(this).closest('.sortableFormField') //sortable fields
-        console.log ( 2, $(groupContainer).length, $(groupContainer) )
+        // console.log ( 2, $(groupContainer).length, $(groupContainer) )
         }
   
     if($(groupContainer).length==0){
         groupContainer = $(this).closest('fieldset') //global fields
-        console.log ( 3, $(groupContainer).length, $(groupContainer) )
+        // console.log ( 3, $(groupContainer).length, $(groupContainer) )
         }
    
-   console.log ( '**** container IS', $(groupContainer) )
+   //console.log ( '**** container IS', $(groupContainer) )
     
     
     if( $(groupContainer).length>0) {
@@ -896,14 +896,14 @@ $.fn.serializeObject = function()
         showifgroupselectvalues = showifgroupselectvalues.split(",");
         // console.log ('groupName in', groupName, showifgroupselectvalues)
         if(showifgroupselectvalues.indexOf(selectVal)>-1 ){
-            console.log('show', this)
+            // console.log('show', this)
             $(this).show(250);
-            $(this).css({ opacity: 1 });
+            // $(this).css({ opacity: 1 });
             
         }else{
-            console.log('hide', this)
-            // $(this).hide(250);
-            $(this).css({ opacity: .25 });
+            // console.log('hide', this)
+            $(this).hide(250);
+            // $(this).css({ opacity: .25 });
         }
         
 
