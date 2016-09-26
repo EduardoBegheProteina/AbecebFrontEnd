@@ -178,7 +178,11 @@ for( var i=0; i<gData.datasets.length; i++){
 	//agregamos al nuevo array el elemento que estamos procesando
 	gDataDatasets2.push (gData.datasets[i]);
 	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
-	if(gData.datasets[i]["dataProjected"]){	
+	if(
+		gData.datasets[i]["dataProjected"]
+		&&
+		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected 
+		){	
 
 		if( gDataChartType == "line" || gDataChartType == "area" ){
 
@@ -307,7 +311,13 @@ for( var i=0; i<gData.datasets.length; i++){
 //Avanzamos el Ix de colores SOLO si no tenemos dataProjected
 //Si tenemos dataProjected, se empleara el mismo color para el proximo elemento
 
-if(!gData.datasets[i]["dataProjected"]){
+if( 
+		!(
+		gData.datasets[i]["dataProjected"] 
+		&&
+		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected 
+		)
+	){
 		graphColorIx++
 		if( graphColorIx > graphBackgroundColors.length ){ graphColorIx = 0 };
 	}
