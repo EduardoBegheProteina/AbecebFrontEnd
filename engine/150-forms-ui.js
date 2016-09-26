@@ -702,6 +702,12 @@ function sortableFormFieldControlAdd(){
     
     //find parent targetField
      targetField = ( $(this).closest(".sortableFormField") );
+
+     
+    $( "[id^='yui_patched']" ).removeAttr( 'id' ) //remove all yui_patched injected IDs
+    //$( targetField ).parent().find( "[id^='yui_patched']" ).removeAttr( 'id' )
+    //$( targetField ).removeAttr( 'id' ); //prevent yui_patched injected IDs to be duplicated with the field…
+      
      
     //clone targetField
     var newField = $(targetField).clone().appendTo( $(targetField).parent() );
@@ -726,6 +732,8 @@ function sortableFormFieldControlAdd(){
         $(this).attr('id', $(this).attr('id').replace( re, "Key"+newKey ) )
         $(this).attr('name', $(this).attr('name').replace( re, "Key"+newKey ) )
     });
+
+    $( "[id^='yui_patched']" ).removeAttr( 'id' ) //remove all yui_patched injected IDs
 
 }
 
