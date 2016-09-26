@@ -168,9 +168,8 @@ $("#sortableHtPages").on('click', '.dropdown-menu>LI>A', function() {
 
     case "export":
 		
-		if( $( contextHTli ).cpGetData().downloadHref ){
-			document.location.href= ( $( contextHTli ).cpGetData().downloadHref );
-			}
+    	var htId = $( contextHTli ).cpGetData().abecebObjectId;
+		document.location.href= downloadExcelFromWorkspace(htId);
 		break;
 	
     case "share":

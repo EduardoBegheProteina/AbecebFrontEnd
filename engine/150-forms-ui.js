@@ -81,7 +81,7 @@ function widgetSaveToHTidUpdate(){
         $("#widgetSaveToHTid option").remove();
 
         $.each( htList.children, function(index, item) {
-            if(item.fromRole==undefined) {
+            if(item.fromRole==undefined || item.abecebObjectId == ids.consultantWorkspaceId) {
                 $("#widgetSaveToHTid").append(new Option(item["cpTitle"], item["abecebObjectId"]));
             }
         });
@@ -104,7 +104,7 @@ function widgetSaveToHTidUpdate(){
 
 function widgetBuilderFormSerialize( form ){ 
 
-$( "[id^='yui_patched']" ).removeAttr( 'id' ) //remove all yui_patched injected IDs
+$( "[id^='yui_patched']" ).removeAttr( 'id' ); //remove all yui_patched injected IDs
 
 //var form = form.currentTarget || form || this;
 var form = $("#widgetBuilderOptionsForm");
@@ -223,8 +223,8 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
            // console.log("**** key columnas");
            // console.log("formUI_sortableFormField-columnaKey"+value+"-" + theFieldName);
             if( widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName] ){
-            	widgetBuilderFormData["columnas"][index][theFieldName] =
-            		widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName];
+                widgetBuilderFormData["columnas"][index][theFieldName] =
+                    widgetBuilderFormData["formUI_sortableFormField-columnaKey"+value+"-" + theFieldName];
             }
             
         }
@@ -610,7 +610,7 @@ switch ( formData.widgetType ){
     $('.widgetBuilderPreview')[0].cpData={}
     $('.widgetBuilderPreview').cpObject( previewData );
     renderCpWidget( $('.widgetBuilderPreview'), previewData, true );
-    //console.log ( JSON.stringify( previewData ) )
+    console.log ( JSON.stringify( previewData ) )
     
     
     //store previewData in form cpObject
@@ -703,11 +703,6 @@ function sortableFormFieldControlAdd(){
     //find parent targetField
      targetField = ( $(this).closest(".sortableFormField") );
      
-
-    $( "[id^='yui_patched']" ).removeAttr( 'id' ) //remove all yui_patched injected IDs
-    //$( targetField ).parent().find( "[id^='yui_patched']" ).removeAttr( 'id' )
-    //$( targetField ).removeAttr( 'id' ); //prevent yui_patched injected IDs to be duplicated with the field…
-     
     //clone targetField
     var newField = $(targetField).clone().appendTo( $(targetField).parent() );
     
@@ -732,7 +727,6 @@ function sortableFormFieldControlAdd(){
         $(this).attr('name', $(this).attr('name').replace( re, "Key"+newKey ) )
     });
 
-	$( "[id^='yui_patched']" ).removeAttr( 'id' ) //remove all yui_patched injected IDs
 }
 
 
@@ -745,7 +739,7 @@ function sortableFormFieldControlAdd(){
 function widgetSaveToHTinit(){
     $('.widgetBuilderSavetoHT').submit(function() {
         event.preventDefault();
-                
+        
         // messageModal("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
     
         var data = widgetBuilderFormSerialize( $('.widgetBuilderOptionsForm') );
@@ -771,19 +765,19 @@ function widgetSaveToHTinit(){
                 //modalContinue("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
                 window.location = redirectUrls.editCompassObjectRedirectURL + receivedWorkspace.createdDataObjectId;
             } else {
-            	// Resetear valores
-            	// Reseteo selects
-            	var selects = $('select[id^=calculoVariacion]')
-            	$.each(selects, function(k,v) {
-            		v[0].selectedIndex = 0;
-            	});
+                // Resetear valores
+                // Reseteo selects
+                var selects = $('select[id^=calculoVariacion]')
+                $.each(selects, function(k,v) {
+                    v[0].selectedIndex = 0;
+                });
 
-            	// Reseteo campos de fecha
-            	$('[id^=calculoVariacion-fecha]').val(null);
+                // Reseteo campos de fecha
+                $('[id^=calculoVariacion-fecha]').val(null);
 
-            	// Reseteo los spinners
-            	$('.spinner>[id^=calculoVariacion]').val(1);
-            	
+                // Reseteo los spinners
+                $('.spinner>[id^=calculoVariacion]').val(1);
+                
                 //messageModal("Creación de Widgets","El widget se ha creado y guardado en el espacio de trabajo exitosamente.");
                 modalWithOptions("Creación de Widgets", "El widget se ha creado y guardado en el espacio de trabajo exitosamente.", editCompassWorkspace, data.saveToHTid, "Ir a Hoja de Trabajo", "Continuar");
             }
@@ -859,66 +853,50 @@ $.fn.serializeObject = function()
     }
 
 
-
-
     // funcion para select groups
     
     $.fn.selectGroupedOptions = function() {
 
     return this.each(function() { 
  
+    //var selectName = $(this).attr('name');
     var groupName = $(this).data( "groupname" );
     var selectVal = $(this).val();
-    // console.log('groupName', groupName, selectVal)
+    //console.log('groupName', groupName, selectVal)
     
     //inferir el contenedor
     var groupContainer = $(this).closest('.subfieldset') //sub grouped options
-    // console.log ( 1, $(groupContainer) )
-    
     if($(groupContainer).length==0){
         groupContainer = $(this).closest('.sortableFormField') //sortable fields
-        // console.log ( 2, $(groupContainer).length, $(groupContainer) )
         }
-  
     if($(groupContainer).length==0){
         groupContainer = $(this).closest('fieldset') //global fields
-        // console.log ( 3, $(groupContainer).length, $(groupContainer) )
         }
-   
-   //console.log ( '**** container IS', $(groupContainer) )
-    
     
     if( $(groupContainer).length>0) {
 
     $(groupContainer).find('[data-showifgroupselect~="'+groupName+'"]').each(function( index ) {
-        // console.log ('testing item: ', this )
+        //console.log ('testing item: ', this )
         var showifgroupselectvalues = $(this).data('showifgroupselectvalues');
         showifgroupselectvalues = showifgroupselectvalues.split(",");
-        // console.log ('groupName in', groupName, showifgroupselectvalues)
+        //console.log ('groupName in', groupName, showifgroupselectvalues)
         if(showifgroupselectvalues.indexOf(selectVal)>-1 ){
-            // console.log('show', this)
+            //console.log('show', this)
             $(this).show(250);
-            // $(this).css({ opacity: 1 });
-            
         }else{
-            // console.log('hide', this)
+            //console.log('hide', this)
             $(this).hide(250);
-            // $(this).css({ opacity: .25 });
         }
         
 
         }); //end each
     
     }//end existe groupContainer
-    
-    //return this;
+
     } )
     }
 
-
-
   }( jQuery ));
-
 
 
 $( "BODY" ).on( "click", "input:checkbox", function() {
