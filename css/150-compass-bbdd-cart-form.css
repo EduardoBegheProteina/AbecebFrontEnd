@@ -42,9 +42,32 @@
 .widgetBuilderFormGroup input[type="radio"] { margin: 0 5px 0 0 }
 .widgetBuilderFormGroup input[type="radio"] ~ label { margin-right: 20px }
 
-.checkbox-label { margin-left: 5px; font-weight: normal; vertical-align: middle;}
+/*
+.widgetBuilderFormGroup form span .checkbox-label,
+.widgetBuilderFormGroup form span .radios-label,
+*/
+.checkbox-label, .radios-label {
+	margin-left: 5px; font-weight: normal; vertical-align: middle;
+	font-size:13px; font-weight: normal;
+	}
+.radios-label { 
+	margin-left:0; margin-right: 5px;
+	}
+
+.widgetBuilderFormGroup input[type="radio"] ~ label.radio-hgroup-label,
+.radio-hgroup-label{
+	margin-right:5px;
+	}
 
 .form-group.inline {display: inline-block; margin-right: 10px; vertical-align: top}
+.form-group.width-md {width: 70%}
+.form-group input {margin-bottom: 10px}
+
+.datos-indicador .form-group { vertical-align: top;}
+.datos-indicador .fix-left {width: 20%}
+.datos-indicador .fix-right {width: 75%}
+.datos-indicador select {margin-bottom: 10px}
+
 
 
 /* RANGO DE FECHAS */

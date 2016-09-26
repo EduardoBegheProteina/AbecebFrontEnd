@@ -327,12 +327,12 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 			'<small data-showifnotchecked="widgetPresentarVariacion" class="label label-warning">Seleccione al menos una opción.</small>'+
 		'</span>'+
 	'</div>'+
-	'<div class="form-inline">'+
-		'<div class="form-group">'+
+	'<div class="form-inline datos-indicador">'+
+		'<div class="form-group fix-left">'+
 			'<input type="checkbox" id="widgetPresentarUltimoDato" name="widgetPresentarUltimoDato" {{if widgetPresentarUltimoDato && widgetPresentarUltimoDato!="false"}}checked="checked"{{/if}} value="true"><label for="widgetPresentarUltimoDato" class="checkbox-label">Último dato</label>'+
 		'</div>'+ //group
 		'&nbsp; &nbsp; '+
-		'<div class="form-group">'+
+		'<div class="form-group fix-right">'+
 		
 			'<input type="checkbox" value="true" id="widgetPresentarVariacion" name="widgetPresentarVariacion" {{if widgetPresentarVariacion && widgetPresentarVariacion!="false"}}checked="checked"{{/if}}>'+
 			'<label for="widgetPresentarVariacion" class="checkbox-label">Variación</label> '+
@@ -349,30 +349,39 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 			
 				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 			
-				'<span class="form-group">'+
+				'<span class="form-group width-md">'+
+					'<label class="radios-label">Estilo:</label>'+
 					//'<label class="checkbox-label">Estilo:</label>'+
 					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-green" />'+
+					
+					'<input type="radio" name="iconSet" value="up-green" id="iconSet-radio-up-green" />'+
+						'<label for="iconSet-radio-up-green" class="radio-hgroup-label">'+
 						'<span class="iconset-up-green trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-green trend-eq trend-arrow"></span>'+
+// 						'<span class="iconset-up-green trend-eq trend-arrow"></span>'+
 						'<span class="iconset-up-green trend-down trend-arrow"></span>'+
+						'</label>'+
 					' &nbsp;</span>'+
 					
 					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-red" />'+
+					'<input type="radio" name="iconSet" value="up-red" id="iconSet-radio-up-red" />'+
+						'<label for="iconSet-radio-up-red" class="radio-hgroup-label">'+
 						'<span class="iconset-up-red trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-red trend-eq trend-arrow"></span>'+
+// 						'<span class="iconset-up-red trend-eq trend-arrow"></span>'+
 						'<span class="iconset-up-red trend-down trend-arrow"></span>'+
+						'</label>'+
 					' &nbsp;</span>'+
 						
 					'<span class="form-group">'+
-					'<input type="radio" name="iconSet" value="up-gray" />'+
+					'<input type="radio" name="iconSet" value="up-gray" id="iconSet-radio-up-gray" />'+
+						'<label for="iconSet-radio-up-gray" class="radio-hgroup-label">'+
 						'<span class="iconset-up-gray trend-up trend-arrow"></span>'+
-						'<span class="iconset-up-gray trend-eq trend-arrow"></span>'+
+// 						'<span class="iconset-up-gray trend-eq trend-arrow"></span>'+
 						'<span class="iconset-up-gray trend-down trend-arrow"></span>'+
+						'</label>'+
 					'</span>'+
 				'</span>'+
 			'</div>'+  // widgetPresentarVariacion
+			
 		'</div>'+//group
 	'</div>'+ //inline
 '</fieldset>'
@@ -387,119 +396,61 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 // formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula
 // '<h1> ( {{: ~fieldPrefix }} ) </h1>'+ // test
 
-'<div class="form-group"'+
+
+//Campo: fechaInicial
+//para: 
+// - Promedio entre una fecha y ultimo dato (BetweenDatesAverage),
+// - Acumulado hasta último dato (BetweenDatesSum)
+// - Variación respecto de un punto en el tiempo (MomentInTimeVariation)
+'<div class="form-group width-md"'+
 	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
+	' data-showifgroupselectvalues="BetweenDatesAverage,BetweenDatesSum,MomentInTimeVariation" '+
 	+' >'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select class="form-control" '+
-	' data-groupname="calculoVariacion-selectTipoCalculoDosPromedios" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-selectTipoCalculoDosPromedios">'+
-	'<option value="porPeriodicidad">Por periodicidad</option>'+
-	'<option value="porFechas">Por fechas</option>'+
-	'</select>'+
-'</div>'+//group
+'<p>Fecha Inicial (DD/MM/AAAA):&nbsp;</p>'+
+'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
+	' name="{{: ~fieldPrefix}}calculoVariacion-fechaInicial" '+
+	' id="{{: ~fieldPrefix}}calculoVariacion-fechaInicial">'+
+'</div>' + //group
 
 
-'<div class="form-group" '+
+//Campo: Valor de N (calculoVariacion-valordeN)
+//Para: 
+//- Promedio móvil de N datos anteriores al útimo (RangedMovingAverage)
+//-  Variación de dos promedios móviles de N (RangedMovingAveragesVariation)
+'<div class="form-group width-md" '+
 	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="BetweenDatesAverage,BetweenDatesSum,BetweenDatesAveragesVariation" '+
+	' data-showifgroupselectvalues="RangedMovingAverage" '+
 	+' >'+
-'<p>Número de períodos:&nbsp;</p>'+
+'<p>N: &nbsp;'+
 '<div class="input-group spinner">'+
 	'<input type="text" class="form-control" value="1" '+
-//		' data-groupname="calculoVariacion-nroDePeriodos" '+
-		' name="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos" '+
-		' id="{{: ~fieldPrefix}}calculoVariacion-nroDePeriodos"> '+
-	'<div class="input-group-btn-vertical">'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
-		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
-	'</div>'+
-'</div>'+ //spinner
-'</div>'+//group
-
-'<div class="form-group" '+
-	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="RangedMovingAverage,RangedMovingAveragesVariation" '+
-	+' >'+
-'<p>Valor de N:&nbsp;</p>'+
-'<div class="input-group spinner">'+
-	'<input type="text" class="form-control" value="1" '+
-//		' data-groupname="calculoVariacion-valordeN" '+
 		' name="{{: ~fieldPrefix}}calculoVariacion-valordeN" '+
 		' id="{{: ~fieldPrefix}}calculoVariacion-valordeN">'+
 	'<div class="input-group-btn-vertical">'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>'+
 		'<button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>'+
 	'</div>'+
+'</p>'+
 '</div>'+
 '</div>'+//group
 
-'<div class="form-group" '+
+
+//Campo: Tipo de calculo [suma, promedio]: calculoVariacion-tipoDeCalculo
+//Para: AccumulatedVariation
+'<div class="form-group width-md" '+
 	' data-showifgroupselect="PresentarDatoFormula" '+
 	' data-showifgroupselectvalues="AccumulatedVariation" '+
 	+' >'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
+'<p>Tipo de cálculo: &nbsp;'+
 '<select class="form-control" '+
-//	' data-groupname="calculoVariacion-tipoDeCalculo" '+
 	' name="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo" '+
 	' id="{{: ~fieldPrefix}}calculoVariacion-tipoDeCalculo">'+
 	'<option value="suma">Suma</option>'+
 	'<option value="promedio">Promedio</option>'+
 	'</select>'+
-'</div>'+//group
+'</p>'+
+'</div>' //group
 
-
-
-'<div class="form-group"'+
-	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="BetweenDatesAveragesVariation, RangedMovingAveragesVariation, LastPeriodVariation" '+
-	+' >'+
-'<p>Tipo de cálculo:&nbsp;</p>'+
-'<select class="form-control" '+
-//	' data-groupname="calculoVariacion-periodicidad" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-periodicidad" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-periodicidad">'+
-	'<option value="anual">Anual</option>'+
-	'<option value="semestral">Semestral</option>'+
-	'<option value="trimestral">Trimestral</option>'+
-	'<option value="bimestral">Bimestral</option>'+
-	'<option value="mensual">Mensual</option>'+
-	'<option value="semanal">Semanal</option>'+
-	'<option value="diaria">Diaria</option>'+
-	'</select>'+
-'</div>'+//group
-
-
-'<div class="form-group"'+
-	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="MomentInTimeVariation, BetweenDatesAveragesVariation" '+
-	+' >'+
-'<p>Fecha hasta:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
-//	' data-groupname="calculoVariacion-fechaHasta" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHasta" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHasta">'+
-'</div>'+ //group
-
-'<div class="form-group"'+
-	' data-showifgroupselect="PresentarDatoFormula" '+
-	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
-	+' >'+
-'<p>2&ordm; Per&iacute;odo: Fecha desde:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
-//	' data-groupname="calculoVariacion-fechaDesdeSegundoCalculo" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-fechaDesdeSegundoCalculo">'+
-'<p>2&ordm; Per&iacute;odo: Fecha hasta:&nbsp;</p>'+
-'<input type="text" class="form-control" value="" placeholder="DD/MM/AAAA" '+
-// 	' data-showifgroupselect="PresentarDatoFormula" '+
-// 	' data-showifgroupselectvalues="BetweenDatesAveragesVariation" '+
-//	' data-groupname="calculoVariacion-fechaHastaSegundoCalculo" '+
-	' name="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo" '+
-	' id="{{: ~fieldPrefix}}calculoVariacion-fechaHastaSegundoCalculo">'+
-'</div>'//group
 
 				
 ); //widgetBuilderFormOptions-variacionFormulaOptions
@@ -535,7 +486,9 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 		'<big class="btn-sort"><i class="fa fa-bars"></i></big>'+
 	'</div>'+
 	'<div class="col-lg-11">'+
-		'<div class="form-group inline">'+
+	
+//		'<div class="form-group inline">'+
+		'<div class="form-group width-md">'+
 			'<label for="formUI_sortableFormField-columnaKey{{:#parent.index}}-userLabel">'+
 //					'<!-- <strong>Columna <?= $i ?><br></strong> -->'+
 				'Nombre para mostrar'+
@@ -547,7 +500,9 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 				' value="{{:userLabel}}" '+
 				'>'+
 		'</div>'+
-		'<div class="form-group inline">'+
+
+//		'<div class="form-group inline">'+
+		'<div class="form-group width-md">'+
 			'<label for="formUI_sortableFormField-columnaKey{{:#parent.index}}-PresentarDatoFormula">Mostrar</label>'+
 			'<select'+
 				' data-groupname="PresentarDatoFormula" '+
@@ -629,7 +584,9 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 			'</div>'+
 		'</div>'+
 		'<div class="col-lg-8">'+
-			'<div class="form-group inline">'+
+
+//			'<div class="form-group inline">'+
+			'<div class="form-group width-md">'+
 				'<label for="formUI_sortableFormField-serieKey{{:#index}}-userLabel">Nombre para mostrar</label>'+
 				'<input type="text" '+
 					' id="formUI_sortableFormField-serieKey{{:#index}}-userLabel" '+
@@ -660,7 +617,9 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 			'{{/if}}'+
 			
 			'{{if ~root.widgetType == "monitor-cronologico" }}'+
-			'<div class="form-group inline">'+
+
+//			'<div class="form-group inline">'+
+			'<div class="form-group inline width-md">'+
 				'<label for="formUI_sortableFormField-serieKey{{:#parent.index}}-PresentarDatoFormula">Mostrar</label>'+
 				'<select id="mostrar" class="form-control" NOTrequired '+
 					' data-groupname="PresentarDatoFormula" '+
