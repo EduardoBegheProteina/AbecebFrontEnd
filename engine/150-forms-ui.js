@@ -133,7 +133,8 @@ if( widgetBuilderFormData["formUI_sortableFormField-serie-sortedKeys"] ){
         "calculoVariacion-periodicidad",
         "calculoVariacion-fechaHasta",
         "calculoVariacion-fechaDesdeSegundoCalculo",
-        "calculoVariacion-fechaHastaSegundoCalculo"
+        "calculoVariacion-fechaHastaSegundoCalculo",
+        "calculoVariacion-fechaInicial"
     ]
     
     widgetBuilderFormData["series"] = [];
@@ -186,7 +187,8 @@ if( widgetBuilderFormData["formUI_sortableFormField-columna-sortedKeys"] ){
         "calculoVariacion-periodicidad",
         "calculoVariacion-fechaHasta",
         "calculoVariacion-fechaDesdeSegundoCalculo",
-        "calculoVariacion-fechaHastaSegundoCalculo"
+        "calculoVariacion-fechaHastaSegundoCalculo",
+        "calculoVariacion-fechaInicial"
     ];
     
 //    var theSeriesFields = [
