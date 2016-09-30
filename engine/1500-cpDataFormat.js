@@ -83,7 +83,18 @@ cpDataFormats = {
 
 
 	quincenal:  function (dato,vars,loc){
-// 	function quincenal(dato){
+		var mesYearDelDato = moment(dato, "D/M/Y").format("MMM YYYY");
+		var diaDelDato = Number ( moment(dato, "D/M/Y").format("D") );
+		
+		var quincenaDelDatoMes = diaDelDato < 16 ? 1 : 2 ;
+		
+		return ( quincenaDelDatoMes + "Q " + mesYearDelDato );
+	}
+	
+	,
+	
+	
+	quincenacronologica:  function (dato,vars,loc){
 
 		var mesYearDelDato = moment(dato, "D/M/Y").format("MMM YYYY");
 		var semanaDelDato = moment(dato, "D/M/Y").format("w");
@@ -108,11 +119,7 @@ cpDataFormats = {
 					)
 				)
 		
-		
-		return (
-			quincenaDelDatoMes + "Q " + mesYearDelDato
-
-			);
+		return ( quincenaDelDatoMes + "Q " + mesYearDelDato );
 	}
 	,
 
@@ -185,14 +192,7 @@ function parseString2vObj( value ){
 		}else if( vObj.f ){ 
 			formato = vObj.cpDataFormat = vObj.f;
 		}
-	
-	//si no se especifico, podemos inferir formato?
-// 	if (!formato){
-// 		if( vObj.dato.search( /^\d+\/\d+\/\d+$/ ) != -1)  ){ //es una fecha
-// 			formato = "defaultMomentFormat"
-// 		}
-// 		
-// 	}//end !formato
+
 		
 	if( formato //se especifico formato por variable
 		|| $.isNumeric( vObj.dato ) //o aplicamos formato por default a numeros
@@ -245,16 +245,8 @@ function tryToLocalizeTimestamp( d, format ){
 
 	//1. Try to parse date
 	if( !($.isNumeric( d )) ){ //d is String and cannot be parsed to number
-	
-// 		if( d.search ( /^\d+\/\d+\/\d+$/ ) != -1){ //ej "1/2/3" o "11/22/9999"
-// 			d = moment( d , "D/M/Y");
-// 
-// 		}else{
-		
-			return d; // last resort
-		
-//		}//end string cases
-		
+			
+		return d; // last resort		
 
 	}else{ //d is Numeric
 		d = Number(d);
