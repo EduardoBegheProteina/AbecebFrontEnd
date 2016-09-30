@@ -414,6 +414,25 @@ gData.datasets[i].type = gDataChartType;
 
 }//end for i in gData.datasets.length
 
+
+//preprocesamos labels
+var labelsDataFormat = false;
+	if(gData.labelsDataFormat){ labelsDataFormat = gData.labelsDataFormat };
+for (var L=0; L < gData.labels.length; L ++){
+	
+	var Lv = parseString2vObj( gData.labels[L] );
+	console.log (Lv)
+	
+	if( !(Lv.cpDataFormat) && labelsDataFormat ){
+		//aplicar labelsDataFormat general si existe y el dato no tiene definicion particular
+		Lv.datoFormateado = Lv.datoHtml = cpDataFormat( Lv.dato, labelsDataFormat );
+	}
+	
+	gData.labels[L] = Lv.datoHtml;
+	
+}
+
+
 	
 	//construimos el grafico
 	var chartDataObj = {
@@ -857,41 +876,50 @@ $.views.tags("JSONstringifyNoChildren", jsRenderJSONstringifyNoChildren);
 
 //register custom tag: tdFromTableData
 function tdFromTableData(value, tag) {
-	var value = String(value).split("|");
 	var tag = this.tagCtx.params.args[1] || "td";
 	var classes = "";
-	if(value.length==2){
-		var vObj = parseQueryString( value[1] );
-		}else{
-		var vObj = {};
-		}
+
 	
-	if(vObj.proj){
+	var vObj = parseString2vObj( value );
+
+// 	var dato = value.dato;
+// 	var vObj = value[1];
+	
+// 	var value = String(value).split("|");
+// 	if(value.length==2){
+// 		var vObj = parseQueryString( value[1] );
+// 		}else{
+// 		var vObj = {};
+// 		}
+// 		
+// 	var dato = value[0] ;
+
+	
+	if(vObj.proj){ //es dato de proyeccion
 		classes += "tdVarProjectedIs1 ";
-	}
-	var r = '<'+tag+' class="'+ classes +'">';
+		}
+	var r = '<'+tag+' class="'+ classes +'">';	
+
+// 	var formato = "defaultFormat";	
+// 	if( vObj.cpDataFormat ){ formato = vObj.cpDataFormat; }
+// 	if( vObj.cpNumberFormat ){ formato = vObj.cpNumberFormat; }
+// 	if( vObj.f ){ formato = vObj.f; }
 	
-	var dato = value[0] ;
-	var formato = "default";
+// 	if( $.isNumeric( vObj.dato ) ){
+// 		vObj.dato = cpDataFormat( vObj.dato, formato );
+// 	}
+
+
+	r+= vObj.datoHtml ;
 	
-	if( vObj.cpDataFormat ){ formato = vObj.cpDataFormat; }
-	if( vObj.cpNumberFormat ){ formato = vObj.cpNumberFormat; }
-	if( vObj.f ){ formato = vObj.f; }
-	
-	
-	
-	if( $.isNumeric( dato ) ){
-		dato = cpDataFormat( dato, formato );
-	}
-	
-	if( vObj.um1 ){ r+=vObj.um1 };
-	r+= dato ;
-	if( vObj.um2 ){ r+=vObj.um2 };
 	r+= '</'+tag+'>';
 
 	return r;
 }
 $.views.tags("tdFromTableData", tdFromTableData);
+
+
+
 
 
 

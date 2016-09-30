@@ -792,18 +792,6 @@ $(container).find('.contentWidget').each(function() {
 
 
 
-function tryToLocalizeTimestamp( d, format ){
-	//returns localized format OR original string if cannot parse
-
-	if( !($.isNumeric( d )) ){ return d; }
-	
-	d = Number(d);
-	if(d<631159200000){ return d; } //unix timestamp para "enero 1º 1990, 12:00:00 am"
-
-	return moment (d).format(format);
-	
-}
-
 
 
 
