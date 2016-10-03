@@ -624,12 +624,11 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-exportar" ) ){
 		
-		if( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref ){
-		document.location.href= ( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref  );
-		}
-		// +		var id = $( clickedObj ).cpGetAncestor().cpGetData().abecebObjectId
-		// +		document.location.href= downloadExcelFromWorkspace(id);
-
+		// if( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref ){
+		// 	document.location.href= ( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref  );
+		// }
+		var id = $( clickedObj ).cpGetAncestor().cpGetData().abecebObjectId
+		downloadExcelFromWorkspace(id);
 		
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-share" ) ){
 		

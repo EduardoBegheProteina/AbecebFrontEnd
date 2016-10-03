@@ -192,9 +192,12 @@ $.templates("cpWidget-x-indicador",
 
 	'<div class="x_content_dato">'+
 		'{{if dataShown.trend!=undefined && !dataShown.trendDescription }}'+
-			'{{if dataShown.trend == 1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-up"></big>{{/if}}'+
-			'{{if dataShown.trend == "0" || dataShown.trend == "eq" }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-eq"></big>{{/if}}'+
-			'{{if dataShown.trend == -1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-down"></big>{{/if}}'+
+			// '{{if dataShown.trend == 1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-up"></big>{{/if}}'+
+			// '{{if dataShown.trend == "0" || dataShown.trend == "eq" }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-eq"></big>{{/if}}'+
+			// '{{if dataShown.trend == -1 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-down"></big>{{/if}}'+
+			'{{if dataShown.valor > 0 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-up"></big>{{/if}}'+
+			'{{if dataShown.valor == 0 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-eq"></big>{{/if}}'+
+			'{{if dataShown.valor < 0 }}<big class="{{if iconSet}}iconset-{{:iconSet}}{{/if}} trend-down"></big>{{/if}}'+
 		'{{/if}}'+
 		'<span class="valor">{{:dataShown.valor}}</span>'+
 		'<span class="valorUM{{if dataShown.valorUM.length < 3 }} big{{/if}}">{{:dataShown.valorUM}}</span>'+
@@ -403,69 +406,123 @@ $.templates("cpWidget-x-cphtml",
 
 ); //cpWidget-x-cphtml
 
+var templateToolbar;
 
+if ($isCompassConsultant) {
 
-$.templates("cpRoot-topToolbar",
+	templateToolbar = '<div id="topToolbar" class="topHTtitle topToolbar pinnedNOT">'+
+							'<div class="row">'+
+								'<div class="col-md-8">'+
+									'<h1 id="topHTtitleH1">{{:cpTitle}}</h1>'+
+								'</div>'+
 
-'<div id="topToolbar" class="topHTtitle topToolbar pinnedNOT">'+
-	'<div class="row">'+
-		'<div class="col-md-8">'+
-			'<h1 id="topHTtitleH1">{{:cpTitle}}</h1>'+
-		'</div>'+
+								'<div class="col-md-4">'+
+								'<ul class="topToolbarTools">'+
+								
+									// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+									'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
+										'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+										'<i class="fa fa-text-width" aria-hidden="true"></i>'+
+										'Crear texto'+
+										'</a>'+
+									'</li>'+
+									
+									'<li class="vr"></li>'+
+									
+									'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
+										'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+										'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
+										'Cambiar nombre…'+
+										'</a>'+
+									'</li>'+
+									
+									'<li class="vr"></li>'+
 
-		'<div class="col-md-4">'+
-		'<ul class="topToolbarTools">'+
-		
-			// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
-			'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
-				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
-				'<i class="fa fa-text-width" aria-hidden="true"></i>'+
-				'Crear texto'+
-				'</a>'+
-			'</li>'+
-			
-			'<li class="vr"></li>'+
-			
-			'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
-				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
-				'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
-				'Cambiar nombre…'+
-				'</a>'+
-			'</li>'+
-			
-			'<li class="vr"></li>'+
-			
-			'<li class="iconTop iconBig toolbarIcon toolbarIcon-share">'+
-				'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
-				'<i class="fa fa-share-alt" aria-hidden="true"></i>'+
-				'Compartir...'+
-				'</a>'+
-			'</li>'+
-			
-			// '<li class="vr"></li>'+
-			
-			'<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
-			//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
-				'<a href="#" class="btn btn-tool btn-lg">'+
-				'<i class="fa fa-download" aria-hidden="true"></i>'+
-				'Exportar'+
-				'</a>'+
-			'</li>'+
-			
-			'<li class="vr"></li>'+
-			
-			'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
-				'<a href="#" class="btn btn-tool btn-lg">'+
-				'<i class="fa fa-refresh" aria-hidden="true"></i>'+
-				'Actualizar…'+
-				'</a>'+
-			'</li>'+
-		'</ul>'+
-	'</div>'+ //col
-	'</div>'+ //row
-'</div>' //toolbar
+									'<li class="iconTop iconBig toolbarIcon toolbarIcon-share">'+
+										'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+										'<i class="fa fa-share-alt" aria-hidden="true"></i>'+
+										'Compartir...'+
+										'</a>'+
+									'</li>'+
+									// '<li class="vr"></li>'+
+									
+									'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+									//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+										'<a href="#" class="btn btn-tool btn-lg">'+
+										'<i class="fa fa-download" aria-hidden="true"></i>'+
+										'Exportar'+
+										'</a>'+
+									'</li>'+
+									
+									'<li class="vr"></li>'+
+									
+									'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
+										'<a href="#" class="btn btn-tool btn-lg">'+
+										'<i class="fa fa-refresh" aria-hidden="true"></i>'+
+										'Actualizar…'+
+										'</a>'+
+									'</li>'+
+								'</ul>'+
+							'</div>'+ //col
+							'</div>'+ //row
+						'</div>'; //toolbar
 
-); //cpRoot-topToolbar
+} else {
+
+	templateToolbar = '<div id="topToolbar" class="topHTtitle topToolbar pinnedNOT">'+
+						'<div class="row">'+
+							'<div class="col-md-8">'+
+								'<h1 id="topHTtitleH1">{{:cpTitle}}</h1>'+
+							'</div>'+
+
+							'<div class="col-md-4">'+
+							'<ul class="topToolbarTools">'+
+							
+								// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+								'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
+									'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+									'<i class="fa fa-text-width" aria-hidden="true"></i>'+
+									'Crear texto'+
+									'</a>'+
+								'</li>'+
+								
+								'<li class="vr"></li>'+
+								
+								'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
+									'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
+									'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
+									'Cambiar nombre…'+
+									'</a>'+
+								'</li>'+
+								
+								'<li class="vr"></li>'+
+
+								// '<li class="vr"></li>'+
+								
+								'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+								//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
+									'<a href="#" class="btn btn-tool btn-lg">'+
+									'<i class="fa fa-download" aria-hidden="true"></i>'+
+									'Exportar'+
+									'</a>'+
+								'</li>'+
+								
+								'<li class="vr"></li>'+
+								
+								'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
+									'<a href="#" class="btn btn-tool btn-lg">'+
+									'<i class="fa fa-refresh" aria-hidden="true"></i>'+
+									'Actualizar…'+
+									'</a>'+
+								'</li>'+
+							'</ul>'+
+						'</div>'+ //col
+						'</div>'+ //row
+					'</div>'; //toolbar
+
+}
+
+$.templates("cpRoot-topToolbar",templateToolbar); //cpRoot-topToolbar
 
 
 

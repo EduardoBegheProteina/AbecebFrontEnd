@@ -289,6 +289,16 @@ function getWorkspace( compassWorkspaceID , callback){
 			console.log("error: " + errorThrown);
 			var data = jqXHR.responseJSON;
 			createAlert(data);
+		},
+		statusCode: {
+			403: function(data) {
+				var workspace = data.responseJSON;
+				console.log("No se tiene permisos de escritura para guardar el workspace " + workspace.abecebObjectId);
+				createAlert(data);
+				//renderCpObject($('#cpRoot'), workspace, 'replace');
+				
+				getSidebar();
+			}
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -343,6 +353,16 @@ function addChildrenToWorkspace(compassWorkspaceID, newChildren, evento){
 			result = jqXHR;
 			var data = jqXHR.responseJSON;
 			createAlert(data);
+		},
+		statusCode: {
+			403: function(data) {
+				var workspace = data.responseJSON;
+				console.log("No se tiene permisos de escritura para guardar el workspace " + workspace.abecebObjectId);
+				createAlert(data);
+				renderCpObject($('#cpRoot'), workspace, 'replace');
+				
+				getSidebar();
+			}
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -372,6 +392,16 @@ function persistWorkspace(data, isNewWorkspace, evento){
 			console.log("error: " + errorThrown);
 			var data = jqXHR.responseJSON;
 			createAlert(data);
+		},
+		statusCode: {
+			403: function(data) {
+				var workspace = data.responseJSON;
+				console.log("No se tiene permisos de escritura para guardar el workspace " + workspace.abecebObjectId);
+				createAlert(data);
+				renderCpObject($('#cpRoot'), workspace, 'replace');
+				
+				getSidebar();
+			}
 		}
 	});
 }
@@ -397,6 +427,16 @@ function removeWorkspace(compassWorkspaceID) {
 			console.log("error: " + errorThrown);
 			var data = jqXHR.responseJSON;
 			createAlert(data);
+		},
+		statusCode: {
+			403: function(data) {
+				var workspace = data.responseJSON;
+				console.log("No se tiene permisos de escritura para guardar el workspace " + workspace.abecebObjectId);
+				createAlert(data);
+				//renderCpObject($('#cpRoot'), workspace, 'replace');
+				
+				getSidebar();
+			}
 		}
 	});
 }
@@ -422,6 +462,16 @@ function renameWorkspace(compassWorkspaceID, newTitle) {
 			console.log("error: " + errorThrown);
 			var data = jqXHR.responseJSON;
 			createAlert(data);
+		},
+		statusCode: {
+			403: function(data) {
+				var workspace = data.responseJSON;
+				console.log("No se tiene permisos de escritura para guardar el workspace " + workspace.abecebObjectId);
+				createAlert(data);
+				renderCpObject($('#cpRoot'), workspace, 'replace');
+				
+				getSidebar();
+			}
 		}
 	});
 	setDefaultWorkspace(compassWorkspaceID);
@@ -431,7 +481,7 @@ function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
+ //   xmlHttp.send( null );
     return xmlHttp.responseText;
 }
 

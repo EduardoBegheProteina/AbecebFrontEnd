@@ -169,7 +169,7 @@ $("#sortableHtPages").on('click', '.dropdown-menu>LI>A', function() {
     case "export":
 		
     	var htId = $( contextHTli ).cpGetData().abecebObjectId;
-		document.location.href= downloadExcelFromWorkspace(htId);
+		downloadExcelFromWorkspace(htId);
 		break;
 	
     case "share":
@@ -269,11 +269,14 @@ processWidgetContextMenu = function(itemKey, opt){
 		break;
 
 	case "export":
-		if($(contextWidget)[0].cpData.downloadHref){
-			document.location.href= ( $(contextWidget)[0].cpData.downloadHref );
-			}
+//		if($(contextWidget)[0].cpData.downloadHref){
+//			document.location.href= ( $(contextWidget)[0].cpData.downloadHref );
+//			}
+//		break;
+		var widgjetJson = JSON.stringify( $(contextWidget)[0].cpData );
+		console.log("Entro en el case export : " + widgjetJson );
+		dowloadExcelFromWidget( widgjetJson );
 		break;
-
 	case "exportHT":
 		var ancestor = $(contextWidget).cpGetAncestor();
 		if($(ancestor)[0].cpData && $(ancestor)[0].cpData.downloadHref){
@@ -525,6 +528,7 @@ function initContextMenu( callee ){
 	var disabledOnNoDownloadHref = function( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];		
 		var contextWidgetDownloadHref = $(contextWidget).cpGetData('downloadHref') ;
+		console.log("HOLA!");
 		return ( ! ( contextWidgetDownloadHref && contextWidgetDownloadHref != "" ) );
 	};
 
@@ -636,7 +640,8 @@ function initContextMenu( callee ){
 	var cpObjectWidgetContexMenuItems = {
 	
         	"export": {
-        		disabled: disabledOnNoDownloadHref,
+        		//disabled: disabledOnNoDownloadHref,
+        		disabled: false,
         		"name": "Exportar datos", "icon": "fa-file-excel-o"
         		},
         	"exportHT": {
