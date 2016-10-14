@@ -150,13 +150,13 @@ if(gData.options){
 
 var bestType;
 
-if( gData.datasets[0].type ){
-	bestType = gData.datasets[0].type;
-	}else if (gData.datasets[0].chartType) {
-	bestType = gData.datasets[0].chartType
+if( gData.datasets[0] && gData.datasets[0].type  ){
+		bestType = gData.datasets[0].type;
+	}else if ( gData.datasets[0] && gData.datasets[0].chartType) {
+		bestType = gData.datasets[0].chartType
 	}else{
-	bestType = "line"
-	}
+		bestType = "line"
+}
 
 
 

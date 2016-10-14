@@ -144,7 +144,11 @@ cpDataFormats = {
 
 	diario:  function (dato,vars,loc){
 		return moment(dato, "D/M/Y").format("D/M/YY");
-	},	
+	},
+	
+	diaria:  function (dato,vars,loc){
+		return moment(dato, "D/M/Y").format("D/M/YY");
+	},
 
 	anual:  function (dato,vars,loc){
 		return moment(dato, "D/M/Y").format("YYYY");
@@ -229,7 +233,10 @@ function cpDataFormat(dato,format,vars,loc){
 		return cpDataFormats[format +"_"+loc](dato,vars);
 	}else if( cpDataFormats[format] ){
 		return cpDataFormats[format](dato,vars,loc);
-	}else{
+	}else if (dato.includes("/")) { // Es fecha
+		//return cpDataFormats["defaultMomentFormat"](dato,vars);	// esto no funciona
+		return dato;
+	} else {
 		return cpDataFormats["defaultFormat"](dato,vars);
 	}
 
