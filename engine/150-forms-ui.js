@@ -514,10 +514,8 @@ switch ( formData.widgetType ){
        ){
 
            //TBD especificar calcular suma
-           previewData.dataShown.calculationType = formData.widgetPresentarVariacionFormula;
-           previewData["dataShown"]["valorUM"]= "%";
-           previewData["dataShown"]["trend"] = Math.floor(Math.random() * 3) -1;
-           previewData["dataShown"]["ownerText1"]= "Detalle de suma";
+           previewData["dataShown"]["ownerText1"]= "Detalle de operación";
+           previewData["dataShown"]["valorUM"]= "Unidad de medida";
        }
 
 

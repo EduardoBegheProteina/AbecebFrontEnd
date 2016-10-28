@@ -377,7 +377,7 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 			'<div data-hideifonlyornonechecked="widgetPresentarUltimoDato">'+
 				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 
-				'<span class="form-group width-md">'+
+				'<span class="form-group width-md"  data-showifnotchecked="widgetPresentarSum">'+
 					'<label class="radios-label">Estilo:</label>'+
 					//'<label class="checkbox-label">Estilo:</label>'+
 					'<span class="form-group">'+
