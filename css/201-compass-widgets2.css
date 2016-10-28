@@ -46,7 +46,7 @@ overflow: hidden;
 div.territorio, span.territorio {
 	height:25px;
 	margin-right:40px;
-	
+
 /*    margin:5px 0 -1px 0;*/
     display:block;
     text-overflow:ellipsis;
@@ -279,12 +279,12 @@ BIG.iconset-up-red.trend-down{
 	background-image:url(../images/trend-sm-down-green.png);
 	}
 
-	
-	
-	
+
+
+
 .trend-value, .trend-um, .trend-description,  {
 /*
-	display:inline-block;	
+	display:inline-block;
 	margin:0 3px 0 0;
 	width:auto;
 */
@@ -530,7 +530,7 @@ table.table-var TD:first-child {
 	font-style: normal;
 	margin-bottom:5px;
 	}
-	
+
 .dato1-ft-contains DFN VAR{
 	margin-left:3px;
 	}
@@ -596,7 +596,7 @@ textarea.bootbox-input.bootbox-input-textarea.form-control{
 .context-menu-item VAR{
 	display:none!important
 	}
-	
+
 .modal-backdrop{
 	z-index: 20010;
 	}
@@ -621,4 +621,62 @@ textarea.bootbox-input.bootbox-input-textarea.form-control{
 	color: #ccc;
 	background: #fff url("../images/tri7ccc8x8.png") no-repeat left top;
 	padding:0 4px;
+}
+
+
+
+.cpObjectType2-results .cpHtmlwidgetContent{
+	max-height:100px;
+	overflow: hidden;
+}
+
+/* Search results */
+.cpMoreResultsContainer {
+  padding: 0 20px;
+}
+
+.cpMoreResults {
+  margin: 0px 0 30px;
+  border-top: 1px solid #337ab7;
+  font-weight: bold;
+  padding: 7px 0 0 10px;
+}
+
+.cpMoreResults a  {
+  font-size: 16px !important;
+
+}
+
+/* DB */
+.cpDBItems .x_title .xh-flag {
+  height: 19px;
+  float:  left;
+  width: 19px;
+  margin-right: 6px;
+}
+
+.cpDBItems .cpTitle {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.cpDBItems ul,
+.cpDBItems li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cpDBItems li {
+  margin-bottom: 10px;
+}
+
+.cpDBItems .li-icon {
+  width: 16px;
+  height: 18px;
+  margin-top: -3px;
+  margin-left: -3px;
+  margin-right: 6px;
 }

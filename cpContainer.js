@@ -6,6 +6,8 @@ $.templates("cpContainer",
 $.templates("cpContainerNode",
 	'<div id="{{:abecebObjectId}}" data-cpdata=\'{{JSONstringifyNoChildren #data/}}\' '+
 		'class="cpObjectToInit cpContainerNode jstree-default '+
+			' cpObjectType-{{:type}} '+
+			' cpObjectType2-{{:type2}} '+
 			'{{if type1=="widgetsContainer"}} widgetsContainer {{/if}}'+
 			'{{if type2=="cpRoot"}} cpRoot {{/if}}'+
 			'{{if mode=="edit"}} widgetsContainer-sortable {{/if}}'+
@@ -16,7 +18,7 @@ $.templates("cpContainerNode",
 				'{{if opened}} cpCollapsableOpened {{else}} cpCollapsableClosedAfterRender {{/if}}'+
 			'{{/if}}'+
 		'">'+
-		
+
 		'{{if type2=="cpRoot"}}'+
 			'{{if mode=="edit"}}{{include tmpl="cpRoot-topToolbar"/}}'+
 			'{{else title && title!=""}}{{include tmpl="cpRoot-topHTtitle"/}}{{/if}}'+
@@ -41,8 +43,14 @@ $.templates("cpContainerNode",
 
 
 		'{{for children tmpl="cpContainer"/}}'+
-		
-		'<\/div><div class="clearfix"></div>'
+
+		'{{if cpResultHref }}'+
+		'<div class="cpMoreResultsContainer col-sm-12">'+
+		'<p class=\"cpMoreResults\"><a href=\"{{:cpResultHref}}\"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> Ver todos los resultados ({{:cpResultCount}})</a></p>'+
+		'</div>'+
+		'{{/if}}'+//cpResultHref
+
+		'</div><div class="clearfix"></div>'
 ); //cpContainerNode
 
 
@@ -55,6 +63,7 @@ $.templates("cpObjectNode",
 		'{{if type=="cpWidget"}}{{include tmpl="cpWidget"/}}{{/if}}'+
 		'{{if type=="cpHtml"}}{{include tmpl="cpHtml"/}}{{/if}}'+
 		'{{if type=="cpDBList"}}{{include tmpl="cpDBList"/}}{{/if}}'+
+		'{{if type=="cpDBItems"}}{{include tmpl="cpDBItems"/}}{{/if}}'+
 		'{{if type=="cpPagination"}}{{include tmpl="cpPagination"/}}{{/if}}'+
 	'<\/div>'
 ); //cpObjectNode
@@ -93,17 +102,46 @@ $.templates("cpDBList",
 '<div class="clearfix"></div>'
 ); //cpDBList
 
+$.templates("cpDBItems",
+	'<div id="" class="cpDBItems ">'+
+
+	'{{for items}}'+ //	'<!-- PAIS -->'+
+	'<div class="col-sm-{{if gridWidth}}{{:gridWidth}}{{else}}12{{/if}} col-xs-12">'+
+		'<div class="x_title">'+
+			'<h4 class="v-align">'+
+			'{{if territorios}}'+
+			'<span class="xh-flag xh-{{toClassName:territorios[0]}}"></span>'+
+			'{{/if}}'+//territorios
+			'{{:cpTitle}}</h4>'+
+		'</div>'+
+		'<div class="x_content" >'+
+			'<ul class="cpDBItemsList">'+
+			'{{for items}}'+
+				'<li class="cpDBItemsListItem">'+
+					'<span class="cpItemCategories">{{if !cpIcon || cpIcon=="typeCategory" || cpIcon==""}}<span class="li-icon typeCategory"></span>{{else}}<i class="fa {{:cpIcon}}" aria-hidden="true"></i>{{/if}}{{:cpCategories}}</span>'+
+					'<a class="cpTitle" href="{{:cpHref}}">{{:cpTitle}} {{if cpTitleSmall}}<small>{{:cpTitleSmall}}</small>{{/if}}</a>'+
+				'</li>'+
+			'{{/for}}'+//items
+			'</ul>'+
+		'</div>'+
+		'<p class=\"cpMoreResults col-sm-12\"><a href=\"{{:cpResultHref}}\"><i class="fa fa-long-arrow-right" aria-hidden="true"></i> Ver todos los resultados ({{:cpResultCount}})</a></p>'+
+	'</div>'+//items PAIS
+ 	'{{/for}}'+//items PAIS
+'</div>'+
+'<div class="clearfix"></div>'
+); //cpDBItems
+
 
 $.templates("cpPagination",
 '<hr>'+
 '<div class="cpPagination" {{if style}}style="{{:style}}{{/if}}">'+
-	'<nav> <ul class="pagination pagination-lg">'+	
+	'<nav> <ul class="pagination pagination-lg">'+
 		'<li class="page-item {{if pagerCurrent==1}}disabled inactive{{/if}}"><a href="{{:pagerURLpattern1}}{{:pagerCurrent-1}}{{:pagerURLpattern2}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>'+
 
 		'{{for ~getPaginationArray(pagerCurrent, pagerTotal, 3) ~pagerCurrent=pagerCurrent ~pagerTotal=pagerTotal ~pagerURLpattern1=pagerURLpattern1 ~pagerURLpattern2=pagerURLpattern2 }}'+
 
 			'{{if #data == "..." }}'+
-				'<li class="page-item disabled"><span>&hellip;</span></li>'+	
+				'<li class="page-item disabled"><span>&hellip;</span></li>'+
 			'{{else}}'+
 				'<li class="page-item {{if #data == ~pagerCurrent }}active{{/if}}">'+
 				'<a class="page-link" href="{{:~pagerURLpattern1}}{{:#data}}{{:~pagerURLpattern2}}">{{:#data}}</a>'+
@@ -143,14 +181,14 @@ $.templates("cpWidget",
 				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
 			'{{/if}}'+
 			'<span class="autoUpdateBadge autoUpdateStatus-{{if autoUpdate}}true{{else}}false{{/if}}" '+
-				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+	
+				'><i class="fa fa-refresh" aria-hidden="true"></i></span>'+
 			'{{if !hideToolbar}}'+
 			'<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" data-onclick="contextmenu"><i class="fa fa-caret-down"></i></a></li>'+
 			'{{/if}}'+
 		'</ul>'+
 		'<div class="clearfix"></div>'+
 	'</div>'+
-	
+
 	'<div class="x_content">'+
 		'<h2 class="cpTitle">'+
 			'{{if type1=="ht"}}<a href="{{:href}}">{{/if}}'+
@@ -178,7 +216,7 @@ $.templates("cpWidget",
 		'{{/for}}'+
 	'</div>'+
 '{{/if}}'+
-	
+
 
 	'</div>'+
 '</div>'
@@ -202,7 +240,7 @@ $.templates("cpWidget-x-indicador",
 		'<span class="valor">{{:dataShown.valor}}</span>'+
 		'<span class="valorUM{{if dataShown.valorUM.length < 3 }} big{{/if}}">{{:dataShown.valorUM}}</span>'+
 	'</div>'+
-	
+
 	'{{if dataShown.trendDescription }}'+
 		'<div class="trend-text1 {{if iconSet}}iconset-{{:iconSet}}{{/if}} '+
 			'{{if dataShown.trend == 1 }} trend-up{{/if}}'+
@@ -214,7 +252,7 @@ $.templates("cpWidget-x-indicador",
             '<span class="trend-um">{{:dataShown.trendUM}}</span>'+
             ' <span class="trend-description">{{:dataShown.trendDescription}}</span>'+
 		'</div>'+
-	'{{/if}}'+	
+	'{{/if}}'+
 
 	'{{if dataShown.ownerText1 }}'+
 		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
@@ -288,7 +326,7 @@ $.templates("cpWidget-x-tabla",
 			'<tr>'+
 			'{{for #data }}'+
 			//	'{{tdFromTableData #data th /}}' +
-				'{{tdFromTableData #data /}}' +   
+				'{{tdFromTableData #data /}}' +
 				'{{/for}}'+
 			'</tr>'+
 			'{{/range}}'+
@@ -314,11 +352,11 @@ $.templates("cpWidget-x-ht",
 	'{{if dataShown.cpH4 }}'+
 	'<div class="cpH4">{{:dataShown.cpH4}}</div>'+
 	'{{/if}}'+
-	
+
 	'{{if dataShown.descripcion }}'+
 		'<p class="text-gral">{{:dataShown.descripcion}}</p>'+
 	'{{/if}}'+
-	
+
 	'<div class="dato1-ft">'+
 		'{{if dataShown.author }}'+
 			'<div class="dato1-ft-authordata">'+
@@ -349,7 +387,7 @@ $.templates("cpWidget-x-descarga",
 	'{{if dataShown.ownerText3 }}'+
 		'<div class="owner-text3">{{:dataShown.ownerText3}}</div>'+
 	'{{/if}}'+
-	
+
 	'<div class="x_content_descarga">'+
 		'<div class="formato-icon">'+
 			'{{if dataShown.formato.toLowerCase() == "pdf"}}<i class="fa fa-file-pdf-o" aria-hidden="true"></i>'+
@@ -367,7 +405,7 @@ $.templates("cpWidget-x-descarga",
 		'<div class="formato-data">Formato {{:dataShown.formato}}<br>{{:dataShown.filesize}} {{:dataShown.filesizeUM}}</div>'+
 		'<a href="{{:dataShown.href}}" class="descarga">Descargar archivo</a>'+
 	'</div>'+
-	
+
 	'{{if dataShown.ownerText1 }}'+
 		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
 	'{{/if}}'
@@ -383,13 +421,13 @@ $.templates("cpWidget-x-embed",
 	'{{if dataShown.ownerText3 }}'+
 		'<div class="owner-text3">{{:dataShown.ownerText3}}</div>'+
 	'{{/if}}'+
-	
+
 	'<div class="embed-responsive embed-responsive-{{:dataShown.proporcion}}">'+
 		'<iframe class="embed-responsive-item" frameborder="0" allowfullscreen '+
 			'width="400" height="300" '+
 			'src="{{:dataShown.src}}"></iframe>'+
 		'</div>'+
-	
+
 	'{{if dataShown.ownerText1 }}'+
 		'<div class="owner-text1">{{:dataShown.ownerText1}}</div>'+
 	'{{/if}}'
@@ -399,7 +437,7 @@ $.templates("cpWidget-x-embed",
 
 
 $.templates("cpWidget-x-cphtml",
-	
+
 	'<div class="cpHtmlwidgetContent">'+
 		'{{:dataShown.cpHtml}}'+
 		'</div>'
@@ -418,7 +456,7 @@ if ($isCompassConsultant) {
 
 								'<div class="col-md-4">'+
 								'<ul class="topToolbarTools">'+
-								
+
 									// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 									'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
 										'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
@@ -426,16 +464,16 @@ if ($isCompassConsultant) {
 										'Crear texto'+
 										'</a>'+
 									'</li>'+
-									
+
 									'<li class="vr"></li>'+
-									
+
 									'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
 										'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 										'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
 										'Cambiar nombre…'+
 										'</a>'+
 									'</li>'+
-									
+
 									'<li class="vr"></li>'+
 
 									'<li class="iconTop iconBig toolbarIcon toolbarIcon-share">'+
@@ -445,7 +483,7 @@ if ($isCompassConsultant) {
 										'</a>'+
 									'</li>'+
 									// '<li class="vr"></li>'+
-									
+
 									'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 									//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 										'<a href="#" class="btn btn-tool btn-lg">'+
@@ -453,9 +491,9 @@ if ($isCompassConsultant) {
 										'Exportar'+
 										'</a>'+
 									'</li>'+
-									
+
 									'<li class="vr"></li>'+
-									
+
 									'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
 										'<a href="#" class="btn btn-tool btn-lg">'+
 										'<i class="fa fa-refresh" aria-hidden="true"></i>'+
@@ -477,7 +515,7 @@ if ($isCompassConsultant) {
 
 							'<div class="col-md-4">'+
 							'<ul class="topToolbarTools">'+
-							
+
 								// '<li class="{{if !downloadHref || downloadHref==\"\"}} disabled {{/if}} iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 								'<li class="iconTop iconBig toolbarIcon toolbarIcon-crearTexto">'+
 									'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
@@ -485,20 +523,20 @@ if ($isCompassConsultant) {
 									'Crear texto'+
 									'</a>'+
 								'</li>'+
-								
+
 								'<li class="vr"></li>'+
-								
+
 								'<li class="iconTop iconBig toolbarIcon toolbarIcon-renombrar">'+
 									'<a href="#" class="btn btn-tool btn-draggable-COMMENTEDOUT btn-lg">'+
 									'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
 									'Cambiar nombre…'+
 									'</a>'+
 								'</li>'+
-								
+
 								'<li class="vr"></li>'+
 
 								// '<li class="vr"></li>'+
-								
+
 								'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 								//'<li class="iconTop iconBig toolbarIcon toolbarIcon-exportar">'+
 									'<a href="#" class="btn btn-tool btn-lg">'+
@@ -506,9 +544,9 @@ if ($isCompassConsultant) {
 									'Exportar'+
 									'</a>'+
 								'</li>'+
-								
+
 								'<li class="vr"></li>'+
-								
+
 								'<li class="{{if autoUpdate=="true" || autoUpdate==true }} green {{/if}} iconTop iconBig toolbarIcon toolbarIcon-update">'+
 									'<a href="#" class="btn btn-tool btn-lg">'+
 									'<i class="fa fa-refresh" aria-hidden="true"></i>'+

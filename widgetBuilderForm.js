@@ -1,11 +1,11 @@
 $.templates("widgetBuilderForm",
-		
+
 	'{{if !display || display=="builderPage"}}'+
 		'{{include tmpl="widgetBuilderPage"/}}'+
 	'{{else display=="formOptions"}}'+
 		'{{include tmpl="widgetBuilderFormOptions"/}}'+
 	'{{/if}}'
-		
+
 ); //widgetBuilderForm
 
 
@@ -13,13 +13,13 @@ $.templates("widgetBuilderForm",
 $.templates("widgetBuilderPage",
 
 '<div class="container1 cmp-cont widgetBuilderFormGroup">'+
-	'{{include tmpl="widgetBuilderForm-cmpHeader"/}}' +	
+	'{{include tmpl="widgetBuilderForm-cmpHeader"/}}' +
 	'{{include tmpl="widgetBuilderForm-typeSelect"/}}' +
 
 	'<div class="row widgetBuilderOptionsFormContainerRow">'+
 		'<div class="col-lg-7 col-xs-12" id="widgetBuilderOptionsFormContainer" class="widgetBuilderOptionsFormContainer">'+
 			'{{include tmpl="widgetBuilderFormOptions"/}}' +
-		'</div>'+		
+		'</div>'+
 		'<div class="col-lg-4 col-xs-12 widgetBuilderPreviewAndSavetoHT">'+
 			'{{include tmpl="widgetBuilderPreviewAndSavetoHT"/}}' +
 		'</div>'+
@@ -40,7 +40,7 @@ $.templates("widgetBuilderForm-cmpHeader",
 		'</div>'+
 	'</div>'+
 '</div>'
-	
+
 ); //widgetBuilderForm-cmpHeader
 
 
@@ -89,7 +89,7 @@ $.templates("widgetBuilderForm-typeSelect",
 						'<span>Indicador</span>'+
 					'</a>'+
 				'</li>'+
-				
+
 			'</ul>'+
 		'</li>'+
 		'<li class="list-nav">'+
@@ -146,7 +146,7 @@ $.templates("widgetBuilderPreviewAndSavetoHT",
 			' class="btn-main" type="submit">Guardar</button>'+
 	'</div>'+
 '</form>'
-	
+
 ); //widgetBuilderPreviewAndSavetoHT
 
 
@@ -179,9 +179,9 @@ $.templates("widgetBuilderFormOptions",
 	'{{include tmpl="widgetBuilderFormOptions-fieldset-titulo"/}}'+
 
 
-	'{{if widgetType=="monitor-cronologico" || widgetType=="" || !widgetType }}'+		
+	'{{if widgetType=="monitor-cronologico" || widgetType=="" || !widgetType }}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-rangofechas"/}}'+
-		'{{include tmpl="widgetBuilderFormOptions-fieldset-series"/}}'+	
+		'{{include tmpl="widgetBuilderFormOptions-fieldset-series"/}}'+
 
 	'{{else widgetType=="monitor-variaciones"}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-columnas"/}}'+
@@ -195,7 +195,7 @@ $.templates("widgetBuilderFormOptions",
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-rangofechas"/}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-series"/}}'+
 		//FALTA SELECCIONAR TIPO DE GRAFICO EN SERIE
-		
+
 	'{{else widgetType=="grafico-partentotales"}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-datoFormula"/}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-series"/}}'+
@@ -204,7 +204,7 @@ $.templates("widgetBuilderFormOptions",
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-rangofechas"/}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-datoFormula"/}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-series"/}}'+
-	
+
 	'{{else}}'+ // full form
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-rangofechas"/}}'+
 		'{{include tmpl="widgetBuilderFormOptions-fieldset-datoFormula"/}}'+
@@ -218,7 +218,7 @@ $.templates("widgetBuilderFormOptions",
 //'{{else type1=="grafico"}}{{include tmpl="cpWidget-x-grafico"/}}'+
 
 
-	
+
 '</form>'
 
 ); //widgetBuilderForm
@@ -275,7 +275,7 @@ $.templates("widgetBuilderFormOptions-fieldset-rangofechas",
 	'</div>'+
 '</fieldset>'
 ); //widgetBuilderFormOptions-fieldset-rangofechas
-	
+
 
 
 $.templates("widgetBuilderFormOptions-datoFormulaOptions",
@@ -287,11 +287,17 @@ $.templates("widgetBuilderFormOptions-datoFormulaOptions",
 
 
 $.templates("widgetBuilderFormOptions-variacionFormulaOptions",
-'{{for ~root.dbVariacionFormulaOptions ~widgetPresentarVariacionFormula=widgetPresentarVariacionFormula}}'+ 
+'{{for ~root.dbVariacionFormulaOptions ~widgetPresentarVariacionFormula=widgetPresentarVariacionFormula}}'+
 	'<option value="{{:value}}" {{if ~widgetPresentarVariacionFormula==value}}selected{{/if}} >{{:text}}</option>'+
 '{{/for}}'
 ); //widgetBuilderFormOptions-variacionFormulaOptions
 
+
+$.templates("widgetBuilderFormOptions-sumFormulaOptions",
+'{{for ~root.dbSumFormulaOptions ~widgetPresentarSumFormula=widgetPresentarSumFormula}}'+
+	'<option value="{{:value}}" {{if ~widgetPresentarSumFormula==value}}selected{{/if}} >{{:text}}</option>'+
+'{{/for}}'
+); //widgetBuilderFormOptions-variacionSumOptions
 
 
 
@@ -302,13 +308,15 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormula",
 	'<div class="row">'+
 	'<div class="col-lg-6">'+
 		'<div class="form-group">'+
+
 			'<select '+
 			' data-groupname="PresentarDatoFormula" '+
 				'name="widgetPresentarDatoFormula" class="form-control" NOTrequired >'+
 				'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions" ~presentarDatoFormula=widgetPresentarDatoFormula /}}'+
 			'</select>'+
+
 		'</div>'+
-		
+
 		'{{if widgetType=="grafico-partentotales"}}'+
 			'{{include ~fieldPrefix="" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 		'{{/if}}'+
@@ -317,43 +325,63 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormula",
 	'</div>'+
 '</fieldset>'
 ); //widgetBuilderFormOptions-fieldset-datoFormula
-	
+
 
 $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 //'<!-- CREAR INDICADOR -->'+// mostrar ULTIMO DATO o VARIACION
 '<fieldset>'+
 	'<div class="h4">Datos del indicador '+
-			'<span data-showifnotchecked="widgetPresentarUltimoDato">&nbsp;'+
-			'<small data-showifnotchecked="widgetPresentarVariacion" class="label label-warning">Seleccione al menos una opción.</small>'+
-		'</span>'+
+			'<span data-showifnotchecked="widgetPresentarSum"><span data-showifnotchecked="widgetPresentarUltimoDato">&nbsp;'+
+			'<small data-showifnotchecked="widgetPresentarVariacion" class="label label-warning">'+
+			'Seleccione al menos una opción.</small>'+
+		'</span></span>'+
 	'</div>'+
 	'<div class="form-inline datos-indicador">'+
 		'<div class="form-group fix-left">'+
-			'<input type="checkbox" id="widgetPresentarUltimoDato" name="widgetPresentarUltimoDato" {{if widgetPresentarUltimoDato && widgetPresentarUltimoDato!="false"}}checked="checked"{{/if}} value="true"><label for="widgetPresentarUltimoDato" class="checkbox-label">Último dato</label>'+
+			'<input type="checkbox" id="widgetPresentarUltimoDato" data-groupname="tipo-indicador-checks" name="widgetPresentarUltimoDato" {{if widgetPresentarUltimoDato && widgetPresentarUltimoDato!="false"}}checked="checked"{{/if}} value="true"><label for="widgetPresentarUltimoDato" class="checkbox-label">Último dato</label>'+
 		'</div>'+ //group
 		'&nbsp; &nbsp; '+
 		'<div class="form-group fix-right">'+
-		
-			'<input type="checkbox" value="true" id="widgetPresentarVariacion" name="widgetPresentarVariacion" {{if widgetPresentarVariacion && widgetPresentarVariacion!="false"}}checked="checked"{{/if}}>'+
+
+			'<input type="checkbox" value="true" id="widgetPresentarVariacion" data-groupname="tipo-indicador-checks" name="widgetPresentarVariacion" {{if widgetPresentarVariacion && widgetPresentarVariacion!="false"}}checked="checked"{{/if}}>'+
 			'<label for="widgetPresentarVariacion" class="checkbox-label">Variación</label> '+
-			
-			'<div data-showifchecked="widgetPresentarVariacion" >'+
-			
+
+			'<input type="checkbox" value="true" id="widgetPresentarSum" data-groupname="tipo-indicador-checks" data-checkboxbehavior="exclusive" name="widgetPresentarSum" {{if widgetPresentarSum && widgetPresentarSum!="false"}}checked="checked"{{/if}}>'+
+			'<label for="widgetPresentarSum" class="checkbox-label">Operaciones</label> '+
+
+
+
+			'<div >'+
+
 			'<select '+
 				' data-groupname="PresentarDatoFormula" '+
+				' data-showifchecked="widgetPresentarVariacion"' +
 				' id="widgetPresentarVariacionFormula" '+
 				' name="widgetPresentarVariacionFormula" '+
 				' class="form-control" NOTrequired >'+
 				'{{include tmpl="widgetBuilderFormOptions-variacionFormulaOptions"/}}'+
 			'</select>'+
-			
+
+
+			'<select '+
+				' data-groupname="PresentarDatoSum" '+
+				' data-showifchecked="widgetPresentarSum"' +
+				' id="widgetPresentarSumFormula" '+
+				' name="widgetPresentarSumFormula" '+
+				' class="form-control" NOTrequired >'+
+				'{{include tmpl="widgetBuilderFormOptions-sumFormulaOptions"/}}'+
+			'</select>'+
+			'</div>'+
+
+
+			'<div data-hideifonlyornonechecked="widgetPresentarUltimoDato">'+
 				'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
-			
+
 				'<span class="form-group width-md">'+
 					'<label class="radios-label">Estilo:</label>'+
 					//'<label class="checkbox-label">Estilo:</label>'+
 					'<span class="form-group">'+
-					
+
 					'<input type="radio" name="iconSet" value="up-green" id="iconSet-radio-up-green" />'+
 						'<label for="iconSet-radio-up-green" class="radio-hgroup-label">'+
 						'<span class="iconset-up-green trend-up trend-arrow"></span>'+
@@ -361,7 +389,7 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 						'<span class="iconset-up-green trend-down trend-arrow"></span>'+
 						'</label>'+
 					' &nbsp;</span>'+
-					
+
 					'<span class="form-group">'+
 					'<input type="radio" name="iconSet" value="up-red" id="iconSet-radio-up-red" />'+
 						'<label for="iconSet-radio-up-red" class="radio-hgroup-label">'+
@@ -370,7 +398,7 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 						'<span class="iconset-up-red trend-down trend-arrow"></span>'+
 						'</label>'+
 					' &nbsp;</span>'+
-						
+
 					'<span class="form-group">'+
 					'<input type="radio" name="iconSet" value="up-gray" id="iconSet-radio-up-gray" />'+
 						'<label for="iconSet-radio-up-gray" class="radio-hgroup-label">'+
@@ -381,7 +409,7 @@ $.templates("widgetBuilderFormOptions-fieldset-datoFormulaVariacion",
 					'</span>'+
 				'</span>'+
 			'</div>'+  // widgetPresentarVariacion
-			
+
 		'</div>'+//group
 	'</div>'+ //inline
 '</fieldset>'
@@ -398,12 +426,12 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
 
 //Campo: fechaInicial
-//para: 
+//para:
 // - Promedio entre una fecha y ultimo dato (BetweenDatesAverage),
 // - Acumulado hasta último dato (BetweenDatesSum)
 // - Variación respecto de un punto en el tiempo (MomentInTimeVariation)
 '<div class="form-group width-md"'+
-	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselect="PresentarDatoFormula,PresentarDatoSum" '+
 	' data-showifgroupselectvalues="BetweenDatesAverage,BetweenDatesSum,MomentInTimeVariation" '+
 	+' >'+
 '<p>Fecha Inicial (DD/MM/AAAA):&nbsp;</p>'+
@@ -414,11 +442,11 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 
 
 //Campo: Valor de N (calculoVariacion-valordeN)
-//Para: 
+//Para:
 //- Promedio móvil de N datos anteriores al útimo (RangedMovingAverage)
 //-  Variación de dos promedios móviles de N (RangedMovingAveragesVariation)
 '<div class="form-group width-md" '+
-	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselect="PresentarDatoFormula,PresentarDatoSum" '+
 	' data-showifgroupselectvalues="RangedMovingAverage" '+
 	+' >'+
 '<p>N: &nbsp;'+
@@ -438,7 +466,7 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 //Campo: Tipo de calculo [suma, promedio]: calculoVariacion-tipoDeCalculo
 //Para: AccumulatedVariation
 '<div class="form-group width-md" '+
-	' data-showifgroupselect="PresentarDatoFormula" '+
+	' data-showifgroupselect="PresentarDatoFormula,PresentarDatoSum" '+
 	' data-showifgroupselectvalues="AccumulatedVariation" '+
 	+' >'+
 '<p>Tipo de cálculo: &nbsp;'+
@@ -452,7 +480,7 @@ $.templates("widgetBuilderFormOptions-fieldgroup-calculosvariacion",
 '</div>' //group
 
 
-				
+
 ); //widgetBuilderFormOptions-variacionFormulaOptions
 
 
@@ -486,7 +514,7 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 		'<big class="btn-sort"><i class="fa fa-bars"></i></big>'+
 	'</div>'+
 	'<div class="col-lg-11">'+
-	
+
 //		'<div class="form-group inline">'+
 		'<div class="form-group width-md">'+
 			'<label for="formUI_sortableFormField-columnaKey{{:#parent.index}}-userLabel">'+
@@ -515,7 +543,7 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 			//'{{include tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 			'{{include ~fieldPrefix="formUI_sortableFormField-columnaKey"+#parent.index+"-" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
 
-			
+
 		'</div> '+
 		'<div class="form-group inline cta-btn">'+
 			'<button class="btn btn-primary btn-sm sortableFormFieldControl-delete"><i class="fa fa-minus"></i></button> '+
@@ -523,7 +551,7 @@ $.templates("widgetBuilderFormOptions-fieldset-columna",
 		'</div>'+
 	'</div>'+
 '</div>'
-	
+
 ); //widgetBuilderFormOptions-fieldset-columna
 
 
@@ -538,7 +566,7 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 //	'<!-- SERIES -->'+
 '<fieldset>'+
 	'<div class="h4">Series <small>'+
-	
+
 		'{{if widgetType=="indicador"}}Para el indicador se empleará sólo la primer serie de la lista{{/if}}'+
 
 		'{{if widgetType=="grafico-cronologico"}}Las series con tipos de gráfico incompatibles no se presentarán en la vista previa{{/if}}'+
@@ -594,7 +622,7 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 					' value="{{:userLabel}}" '+
 					' class="form-control" NOTrequired >'+
 			'</div>'+
-			
+
 			'{{if ~root.widgetType == "grafico-cronologico" }}'+
 			'<div class="form-group inline" >'+
 				'<label for="formUI_sortableFormField-serieKey{{:#parent.index}}-chartType">Tipo</label>'+
@@ -611,11 +639,11 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 				'<div class="form-group inline" >'+
 					'<input type="checkbox" value="true" '+
 					' {{if ejeCero && ejeCero!="false"}}checked="checked"{{/if}} '+
-					' class="checkbox-label" id="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero" name="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero"> <label for="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero" >Eje cero</label>'+				
+					' class="checkbox-label" id="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero" name="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero"> <label for="formUI_sortableFormField-serieKey{{:#parent.index}}-ejeCero" >Eje cero</label>'+
 				'</div>'+
 			'</div>'+
 			'{{/if}}'+
-			
+
 			'{{if ~root.widgetType == "monitor-cronologico" }}'+
 
 //			'<div class="form-group inline">'+
@@ -628,12 +656,12 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 					'>'+
 					'{{include tmpl="widgetBuilderFormOptions-datoFormulaOptions"/}}'+
 				'</select>'+
-				
+
 				'{{include ~fieldPrefix="formUI_sortableFormField-serieKey"+#parent.index+"-" tmpl="widgetBuilderFormOptions-fieldgroup-calculosvariacion"/}}' +
-				
+
 			'</div>'+
 			'{{/if}}'+
-			
+
 		'</div>'+
 	'</div>'+
 	'{{/for}}'+
@@ -642,14 +670,3 @@ $.templates("widgetBuilderFormOptions-fieldset-series",
 	'</div>'+ // <!-- /sortableFormFieldsGroup -->'+
 '</fieldset>'
 ); // widgetBuilderFormOptions-fieldset-series
-
-
-
-
-
-
-
-
-
-
-

@@ -7,10 +7,10 @@
 /* ****************************
 Region 'flags'
 *********** */
-.xh-flag.xh-mercosur{ 
+.xh-flag.xh-mercosur{
 	background:#8c8;
 	}
-.xh-flag.xh-conosur{ 
+.xh-flag.xh-conosur{
 	background:#aee;
 	}
 
@@ -18,18 +18,25 @@ Region 'flags'
 /* ****************************
 Country flags (.xh-xx classes)
 ******************************
-	
+
 	GREP from "TL\tComment\r" to CSS code to build:
 
 	FIND:
 	(..)\t(.*)\r
-	
+
 	REPLACE:
 	.xh-flag.xh-\L\1\E{ /* \1: \2 * /
 	background-image:url(../images/xh-flags/\L\1\E.png);
 	}\r
-	
+
 *********** */
+
+.xh-flag.xh-mundo{ /* Mundo: Mundo */
+	background-image:url(../images/xh-flags/mundo.png);
+	background-repeat: no-repeat;
+	width: 22px; 
+	}
+
 
 .xh-flag.xh-ar{ /* AR: Argentina */
 	background-image:url(../images/xh-flags/ar.png);
@@ -130,5 +137,3 @@ Country flags (.xh-xx classes)
 .xh-flag.xh-ve{ /* VE: Venezuela */
 	background-image:url(../images/xh-flags/ve.png);
 	}
-
-

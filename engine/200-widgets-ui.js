@@ -600,6 +600,7 @@ $('#modal-widget-update .modal-body .btn-default').click(function(event) {
 $(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
 	$(this).removeClass('jstree-open').addClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
+	evenWidgetHeights( "BODY" );
 	}).on('click','a',function(e) {
         e.stopPropagation();
    });
@@ -607,6 +608,7 @@ $(document).on('click', '.cpDBList>UL>li.jstree-open', function(event) {
 $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
 	$(this).addClass('jstree-open').removeClass('jstree-closed');
 	event.preventDefault(); event.stopPropagation();
+	evenWidgetHeights( "BODY" );
 	}).on('click','a',function(e) {
         e.stopPropagation();
    });
@@ -615,6 +617,7 @@ $(document).on('click', '.cpDBList>UL>li.jstree-closed', function(event) {
 //Tree on cpContainers
 $(document).on('click', '.cpContainerTitle.jstree-open', function(event) {
 	$(this).removeClass('jstree-open').addClass('jstree-closed');
+	evenWidgetHeights( "BODY" );
 	$(this).closest('.cpCollapsable').removeClass('cpCollapsableOpened').addClass('cpCollapsableClosed');	
 	event.preventDefault(); event.stopPropagation();
 	}).on('click','a',function(e) {
@@ -623,6 +626,7 @@ $(document).on('click', '.cpContainerTitle.jstree-open', function(event) {
 
 $(document).on('click', '.cpContainerTitle.jstree-closed', function(event) {
 	$(this).addClass('jstree-open').removeClass('jstree-closed');
+		evenWidgetHeights( "BODY" );
 	$(this).closest('.cpCollapsable').addClass('cpCollapsableOpened').removeClass('cpCollapsableClosed');
 	event.preventDefault(); event.stopPropagation();
 	}).on('click','a',function(e) {
@@ -711,13 +715,15 @@ function evenWidgetHeights( container ){
 
 
 //From this point onwards, we have a container.
-//console.log('** container is: ', container)
+console.log('** container is: ', container)
 
 //get container width
 var containerWidth = $(container).width();
 
 //get widgets
-var widgets = $(container).children('.contentWidget')
+//var widgets = $(container).children('.contentWidget')
+var widgets = $(container).children('.cpObject')
+console.log ('widgets',widgets)
 
 // console.log ('container', $(container).width(), container)
 // console.log ( 'widgets', widgets)
@@ -733,17 +739,17 @@ var sumWidths = 0;
 //for each widget
 $(widgets).each(function() {
 
-	// console.log('processing w h this', $(this).width(), $(this).height(), this )
+	console.log('processing w h this', $(this).width(), $(this).height(), this )
 	
 	//add widget's width to processed sumWidths
 	sumWidths += $(this).width();
 
 	//if widget width overflows container, process buffer
 	if(sumWidths>containerWidth){
-		// console.log ( 'this widget starts a new line' );
+		console.log ( 'this widget starts a new line' );
 		//this widget starts a new line.
 		//process last line buffer widgets: assign their line's max height to all
-			// console.log( widgetsBufferMaxHeight, widgetsBuffer )
+			console.log( widgetsBufferMaxHeight, widgetsBuffer )
 			$( widgetsBuffer ).each(function() {
 				$(this).height( widgetsBufferMaxHeight )
 			});

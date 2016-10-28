@@ -50,7 +50,7 @@
 	margin-left: 5px; font-weight: normal; vertical-align: middle;
 	font-size:13px; font-weight: normal;
 	}
-.radios-label { 
+.radios-label {
 	margin-left:0; margin-right: 5px;
 	}
 
@@ -160,6 +160,11 @@
 	display:none;
 	}
 
-.h4 small.label-warning{ 
+.h4 small.label-warning{
 	color: #fff;
 	}
+
+/* FORM datos del indicador */
+#widgetPresentarSum {
+  margin-left: 20%;
+}
