@@ -177,6 +177,16 @@ for( var i=0; i<gData.datasets.length; i++){
 
 	//agregamos al nuevo array el elemento que estamos procesando
 	gDataDatasets2.push (gData.datasets[i]);
+
+	//BUGFIX: Convertimos todos los números a Number para evitar errores de render en las stacked bars
+	for (d in gData.datasets[i]["data"]) {
+		if ((gData.datasets[i]["data"][d].length > 0) &&
+			(Number(gData.datasets[i]["data"][d]) == gData.datasets[i]["data"][d])) {
+
+			gData.datasets[i]["data"][d] = Number(gData.datasets[i]["data"][d]);
+		}
+	}
+
 	//si tenemos dataProjected, necesitaremos agregar un segundo elemento con esa data
 	if(
 		gData.datasets[i]["dataProjected"]
