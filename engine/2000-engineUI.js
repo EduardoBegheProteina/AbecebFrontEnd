@@ -1,7 +1,7 @@
 function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 
 	if( data.children ){
-		data.children = 
+		data.children =
 			$.each( data.children, function(key, val) {
 				preprocessCpData(val)
 				});
@@ -13,8 +13,8 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 
 	if( data.dataUpdated ){
 		data.dataUpdated = preprocessCpDataShown( data.dataUpdated, data );
-		
-		//set data.titlebarBadge 
+
+		//set data.titlebarBadge
 		data.titlebarBadge = true;
 		if(!data.titlebarBadgeStatus){
 			if( data.dataUpdated.updateStatus ){
@@ -24,12 +24,12 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 			}
 		}
 	}else{ // no data.dataUpdated
-		//set no data.titlebarBadge 
+		//set no data.titlebarBadge
 		if(!data.titlebarBadge){
 		data.titlebarBadge = false;
 		}
 	}
-		
+
 	return data;
 }//end preprocessCpData
 
@@ -37,7 +37,7 @@ function preprocessCpData( data ){ //recursively preprocess JSON cpObjects data
 
 //sub-funcion para preprocesar data.dataShown y data.dataUpdated
 //necesitamos nodo dataShown y su parent data
-function preprocessCpDataShown( dataShown, data ){ 
+function preprocessCpDataShown( dataShown, data ){
 
 	//curzar tabledata with series
 	if ( dataShown.tabledata && data.series ){
@@ -47,7 +47,7 @@ function preprocessCpDataShown( dataShown, data ){
 				}
 		}
 	} //curzar tabledata with series
-	
+
 	return dataShown;
 
 } //end preprocessCpDataShown
@@ -97,26 +97,26 @@ function initGraficos( container ){
 var container = container || $('BODY');
 
 var graphBackgroundColors = [
-	"rgba(122, 204, 122, 0.6)", //"#7acc7a", 
-	"rgba(128, 213, 255, 0.6)", //"#80d5ff", 
-	"rgba(41, 123, 204, 0.6)", //"#297bcc", 
-	"rgba(183, 92, 230, 0.6)", //"#b75ce6", 
-	"rgba(204, 82, 82, 0.6)", //"#cc5252", 
-	"rgba(230, 161, 92, 0.6)", //"#e6a15c", 
+	"rgba(122, 204, 122, 0.6)", //"#7acc7a",
+	"rgba(128, 213, 255, 0.6)", //"#80d5ff",
+	"rgba(41, 123, 204, 0.6)", //"#297bcc",
+	"rgba(183, 92, 230, 0.6)", //"#b75ce6",
+	"rgba(204, 82, 82, 0.6)", //"#cc5252",
+	"rgba(230, 161, 92, 0.6)", //"#e6a15c",
 	"rgba(230, 230, 0, 0.6)" //"#e6e600"
 	]
 var graphProjectedBackgroundColors = [
-	"rgba(122, 204, 122, 0.2)", //"#7acc7a", 
-	"rgba(128, 213, 255, 0.2)", //"#80d5ff", 
-	"rgba(41, 123, 204, 0.2)", //"#297bcc", 
-	"rgba(183, 92, 230, 0.2)", //"#b75ce6", 
-	"rgba(204, 82, 82, 0.2)", //"#cc5252", 
-	"rgba(230, 161, 92, 0.2)", //"#e6a15c", 
+	"rgba(122, 204, 122, 0.2)", //"#7acc7a",
+	"rgba(128, 213, 255, 0.2)", //"#80d5ff",
+	"rgba(41, 123, 204, 0.2)", //"#297bcc",
+	"rgba(183, 92, 230, 0.2)", //"#b75ce6",
+	"rgba(204, 82, 82, 0.2)", //"#cc5252",
+	"rgba(230, 161, 92, 0.2)", //"#e6a15c",
 	"rgba(230, 230, 0, 0.2)" //"#e6e600"
 	]
 var graphBorderColors = [
-	"#7acc7a", 
-	"#80d5ff", 
+	"#7acc7a",
+	"#80d5ff",
 	"#297bcc", "#b75ce6", "#cc5252", "#e6a15c", "#e6e600"
 	]
 
@@ -181,15 +181,15 @@ for( var i=0; i<gData.datasets.length; i++){
 	if(
 		gData.datasets[i]["dataProjected"]
 		&&
-		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected 
-		){	
+		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected
+		){
 
 		if( gDataChartType == "line" || gDataChartType == "area" ){
 
 			var gDataIdataSet = jQuery.extend(true, {}, gData.datasets[i] );
 			gDataIdataSet["isProjected"] = true;
 			delete gDataIdataSet["dataProjected"];
-		
+
 		//para graficos de linea o area, desplazamos valores
 			//creamos array de NULLs para desplazar dataUpdated
 			//con un elementos MENOS que lenght de data
@@ -207,14 +207,14 @@ for( var i=0; i<gData.datasets.length; i++){
 			//asignamos data del nuevo elemento
 			gDataIdataSet["borderDash"] = [10,5]
 			gDataIdataSet["label"] += " (Proy.)";
-		
+
 			//copiamos elemento conteniendo dataProjected a gDataDatasets2
 			gDataDatasets2.push ( gDataIdataSet );
 
 		}else{
 
 
-			gData.datasets[i]["hasProjectedFrom"] = gData.datasets[i]["data"].length;		
+			gData.datasets[i]["hasProjectedFrom"] = gData.datasets[i]["data"].length;
 			gData.datasets[i]["data"] = gData.datasets[i]["data"].concat ( gData.datasets[i]["dataProjected"] );
 			gData.datasets[i]["label"] += " (con proy.)";
 			delete gData.datasets[i]["dataProjected"];
@@ -238,18 +238,18 @@ for( var i=0; i<gData.datasets.length; i++){
 			gDataIdataSet["data"] = dataProjectedLeftNulls.concat (
 				gData.datasets[i]["dataProjected"]
 				);
-			
+
 		//para graficos bar, horizontal bar o pie, identificamos datos proyectados con atributos de area
 			gDataIdataSet[ "borderWidth" ] = 2;
 			gDataIdataSet["label"] += " (Proy.)";
-		
+
 		//copiamos elemento conteniendo dataProjected a gDataDatasets2
 		gDataDatasets2.push ( gDataIdataSet );
 */
 
 		}
 
-		
+
 	} // end if(gData.datasets[i]["dataProjected"])
 }
 
@@ -263,7 +263,7 @@ for( var i=0; i<gData.datasets.length; i++){
 
 	//if backgroundColor was not defined by JSON, apply palette
 	if( !gData.datasets[i]["backgroundColor"] ){
-	
+
 		//if is a Projected series, use projected colors
 		if( gData.datasets[i]["isProjected"] ){
 			gData.datasets[i]["backgroundColor"] = graphProjectedBackgroundColors [graphColorIx]
@@ -278,7 +278,7 @@ for( var i=0; i<gData.datasets.length; i++){
 			//Has projected data, define background color array
 
 			var backgroundColorArray = [];
-			
+
 			var hasProjectedFrom = gData.datasets[i]["hasProjectedFrom"]
 			var hasProjectedTo = gData.datasets[i]["data"].length
 
@@ -290,12 +290,12 @@ for( var i=0; i<gData.datasets.length; i++){
 			for(var bgcaIx=bgcaIx; bgcaIx< hasProjectedTo ; bgcaIx++ ){
 				backgroundColorArray.push( graphProjectedBackgroundColors[graphColorIx] );
 				}
-			
+
 			//apply background color array to serie
 			gData.datasets[i]["backgroundColor"] = backgroundColorArray;
-			
+
 			}
-			
+
 		}
 	}
 	if( !gData.datasets[i]["borderColor"] ){
@@ -303,25 +303,25 @@ for( var i=0; i<gData.datasets.length; i++){
 	}
 	gData.datasets[i]["pointBackgroundColor"] = graphBackgroundColors [graphColorIx];
 	gData.datasets[i]["pointBorderColor"] = graphBorderColors [graphColorIx];
-	
+
 	gData.datasets[i].fill = false;
 	gData.datasets[i]["pointRadius"] = 4;
 	gData.datasets[i]["lineTension"] = 0;
-			
+
 //Avanzamos el Ix de colores SOLO si no tenemos dataProjected
 //Si tenemos dataProjected, se empleara el mismo color para el proximo elemento
 
-if( 
+if(
 		!(
-		gData.datasets[i]["dataProjected"] 
+		gData.datasets[i]["dataProjected"]
 		&&
-		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected 
+		gData.datasets[i]["dataProjected"].length > 0 //dont process empty dataProjected
 		)
 	){
 		graphColorIx++
 		if( graphColorIx > graphBackgroundColors.length ){ graphColorIx = 0 };
 	}
-	
+
 	var gDataChartType;
 	if( gData.datasets[i].type ){
 		gDataChartType = gData.datasets[i].type
@@ -332,24 +332,24 @@ if(
 		}
 
 	bestType = getBestType( bestType, gDataChartType );
-	
+
 	switch ( gDataChartType ){ // gData.datasets[i].type ){
-	
+
 		case 'line':
-			gData.datasets[i].fill = false;			
+			gData.datasets[i].fill = false;
 			break;
-			
+
 		case 'area':
 			gDataChartType = 'line';
 			gData.datasets[i].fill = true;
 			break;
-			
+
 		case 'bar':
 			gDataChartType = 'bar';
 			gData.datasets[i].fill = true;
 			gData.datasets[i][ "borderWidth" ] = 1;
 			break;
-			
+
 		case 'columnas-stacked': case 'bar-stacked':
 			gDataChartType = 'bar';
 			gData.datasets[i][ "borderWidth" ] = 1;
@@ -365,16 +365,16 @@ if(
 					}
 			);
 			break;
-		
+
 		case 'horizontalBar':
 			gData.datasets[i][ "borderWidth" ] = 1;
 			break;
-		
+
 		case 'horizontalBar-stacked':
 			gDataChartType = 'horizontalBar';
 			gData.datasets[i][ "borderWidth" ] = 1;
 
-			jQuery.extend(true, graphOptions, 
+			jQuery.extend(true, graphOptions,
 				{
 				"scales": {
 					"xAxes": [{ "stacked": "true" }],
@@ -390,13 +390,13 @@ if(
 			gData.datasets[i].borderColor = graphBorderColors;
 			graphOptions.scales = {};
 			break;
-			
+
 		default: //line
 			gData.datasets[i].fill = false;
 			break;
 
 	} //end switch gDataChartType
-	
+
 
 	if( gData.datasets[i].ejeCero && gData.datasets[i].ejeCero != "false" ) {
 			jQuery.extend(true, graphOptions, {
@@ -419,25 +419,25 @@ gData.datasets[i].type = gDataChartType;
 var labelsDataFormat = false;
 	if(gData.labelsDataFormat){ labelsDataFormat = gData.labelsDataFormat };
 for (var L=0; L < gData.labels.length; L ++){
-	
+
 	var Lv = parseString2vObj( gData.labels[L] );
 	console.log (Lv)
-	
+
 	if( !(Lv.cpDataFormat) && labelsDataFormat ){
 		//aplicar labelsDataFormat general si existe y el dato no tiene definicion particular
 		Lv.datoFormateado = Lv.datoHtml = cpDataFormat( Lv.dato, labelsDataFormat );
 	}
-	
+
 	gData.labels[L] = Lv.datoHtml;
-	
+
 }
 
 
-	
+
 	//construimos el grafico
 	var chartDataObj = {
 		options: graphOptions,
-		type: bestType, // gDataChartType, //gData.datasets[0].type, 
+		type: bestType, // gDataChartType, //gData.datasets[0].type,
 		data: {
 			labels: gData.labels,
 			datasets: gData.datasets
@@ -450,18 +450,20 @@ for (var L=0; L < gData.labels.length; L ++){
 			evenWidgetHeights( this.chart.canvas );
 			//procesar foldable widgetsContainers
 			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
-			
+
 			}
 		}
 
 
 	//console.log ('chartDataObj: ', JSON.stringify(chartDataObj) )
-	new Chart(chartContainerObj, chartDataObj);	
+
+	//Keep a reference to the chart object in the canvas DOM
+	chartContainerObj.chart = new Chart(chartContainerObj, chartDataObj);
 
 
 
 
-    
+
 });
 
 }
@@ -491,7 +493,7 @@ function renderNewCpWidget( container, data, beforeOrAfter ){
 
 	//pre procesamos DATA
 	preprocessCpData( data );
-	
+
 	//preparamos DIV de Widget para recibir el template
 	var $target = $(
 		'<div id="widget-' + data.abecebObjectId + '" class="contentWidget col-md-'+ data.gridWidth +
@@ -511,7 +513,7 @@ function renderNewCpWidget( container, data, beforeOrAfter ){
 		$( container ).append( $renderedTarget );
 	}else{
 		$( container ).html( $renderedTarget );
-	}	
+	}
 
 	return ( $renderedTarget );
 
@@ -525,7 +527,7 @@ function renderNewHtList( container, data, beforeOrAfter ){
 
 	//inicializamos container como cpObject
 	$(container).cpObject( { "type": "htList" } );
-	
+
 	//preparamos DIV de Widget para recibir el template
 	if( !beforeOrAfter || beforeOrAfter=='replace'){
 		var $target = $(container);
@@ -543,8 +545,8 @@ function renderNewHtList( container, data, beforeOrAfter ){
 		//ya fue aplicado
 		//$( container ).html( $renderedTarget );
 	}
-	
-	
+
+
 	return ( $renderedTarget );
 } //end renderNewCpContainer
 
@@ -557,20 +559,20 @@ function renderHTlistContainer( target, data ){
     	//procesamos template
 		var html = $.templates.HTlistContainer.render( data );
 		$( target ).html(html);
-		
+
 		//procesamos cpObjects que acabamos de renderear
 		$( target ).find(".cpObjectToInit").cpObject().removeClass('cpObjectToInit');
-		
+
 		//actualizamos menu "guardar widget en HT", si existe
 		widgetSaveToHTidUpdate();
 
-		
+
 		// initDraggableWidgets( target );
 		initHTdroppables( target );
 
-		
+
 	}); //end when.done
-	
+
 	return ( target );
 }
 
@@ -582,7 +584,7 @@ function renderNewCpContainer( container, data, beforeOrAfter ){
 
 	//pre procesamos DATA
 	preprocessCpData( data );
-	
+
 	//preparamos DIV de Widget para recibir el template
 	var $target = $(
 		'<div class="cpContainerDIV"><\/div>')
@@ -609,38 +611,38 @@ function initTopToolbarListeners(){
 //process toolbar actions
 $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 	var clickedObj = this;
-	
+
 	if( $( clickedObj ).hasClass( "toolbarIcon-crearTexto" ) ){
-	
+
 		addNewTextWidget();
 
 
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-renombrar" ) ){
-		
+
 		var htId = $( clickedObj ).cpGetAncestor().cpGetData('abecebObjectId') ;
 		if ( $('#htli-'+htId)[0] ){
 			htRenameDialog( $('#htli-'+htId) );
 		}
 
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-exportar" ) ){
-		
+
 		// if( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref ){
 		// 	document.location.href= ( $( clickedObj ).cpGetAncestor().cpGetData().downloadHref  );
 		// }
 		var id = $( clickedObj ).cpGetAncestor().cpGetData().abecebObjectId
 		downloadExcelFromWorkspace(id);
-		
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-share" ) ){
-		
+
 		var htId = $( clickedObj ).cpGetAncestor().cpGetData('abecebObjectId') ;
 		var url = "/group/compass-platform/share-workspace-role-selection?ht=" + htId;
 		document.location.href=url;
-	
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-update" ) ){
-	
+
 		var autoUpdateHTvar = $( clickedObj ).cpGetAncestor().cpGetData('autoUpdate') ;
 
-		
+
 		if ( !autoUpdateHTvar ){ //autoupdate activado
 		bootbox.dialog({
 		  title: "Actualizar datos…",
@@ -653,8 +655,8 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  className: "btn-default",
 			  callback: function() {
 			  }
-			}, 
-			
+			},
+
 			updatenow: {
 			 label: "Actualizar todos los objetos",
 			  className: "btn-primary",
@@ -663,11 +665,11 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  	$("#cpRoot").find(".contentWidget").each(function() {
 					updateWidgetData( $( this ) , false); //no persistir cada update individual, persistiremos la HT una sola vez
 				});
-			  	
+
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
 			  }
 			},
-			
+
 			autoupdate: {
 			  label: "Activar actualización automática",
 			  className: "btn-primary",
@@ -676,7 +678,7 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  	$("#cpRoot").find(".contentWidget").each(function() {
 					updateWidgetData( $( this ) , false); //no persistir cada update individual, persistiremos la HT una sola vez
 				});
-				
+
 			  	$( clickedObj ).addClass("green")
 			  	$( clickedObj ).cpGetAncestor().addClass("htHasautoUpdate");
 			  	$( clickedObj ).cpGetAncestor().cpSetData( { 'autoUpdate': true } );
@@ -684,7 +686,7 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 
 			  }
 			}
-			
+
 		  }
 
 
@@ -702,8 +704,8 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  className: "btn-default",
 			  callback: function() {
 			  }
-			}, 
-						
+			},
+
 			autoupdateoff: {
 			  label: "Desactivar actualización automática",
 			  className: "btn-primary",
@@ -714,29 +716,29 @@ $("div#topToolbar").on('click', '.toolbarIcon:not(.disabled)', function() {
 			  	$( clickedObj ).cpGetAncestor().cpPersist( events.widgetUpdate );
 			  }
 			}
-			
+
 		  }
 
 
 
 
 		});
-		
+
 		}
 
-	
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-copiar" ) ){
-		
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-cortar" ) ){
-		
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-pegar" ) ){
-		
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-deshacer" ) ){
-		
+
 	}else if( $( clickedObj ).hasClass( "toolbarIcon-compartir" ) ){
-		
+
 	}
-	
+
 	//updatecompassGlobalUI();
 	compassGlobalUI.update()
 	});
@@ -753,26 +755,26 @@ function renderCpContainer( target, data ){
     	//procesamos template
 		var html = $.templates.cpContainer.render( data );
 		$( target ).html(html);
-		
+
 		//procesamos cpObjects que acabamos de renderear
 		$( target ).find(".cpObjectToInit").cpObject().removeClass('cpObjectToInit');
-		
+
 		initDraggableWidgets( target );
-		
+
 		initGraficos();
 		initTopToolbarListeners();
-		
+
 		//backup processing cpCollapsableClosedAfterRender, in case no graphics were inited
 		setTimeout(function(){
 			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
 			}, 250);
 
-		
 
-		
+
+
 	}); //end when.done
 
-	
+
 	return ( target );
 }
 
@@ -782,7 +784,7 @@ function renderCpObject( container, data, beforeOrAfter ){
 //renders a widget AND stores source data as cpObject
 
 	if(!beforeOrAfter){ beforeOrAfter = false; }
-		
+
 	  //preprocesar JSON obtenido
 	  switch(data['type']) {
 		case 'cpWidget':
@@ -828,7 +830,7 @@ function lazyGetTemplate(name) {
   if ($.templates[name]) {
     deferred.resolve();
   } else {
-  
+
   var jsTemplateURI;
   //v407/v409 UNMATCHING
   if( $entorno && $entorno=="local" ){
@@ -836,7 +838,7 @@ function lazyGetTemplate(name) {
   	}else{
   	jsTemplateURI = $baseURL + $jsonPath + name + ".js"
     };
-  
+
   	$.getScript( jsTemplateURI ).then(function() {
         if ($.templates[name]) {
           deferred.resolve();
@@ -878,39 +880,39 @@ function tdFromTableData(value, tag) {
 	var tag = this.tagCtx.params.args[1] || "td";
 	var classes = "";
 
-	
+
 	var vObj = parseString2vObj( value );
 
 // 	var dato = value.dato;
 // 	var vObj = value[1];
-	
+
 // 	var value = String(value).split("|");
 // 	if(value.length==2){
 // 		var vObj = parseQueryString( value[1] );
 // 		}else{
 // 		var vObj = {};
 // 		}
-// 		
+//
 // 	var dato = value[0] ;
 
-	
+
 	if(vObj.proj){ //es dato de proyeccion
 		classes += "tdVarProjectedIs1 ";
 		}
-	var r = '<'+tag+' class="'+ classes +'">';	
+	var r = '<'+tag+' class="'+ classes +'">';
 
-// 	var formato = "defaultFormat";	
+// 	var formato = "defaultFormat";
 // 	if( vObj.cpDataFormat ){ formato = vObj.cpDataFormat; }
 // 	if( vObj.cpNumberFormat ){ formato = vObj.cpNumberFormat; }
 // 	if( vObj.f ){ formato = vObj.f; }
-	
+
 // 	if( $.isNumeric( vObj.dato ) ){
 // 		vObj.dato = cpDataFormat( vObj.dato, formato );
 // 	}
 
 
 	r+= vObj.datoHtml ;
-	
+
 	r+= '</'+tag+'>';
 
 	return r;
@@ -958,7 +960,7 @@ function getPaginationArray(current, last, delta) {
 $.views.helpers({
   getPaginationArray: getPaginationArray
   });
-  
+
 
 
 
@@ -1003,4 +1005,3 @@ var parseQueryString = function( queryString ) {
     }
     return params;
 };
-

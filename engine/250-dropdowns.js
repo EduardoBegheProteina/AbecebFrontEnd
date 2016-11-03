@@ -15,7 +15,7 @@ function htRenameDialog( contextHTli ){
 					$('#sortableHtPages').attr("workspaceNameHolder", result);
 					$('#sortableHtPages').attr("workspaceIDHolder", contextHTli.attr("workspaceID"));
 					$('#sortableHtPages').cpPersist(events.sidebarRename);
-					
+
 					//Es la HT activa? reflejar en topTitle
 					if ( $("#topHTtitleH1") &&
 						$("#topHTtitleH1").cpGetAncestor().cpGetData('abecebObjectId') &&
@@ -26,8 +26,8 @@ function htRenameDialog( contextHTli ){
 						$("#topHTtitleH1").text( result );
 						widgetSaveToHTidUpdate();
 						}
-					
-					
+
+
 				}
 			}
 		});
@@ -38,30 +38,30 @@ function htRenameDialog( contextHTli ){
 function showMetadataDialog ( metadata ){
 		/*
 		//formato metadata: key / value
-		metadata = { 
+		metadata = {
 			"nombre": "Ingresos Corrientes -IC- (millones de AR$)",
 			"metodoDeAgregacion": "" }
 		*/
-		
+
 		var metadataString = ""
 		for (variable in metadata) {
-		
+
 			var unCamelVarname = variable
 		    	// insert a space before all caps
 			    .replace(/([A-Z])/g, ' $1')
 			    // uppercase the first character
 			    .replace(/^./, function(str){ return str.toUpperCase(); })
-			    
+
 			var unEmptyValue = metadata[variable];
 			if(unEmptyValue == ""){ unEmptyValue = "–" };
-		
+
 			metadataString +=
 				'<p>'+
 					'<strong>' + unCamelVarname + ":</strong> "+
 					unEmptyValue +
 				'</p>'
 			}
-			
+
 			bootbox.dialog({
 			  message: metadataString,
 			  title: "Metadatos del objeto",
@@ -82,7 +82,7 @@ function showEditContentDialog( contextWidget ){
 	contextWidget = getContextWidget( contextWidget );
 
 		var usrctntKey = 'cpHtml';
-    	var targetFinder = ( ".cpHtmlwidgetContent" ); 
+    	var targetFinder = ( ".cpHtmlwidgetContent" );
     	var currentContent = $( contextWidget )[0].cpData['dataShown'][usrctntKey];
     	var currentCpTitle = $( contextWidget )[0].cpData['dataShown']['cpTitle'];
 
@@ -99,12 +99,12 @@ function showEditContentDialog( contextWidget ){
 		  callback: function(result) {
 					if ( result === null || result === "" ) {
 						//es un objeto de texto recien creado?
-						if( 
+						if(
 							( currentContent == "" ) &&
 							( currentCpTitle == "" )
 							){
 							//si es un objeto de texto vacío y se canceló el diálogo de edición, lo eliminamos
-							var dataRoot = $(contextWidget).cpGetDataRoot();	
+							var dataRoot = $(contextWidget).cpGetDataRoot();
 							contextWidget.remove();
 							compassGlobalUI.update();
 							}
@@ -112,13 +112,13 @@ function showEditContentDialog( contextWidget ){
 						// Nothing to do
 					} else {
 						result = result.replace(/\n/g, "<br>").split("<br>");
-						
+
 						newCpTitle = result[0];
 						//newCpTitle strips tags
 						newCpTitle = $('<span>'+newCpTitle+'</span>').text();
 
 						//newCpHtml preserves tags
-						newCpHtml = result.length>1 ? 
+						newCpHtml = result.length>1 ?
 							result.slice(1) : [""];
 							newCpHtml = newCpHtml.join("<br>");
 
@@ -129,15 +129,15 @@ function showEditContentDialog( contextWidget ){
 						//aplicamos cpTitle en root y root.dataShown del objeto
 						$( contextWidget )[0].cpData['cpTitle'] = newCpTitle;
 						$( contextWidget )[0].cpData['dataShown']['cpTitle'] = newCpTitle;
-						
+
 						//aplicamos cpHtml en root y root.dataShown del objeto
 						$( contextWidget )[0].cpData[usrctntKey] = newCpHtml;
 						$( contextWidget )[0].cpData['dataShown'][usrctntKey] = newCpHtml;
-						
+
 						evenWidgetHeights( $( contextWidget ) );
 
 						$( contextWidget ).cpPersist(events.widgetEdit);
-						
+
 					}
 				}
 			});
@@ -156,116 +156,124 @@ $("#sortableHtPages").on('click', '.dropdown-menu>LI>A', function() {
 
 	var what = this;
 	var action = $( what ).data( "action" );
-	var contextHTli = $(what).closest('#sortableHtPages>LI'); 
+	var contextHTli = $(what).closest('#sortableHtPages>LI');
 
 	switch(action){
 
     case "rename":
-    
+
     	htRenameDialog( contextHTli );
 
         break;
 
     case "export":
-		
+
     	var htId = $( contextHTli ).cpGetData().abecebObjectId;
 		downloadExcelFromWorkspace(htId);
 		break;
-	
+
     case "share":
-    	
+
     	var htId = $( contextHTli ).cpGetData().abecebObjectId;
 		var url = "/group/compass-platform/share-workspace-role-selection?ht=" + htId;
 		document.location.href=url;
     	break;
 
     case "delete":
-        bootbox.confirm({ 
-			message: "¿Está seguro de que desea elminar este elemento?", 
-			callback: function(result){ 
-					
+        bootbox.confirm({
+			message: "¿Está seguro de que desea elminar este elemento?",
+			callback: function(result){
+
 					if(result){
-					
+
 					if( contextHTli.length>0 ){
 						$('#sortableHtPages').attr("workspaceIDHolder", contextHTli.attr("workspaceID"));
 						contextHTli.remove()
 
 						//actualizamos menu "guardar widget en HT", si existe
-						widgetSaveToHTidUpdate(); 
+						widgetSaveToHTidUpdate();
 
 						$('#sortableHtPages').cpPersist(events.sidebarElementDelete);
 
 					}
-					
+
 					}//end if result
 				}//end bootbox callback
 			})//end bootbox
         break;
-        
+
     default:
         //default code block
         break;
-	
+
 	}//end switch(action)
 
 
-	
+
 }); //end $("UL.dropdown-menu")
 
- 
+
  	function makeURI (strData, type) {
 		return 'data:' + type + ';base64,' + strData;
 	}
 
- 
+
  //process widget menu options
- 
-processWidgetContextMenu = function(itemKey, opt){ 
+
+processWidgetContextMenu = function(itemKey, opt){
 
 	var contextWidget = getContextWidget( opt.$trigger );
 	var contextDataRoot = $(contextWidget).cpGetDataRoot;
 	var contextWidgetContainer = $(contextWidget).closest( ".widgetsContainer" );
-	
+
 
 	switch( itemKey ) {
-	
+
 	case "resize-3":
 	case "resize-4":
 	case "resize-6":
 	case "resize-12":
-		
+
 		//reset all heights so graph could scale
 		resetWidgetHeights( $(contextWidgetContainer) );
-		
+
 		//reset widget size
 		for(var i=1; i<=12; i++ ){
 			contextWidget.removeClass("col-md-"+i+" col-sm-"+i );
 			}
 		var requestedSize = itemKey.substr(7);
 		contextWidget.addClass('col-md-'+requestedSize+' col-sm-'+requestedSize);
-				
+
+    //BUGFIX: force resizing of charts, works even after drag and drop
+    if (contextWidget.find("canvas").length > 0) {
+      var chart = contextWidget.find("canvas").get(0).chart;
+      if (chart) {
+        chart.resize();
+      }
+    }
+
 		$(contextWidget).cpSetData( { 'gridWidth': requestedSize } );
 		$(contextWidget).cpPersist( events.widgetResize );
-		
+
 		//ONLY if NOT a graph widget, evenWidgetHeights
 		//if IS a graph widget, let the graph call evenWidgetHeights after redrawing
 		if(	$(contextWidget).find('canvas').length == 0 ){
-			evenWidgetHeights( "BODY" );	
-			// evenWidgetHeights( $(contextWidgetContainer) );	
+			evenWidgetHeights( "BODY" );
+			// evenWidgetHeights( $(contextWidgetContainer) );
 		}
-		
+
 		//last resort
 		setTimeout(function(){ evenWidgetHeights("BODY"); }, 500);
-	
+
 		break;
-		
+
 
 	case "viewmetadata":
-	
+
 		var metadata = $(contextWidget)[0].cpData.dataShown.metadata;
 		showMetadataDialog ( metadata );
-		
-		
+
+
 		break;
 
 	case "export":
@@ -295,7 +303,7 @@ processWidgetContextMenu = function(itemKey, opt){
 		if( $(contextWidget).cpGetData( 'type1' ) == "grafico" ){
 			var canvas = $( contextWidget ).find('canvas')[0];
 			Canvas2Image.saveAsPNG( canvas, $(canvas).width() , $(canvas).height() , filename + '.png' );
-			
+
 		}else if( $(contextWidget).cpGetData( 'type1' ) == "imagen" ){
 			var uri = $(contextWidget)[0].cpData['dataShown']['src'];
 			//var extension = uri.match(/\.\w+$/gi);
@@ -304,14 +312,14 @@ processWidgetContextMenu = function(itemKey, opt){
 			saveFileWithName( uri, filename + "-" + originalExtension );
 
 		}
-		
+
 		break;
-		
+
 
 	case "config-cptitle":
 
 		var usrctntKey = 'cpTitle';
-    	var targetFinder = ( "H2.cpTitle" ); 
+    	var targetFinder = ( "H2.cpTitle" );
     	var currentContent = $( contextWidget )[0].cpData['dataShown'][usrctntKey];
 
 		bootbox.prompt({
@@ -335,27 +343,27 @@ processWidgetContextMenu = function(itemKey, opt){
 
 
 	case "config-cphtml":
-	
+
 		showEditContentDialog( contextWidget );
-		
+
 
         break;
-        
-	
+
+
 	case "config-usrctnt1":
 	case "config-usrctnt2":
 
 		var usrctntKey = ( itemKey == "config-usrctnt1" ?  "usrctnt1" : "usrctnt2" );
-    	var targetFinder = ( itemKey == "config-usrctnt1" ?  ".usrctnt-head" : ".usrctnt-foot" ); 
-		
-    	var currentContent = $( contextWidget )[0].cpData['dataShown'][usrctntKey]; 
+    	var targetFinder = ( itemKey == "config-usrctnt1" ?  ".usrctnt-head" : ".usrctnt-foot" );
+
+    	var currentContent = $( contextWidget )[0].cpData['dataShown'][usrctntKey];
 
 		bootbox.prompt({
 
 		  title: "Agregar / editar comentario (dejar en blanco para eliminar):",
 		  value: currentContent,
 		  callback: function(result) {
-					if ( result === null ) { 
+					if ( result === null ) {
 						// Nothing to do
 					} else {
 						$( contextWidget ).find(targetFinder).text( result )
@@ -369,63 +377,63 @@ processWidgetContextMenu = function(itemKey, opt){
         break;
 
 	case "update":
-	
-		updateWidgetData( $(contextWidget) );		
-    
+
+		updateWidgetData( $(contextWidget) );
+
     	break;
-        
+
 
 	case "config-autoupdate-toggle":
 		//cual es el valor del autoupdate flag?
 		var widgetVarAutoUpdate = $( contextWidget )[0].cpData["autoUpdate"];
 		widgetVarAutoUpdate = widgetVarAutoUpdate || false;
-		
+
 		//toggle value
 		widgetVarAutoUpdate = !widgetVarAutoUpdate
 		//store autoUpdate value in cpData
 		$(contextWidget).cpSetData( { 'autoUpdate': widgetVarAutoUpdate } );
 
-		
+
 		//si se activo la autoactualizacion, actualizamos
 		if( widgetVarAutoUpdate ){ //usr Aactivo autoupdate
-		
+
 			if( $(contextWidget)[0].cpData["dataUpdated"] ){
 				//si hay datos actualizados a mostrar,
 				//esta funcion se encarga de actualizar el widget completo, incluyendo toolbar,
-				//y de persistir HT 
+				//y de persistir HT
 				updateWidgetData( contextWidget )
 				}else{
 				//no hay datos actualizados a mostrar.
 				//solo persistimos la opcion.
 				$(contextWidget).cpPersist( events.widgetUpdate );
 				}
-			
+
 				$( contextWidget ).find(".x_panel .x_title .panel_toolbox .autoUpdateBadge").removeClass("autoUpdateStatus-false").addClass("autoUpdateStatus-true");
-				
+
 			}else{ //usr desactivo autoupdate
-			
-			
+
+
 				$( contextWidget ).find(".x_panel .x_title .panel_toolbox .autoUpdateBadge").removeClass("autoUpdateStatus-true").addClass("autoUpdateStatus-false");
-			 
-				//persist HT 
+
+				//persist HT
 				$(contextWidget).cpPersist( events.widgetUpdate );
 			}
-		
+
 		//store autoUpdate value in cpData
 		$(contextWidget).cpSetData( { 'autoUpdate': widgetVarAutoUpdate } );
 
 
 		 break;
-	
-	
+
+
 	case "delete":
 
-        bootbox.confirm({ 
-			message: "¿Está seguro de que desea elminar este elemento?", 
-			callback: function(result){ 
-				
+        bootbox.confirm({
+			message: "¿Está seguro de que desea elminar este elemento?",
+			callback: function(result){
+
 					if(result){
-					
+
 					//eliminar widget?
 					if( contextWidget.length > 0){
 						var dataRoot = $(contextWidget).cpGetDataRoot();
@@ -439,20 +447,20 @@ processWidgetContextMenu = function(itemKey, opt){
 							widgetSaveToHTidUpdate();
 							$('#sortableHtPages').cpPersist(events.sidebarElementDelete);
 						}
-						
+
 					//eliminar HT?
 					}//end if widget vs ht
-					
+
 					}//end if result
 				}//end bootbox callback
 			})//end bootbox
 
 		break;
-	
+
 	default:
-	
+
 	if( itemKey.indexOf('copyToHT-')==0 ){
-	
+
 		var what;
 		var htID = itemKey.substring(9);
 		if( htID == "new"){
@@ -460,25 +468,25 @@ processWidgetContextMenu = function(itemKey, opt){
 		}else{
 			what = $('#htli-' + htID );
 		}
-		
+
 		console.log ( 'copyToHT- what' , what )
 
 		var ui = {};
 			ui.draggable = contextWidget;
-		
+
 		compassGlobalUI.htMenuItemAcceptWidget ( what, 'contextmenu', ui );
-		
-		
+
+
 	}else{
-	
+
 		console.log("Clicked on " + itemKey + " on element: ",  opt.$trigger );
 		break;
 		}
 
 	}//end switch
-		
+
 	compassGlobalUI.update()
-	
+
 };
 
 
@@ -499,7 +507,7 @@ initContextMenu( );
 function initContextMenu( callee ){
 	$.contextMenu( 'destroy' );
 	//console.log( 'initContextMenu', callee )
- 
+
 // init widget contextmenu
 // https://swisnl.github.io/jQuery-contextMenu/
 
@@ -514,33 +522,33 @@ function initContextMenu( callee ){
 		var editMode = ( $(contextWidget).cpGetAncestor().cpGetData('mode') );
 		return ( !(editMode == "edit") );
 	};
-	
+
 	var disabledIfCantEditContent = function( key, opt ){
 		//es no editable?
 		if(disabledOnRenderAncestor( key, opt )){ return true; }
 		if( disabledOnRenderItem ( key, opt ) ){ return true; }
-		
+
 		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var type1 = ( $(contextWidget).cpGetData('type1') );
 		return ( !(type1 == "cphtml") );
 	}
 
 	var disabledOnNoDownloadHref = function( key, opt ){
-		var contextWidget = getContextWidget( opt.$trigger )[0];		
+		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var contextWidgetDownloadHref = $(contextWidget).cpGetData('downloadHref') ;
 		console.log("HOLA!");
 		return ( ! ( contextWidgetDownloadHref && contextWidgetDownloadHref != "" ) );
 	};
 
 	var disabledOnNoAncestorDownloadHref = function( key, opt ){
-		var contextWidget = getContextWidget( opt.$trigger )[0];	
+		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var ancestorDownloadHref = $(contextWidget).cpGetAncestor().cpGetData('downloadHref');
 		return ( ! ( ancestorDownloadHref && ancestorDownloadHref != "" ) );
 	}
-	
+
 	var disabledOnNoMetadata = function( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];
-		
+
 		if(	$(contextWidget)[0].cpData &&
 			$(contextWidget)[0].cpData.dataShown &&
 			$(contextWidget)[0].cpData.dataShown.metadata &&
@@ -548,14 +556,14 @@ function initContextMenu( callee ){
 			return false;
 			}else{
 			return true;
-			}		
+			}
 	};
 
 	var disabledOnNotEditableCpHtml = function( key, opt ){
 		//es no editable?
-		if( disabledOnRenderItem ( key, opt ) ){ return true; }	
+		if( disabledOnRenderItem ( key, opt ) ){ return true; }
 		//es cphtml?
-		var contextWidget = getContextWidget( opt.$trigger )[0];	
+		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var type1 = ( $(contextWidget).cpGetData('type1') );
 		return ( !(type1 == "cphtml") );
 	};
@@ -563,7 +571,7 @@ function initContextMenu( callee ){
 
 	var disabledOnNoCanvasOrImgSrc = function( key, opt ){
 		var contextWidget = getContextWidget( opt.$trigger )[0];
-		
+
 		//opcion 1: es un widget de imagen, con img src
 		if( $(contextWidget).cpGetData('type1') == "imagen" ){
 			return false;
@@ -572,11 +580,11 @@ function initContextMenu( callee ){
 			return ( $(contextWidget).find("canvas").length == 0);
 		}
 	};
-	
+
 	var disabledIfCannotUpdate = function ( key, opt ){
 		if(disabledOnRenderItem( key, opt )){ return true; }
 		if(disabledOnRenderAncestor( key, opt )){ return true; }
-		
+
 		var contextWidget = getContextWidget( opt.$trigger )[0];
  		if( $(contextWidget).cpGetData('dataUpdated') ){
 			return false;
@@ -591,14 +599,14 @@ function initContextMenu( callee ){
 
 		var contextWidget = getContextWidget( opt.$trigger )[0];
 		var autoUpdateHTvar = $( contextWidget ).cpGetAncestor().cpGetData('autoUpdate') ;
-		
+
  		if( autoUpdateHTvar ){
 			return true; //si la HT tiene autoUpdate, desactivamos opcion de autoupdate para el widget
 		}else{
 			return false;
 		}
 	}
-	
+
 
 
 /*
@@ -619,7 +627,7 @@ function initContextMenu( callee ){
 	var htItems = {}
 
 	var htList = $("#sortableHtPages").cpGetData();
-	
+
 	$.each( htList.children, function(index, item) {
 //	console.log ('each htList.children', index)
  		htItems[ 'copyToHT-' + item["abecebObjectId"] ] = {
@@ -628,17 +636,17 @@ function initContextMenu( callee ){
  			};
 //		htItems[ "copyToHT-1" ] = {"name": "uno…", "icon": "fa-plus-square" };
 		});
-	
+
 	htItems["copyToHTsepBeforeNew"] = "---------";
 	htItems["copyToHT-new"] = {"name": "Nueva Hoja de Trabajo", "icon": "fa-plus-square" };
 
 //	console.log ('htItems', JSON.stringify( htItems ) )
-	
+
 
 
 
 	var cpObjectWidgetContexMenuItems = {
-	
+
         	"export": {
         		//disabled: disabledOnNoDownloadHref,
         		disabled: false,
@@ -652,7 +660,7 @@ function initContextMenu( callee ){
         		disabled: disabledOnNoCanvasOrImgSrc,
         		"name": "Exportar gráfico", "icon": "fa-file-picture-o"
         		},
-        		
+
         	// "share": {"name": "Compartir", "icon": "fa-share"},
 
         	"sep1": "---------",
@@ -662,14 +670,14 @@ function initContextMenu( callee ){
         		"name": "Ver información del item (metadatos)", "icon": "fa-info-circle"
         		},
         /* "sep2": "---------",
-        	
+
            "copyToHT": {
-				"name": "Copiar a Hoja de Trabajo", 
+				"name": "Copiar a Hoja de Trabajo",
 				"icon": "fa-files-o",
 				"items": htItems
 				},*/
         	"sep3": "---------",
-        	
+
         	"config-cptitle": {
         		disabled: disabledOnRenderAncestor,
         		"name": "Editar título", "icon": "fa-pencil-square-o"
@@ -678,7 +686,7 @@ function initContextMenu( callee ){
         		disabled: disabledIfCantEditContent,
         		"name": "Editar contenido", "icon": "fa-pencil-square-o"
         		},
-        		
+
         	"config-usrctnt1": {
         		disabled: disabledOnRenderAncestor,
         		"name": "Agregar/editar comentarios entre título y contenido", "icon": "fa-commenting-o"
@@ -690,7 +698,7 @@ function initContextMenu( callee ){
 
         	"resize": {
         		disabled: disabledOnRenderAncestor,
-                "name": "Tamaño del item", 
+                "name": "Tamaño del item",
                 "icon": "fa-text-width",
                 "items": {
                     "resize-3": {"name": "1/4 de página (Mínimo)" },
@@ -699,16 +707,16 @@ function initContextMenu( callee ){
                     "resize-12": {"name": "Página completa (Máximo)" },
                 }
             }, //end resize submenu
-            
+
             "sep4": "---------",
-            
+
             "update": {
             	disabled: disabledIfCannotUpdate,
             	"icon": "fa-refresh",
             	"name": "Actualizar ahora"
             	},
-           
-            
+
+
             "config-autoupdate-toggle": {
             	disabled: disabledIfCannotAutoUpdate,
             	"name": "Actualizar automáticamente",
@@ -716,29 +724,29 @@ function initContextMenu( callee ){
 
 					if(opt && opt.context){
 					var contextWidget = getContextWidget( opt.context )[0];
-					
+
 					if(	$(contextWidget)[0].cpData &&
 						$(contextWidget)[0].cpData.autoUpdate ){
 						return (" context-menu-icon context-menu-icon--fa fa fa-check ");
 						}else{
 						return "";
 						}//end if cpData.autoUpdate
-					
+
 					}//end if opt.$trigger
 
 				}
-        		
+
         	},// end config-autoupdate-toggle
-            
+
             "sep5": "---------",
-            
+
             "delete": {"name": "Eliminar", "icon": "fa-trash-o", disabled: disabledOnRenderAncestor}
 
-		} //end cpObjectWidgetContexMenuItems        
-        
+		} //end cpObjectWidgetContexMenuItems
+
 
 		/*
-			"name": "Copiar a Hoja de Trabajo", 
+			"name": "Copiar a Hoja de Trabajo",
 			"icon": "fa-files-o",
 			"items": //htItems
 				{
@@ -747,22 +755,21 @@ function initContextMenu( callee ){
 				"copyToHT-cpRootWitgets0_ObjectId":{"name":"Esta HT no tiene downloadHref, no se puede exportar","icon":"fa-folder-o"},
 				"copyToHT-id1": {"name": "Mis Indicadores", "icon": "fa-folder-o"},
 				"copyToHT-new": {"name": "Crear nueva Hoja de Trabajo…", "icon": "fa-plus-square"}
-				} 
+				}
 
 		   */
 
 		//only .cpObject items are 'live'
          $.contextMenu({
-            selector: ".cpObject.contentWidget>.x_panel", 
+            selector: ".cpObject.contentWidget>.x_panel",
             callback: processWidgetContextMenu,
             items: cpObjectWidgetContexMenuItems
         });
          $.contextMenu({
-            selector: ".cpObject.contentWidget>.x_panel A[data-onclick='contextmenu']", 
+            selector: ".cpObject.contentWidget>.x_panel A[data-onclick='contextmenu']",
             trigger: 'left',
             callback: processWidgetContextMenu,
             items: cpObjectWidgetContexMenuItems
         });
 
 }
-
