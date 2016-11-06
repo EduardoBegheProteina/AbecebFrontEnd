@@ -771,11 +771,11 @@ function renderCpContainer( target, data ){
 
 		initDraggableWidgets( target );
 
-		initGraficos();
 		initTopToolbarListeners();
 
 		//backup processing cpCollapsableClosedAfterRender, in case no graphics were inited
 		setTimeout(function(){
+			initGraficos(); //BUGFIX: Delayed to avoid blank graphs on post-init rerender 
 			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
 			}, 250);
 
