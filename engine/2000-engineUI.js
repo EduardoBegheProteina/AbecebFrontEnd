@@ -510,7 +510,7 @@ for (var L=0; L < gData.labels.length; L ++){
 						else {
 							labelOptions = {
 								text: dataset.label,
-								fillStyle: dataset.backgroundColor,
+								fillStyle: jQuery.isArray(dataset.backgroundColor) ? dataset.backgroundColor[0] : dataset.backgroundColor,
 								hidden: !chart.isDatasetVisible(i),
 								lineCap: dataset.borderCapStyle,
 								lineDash: dataset.borderDash,
