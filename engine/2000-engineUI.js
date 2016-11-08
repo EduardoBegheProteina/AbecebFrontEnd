@@ -217,6 +217,7 @@ for( var i=0; i<gData.datasets.length; i++){
 			//asignamos data del nuevo elemento
 			gDataIdataSet["borderDash"] = [10,5]
 			gDataIdataSet["label"] += " (Proy.)";
+			gDataIdataSet["isProjected"] = true;
 
 			//copiamos elemento conteniendo dataProjected a gDataDatasets2
 			gDataDatasets2.push ( gDataIdataSet );
@@ -464,6 +465,71 @@ for (var L=0; L < gData.labels.length; L ++){
 			}
 		}
 
+		//Hide projected datasets with white labels
+		var helpers = Chart.helpers;
+
+		chartDataObj.options.legend = {
+	    display: true,
+			labels: {
+				boxWidth: 40,
+				padding: 10,
+				// Generates labels shown in the legend
+				// Valid properties to return:
+				// text : text to display
+				// fillStyle : fill of coloured box
+				// strokeStyle: stroke of coloured box
+				// hidden : if this legend item refers to a hidden item
+				// lineCap : cap style for line
+				// lineDash
+				// lineDashOffset :
+				// lineJoin :
+				// lineWidth :
+				generateLabels: function(chart) {
+					var data = chart.data;
+					return helpers.isArray(data.datasets) ? data.datasets.map(function(dataset, i) {
+						console.log("generateLabels",i,dataset);
+
+						var labelOptions;
+
+						if (dataset.isProjected) {
+							labelOptions = {
+								text: "",//dataset.label,
+								fillStyle: "#ffffff",//dataset.backgroundColor,
+								hidden: !chart.isDatasetVisible(i),
+								lineCap: dataset.borderCapStyle,
+								lineDash: dataset.borderDash,
+								lineDashOffset: dataset.borderDashOffset,
+								lineJoin: dataset.borderJoinStyle,
+								lineWidth: dataset.borderWidth,
+								strokeStyle: "#ffffff",//dataset.borderColor,
+
+								// Below is extra data used for toggling the datasets
+								datasetIndex: i
+							}
+						}
+						else {
+							labelOptions = {
+								text: dataset.label,
+								fillStyle: dataset.backgroundColor,
+								hidden: !chart.isDatasetVisible(i),
+								lineCap: dataset.borderCapStyle,
+								lineDash: dataset.borderDash,
+								lineDashOffset: dataset.borderDashOffset,
+								lineJoin: dataset.borderJoinStyle,
+								lineWidth: dataset.borderWidth,
+								strokeStyle: dataset.borderColor,
+
+								// Below is extra data used for toggling the datasets
+								datasetIndex: i
+							};
+
+						}
+
+						return labelOptions;
+					}, this) : [];
+				}
+		}
+	}
 
 	//console.log ('chartDataObj: ', JSON.stringify(chartDataObj) )
 
@@ -775,7 +841,7 @@ function renderCpContainer( target, data ){
 
 		//backup processing cpCollapsableClosedAfterRender, in case no graphics were inited
 		setTimeout(function(){
-			initGraficos(); //BUGFIX: Delayed to avoid blank graphs on post-init rerender 
+			initGraficos(); //BUGFIX: Delayed to avoid blank graphs on post-init rerender
 			$('.cpCollapsableClosedAfterRender').removeClass('cpCollapsableClosedAfterRender').addClass('cpCollapsableClosed');
 			}, 250);
 
