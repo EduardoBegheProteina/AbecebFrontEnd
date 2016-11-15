@@ -363,7 +363,7 @@ $.templates("cpWidget-x-ht",
 				'{{if dataShown.authorPic }}'+
 					'<div class="dato1-ft-authordata-pic"><img class="pic-author img-circle" src="{{:dataShown.authorPic}}" width="41" height="41" alt="" /></div>'+
 				'{{/if}}'+
-				'<div class="dato1-ft-authordata-data"><p class="dato1-ft-authordata-data-nombre">{{:dataShown.author}}</p><p class="dato1-ft-authordata-data-fecha">25 de mayo 2015</p></div>'+
+				'<div class="dato1-ft-authordata-data"><p class="dato1-ft-authordata-data-nombre">{{:dataShown.author}}</p>{{if dataShown.lastUpdateDate }}<p class="dato1-ft-authordata-data-fecha">{{:dataShown.lastUpdateDate}}</p>{{/if}}</div>'+
 			'</div>'+
 		'{{/if}}'+
 		'<div class="dato1-ft-contains">'+

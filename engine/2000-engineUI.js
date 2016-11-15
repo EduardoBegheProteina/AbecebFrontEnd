@@ -48,6 +48,11 @@ function preprocessCpDataShown( dataShown, data ){
 		}
 	} //curzar tabledata with series
 
+	//Formatear Fechas
+	if (dataShown.lastUpdateDate) {
+		dataShown.lastUpdateDate = tryToLocalizeTimestamp( dataShown.lastUpdateDate, 'D MMMM YYYY, h:mm:ss a');
+	}
+
 	return dataShown;
 
 } //end preprocessCpDataShown
