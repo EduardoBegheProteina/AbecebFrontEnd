@@ -1,0 +1,62 @@
+
+/* CMP HEADER */
+.portlet-topper-toolbar {margin: 0 0 10px}
+.lyCtntNav .cmp-header h2 { margin-top: 5px }
+
+/* SIDEBAR LEFT*/
+.sidebar-left {padding: 0 !important; font-size: 14px !important }
+.sidebar-left li {text-align: left !important}
+.navigation-pane .app-view-navigation-entry .overlay.entry-action {right: 10px; top: 10px}
+.sidebar-left>li>a { padding: 20px !important; border-bottom: 1px solid #e3e3e3; color: #333 }
+.sidebar-left .fa { color: #333; margin-right: 5px }
+
+/* ACTIONS TOPBAR */
+.navbar-actions { background-color: #5C99B0 !important;
+-webkit-border-top-left-radius: 4px !important;
+-webkit-border-top-right-radius: 4px !important;
+-moz-border-radius-topleft: 4px !important;
+-moz-border-radius-topright: 4px !important;
+border-top-left-radius: 4px !important;
+border-top-right-radius: 4px !important; }
+.navbar-actions .nav-item-label {color: #fff !important}
+.navbar-actions .dropdown-menu .nav-item-label {color: #000 !important}
+.navbar-brand, .aui .brand, .navbar-nav>li>a, .aui .nav>li>a { line-height: 0 }
+.aui .nav>li>a { padding: 18px 20px 30px; }
+.search-query { -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px; border:none; padding: 7px; margin-top: 2px !important; margin-right: 5px !important }
+.input-group, .aui .input-prepend, .aui .input-append { margin: 6px; margin-bottom: 0 }
+.navbar-actions .dropdown-view { margin: 8px; }
+.lfr-header-row-content {padding: 0}
+
+/* FILES GRID */
+.aui .img-thumbnail, .aui .img-polaroid { border: none; }
+.app-view-entry-taglib.entry-display-style.display-icon { height: auto }
+.app-view-entry-taglib.entry-display-style.display-icon:hover { box-shadow: 0 1px 10px 1px rgba(0,0,0,.2); background-color: #fff !important }
+.app-view-entry .overlay.folder-action a, .app-view-entry .overlay.entry-action a { height: 20px !important }
+
+/* COMPASS DRIVE */
+.navbar-nav.disabled a {color: rgba(255,255,255,0.5) !important;}
+#drive-action-bar .collapse {display: block !important}
+#action-bar-nav .nav { float: left !important; margin: 0 !important;}
+#action-bar-nav .nav>li {    text-align: center !important; float: left !important;}
+#action-bar-nav .nav>li>a {padding: 18px 20px}
+#action-bar-nav .nav>li>a:active { background: #335f83!important }
+#action-bar-nav .nav>li>a span { font-weight: 500 }
+#action-bar-nav .nav>li>a i {color: #fff}
+.input-append {margin-top: 8px !important}
+.navigation-pane .entry-action {overflow: visible !important}
+
+#modal-venta .modal-dialog {width: 920px; text-align: center;}
+#modal-venta .modal-content {padding: 0 0 20px 0}
+#modal-venta .alert {  margin: 0 auto 20px; display: inline-block; }
+#modal-venta .alert h4 {margin-bottom: 0}
+#modal-venta a {margin: 0 10px; padding: 10px 20px}
+
+#modal-form .modal-dialog {width: 800px; }
+#modal-form .modal-content {padding: 0 20px 20px; background-image: url(../../AbecebFrontEnd/images/modal-form-bg.jpg); background-repeat: no-repeat; background-position: right bottom}
+#modal-form p {font-size: 16px; margin-bottom: 20px}
+#modal-form input { border: none; border-radius: 15px; background-color: #eee; color: #999; padding: 16px}
+#modal-form input[type="submit"] {background: #f6921d;color: #fff; background: #f6921d; border-width: 0px; border-radius: 33px; letter-spacing: 0px; font-size: 18px; padding: 10px 20px}
+
+#sidebar-menu-drive {padding: 20px}
+#sidebar-menu-drive h4 { line-height: 1.2 }
+#sidebar-menu-drive h3 { margin-bottom: 20px }
