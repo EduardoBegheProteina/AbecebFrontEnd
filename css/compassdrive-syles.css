@@ -45,11 +45,19 @@ border-top-right-radius: 4px !important; }
 .input-append {margin-top: 8px !important}
 .navigation-pane .entry-action {overflow: visible !important}
 
-#modal-venta .modal-dialog {width: 920px; text-align: center;}
+/* CAMBIO width */
+#modal-venta .modal-dialog {width: 1020px; text-align: center;}
 #modal-venta .modal-content {padding: 0 0 20px 0}
 #modal-venta .alert {  margin: 0 auto 20px; display: inline-block; }
 #modal-venta .alert h4 {margin-bottom: 0}
 #modal-venta a {margin: 0 10px; padding: 10px 20px}
+
+/* CAMBIO agregado h2 */
+#modal-venta h2 { width: 80%; margin: 0 auto }
+
+/* CAMBIO estilos botones */
+#modal-venta .btn-primary { margin-top: 20px; }
+#modal-venta a.btn-primary { padding: 14px 26px !important; font-weight: bold }
 
 #modal-form .modal-dialog {width: 800px; }
 #modal-form .modal-content {padding: 0 20px 20px; background-image: url(../../AbecebFrontEnd/images/modal-form-bg.jpg); background-repeat: no-repeat; background-position: right bottom}
