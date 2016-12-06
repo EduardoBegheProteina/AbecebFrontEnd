@@ -82,6 +82,8 @@ Side Bar Menu:
 				break;
 				
 			case events.sidebarSort:
+				console.log("estoy en el sidebar sort!!!!");
+				orderSidebar(ajaxData);
 				break;
 				
 			case events.sidebarNewWS:
@@ -237,6 +239,32 @@ function persistSidebar(jsonData){
 		}
 	});
 }
+
+function orderSidebar(jsonData){
+	console.log('Persistiendo Sidebar'); 
+	data = addAttributeToJson( jsonData, 'personId', $personID );
+	$.ajax({
+		type: 'POST',
+		data: data,
+		dataType : 'json',
+		contentType: 'application/json',
+		headers: { "Operation": $orderSidebarOperation , "Authorization" : $sidebarUsernamePassword },
+		url: $sidebarServiceURL+ "/orderSideBar/"+$personID,
+		contentType: "application/json",
+		success: function(data) {
+			console.log("Sidebar Persistida");
+			renderCpObject ( $('#sortableHtPages') , data, 'replace' );
+			createAlert(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log("textStatus: " + textStatus);
+			console.log("error: " + errorThrown);
+			var data = jqXHR.responseJSON;
+			createAlert(data);
+		}
+	});
+}
+
 
 function getSidebar(){
 	console.log('Obteniendo de mongo la sidebar para la persona con ID ' + $personID ); 
